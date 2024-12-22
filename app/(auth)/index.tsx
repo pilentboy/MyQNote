@@ -1,7 +1,7 @@
-import { Image, View } from "react-native";
+import {  View } from "react-native";
 import CustomeLink from "@/components/customLink";
 import ShortTitle from "@/components/shortTitle";
-
+import Logo from "@/components/logo";
 // auth screen
 export default function Index() {
   return (
@@ -13,7 +13,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Image source={require("@/assets/images/logo.png")} />
+           <Logo />
 
       <ShortTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
       <View
