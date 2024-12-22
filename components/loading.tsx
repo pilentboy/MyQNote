@@ -1,9 +1,21 @@
-import { View, Text } from "react-native";
+import { lightTheme } from "@/constants/theme";
+import { View } from "react-native";
+import { WaveIndicator } from "react-native-indicators";
 
 const Loading = () => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text style={{ color: "red" }}>Loading...</Text>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <WaveIndicator
+        count={3}
+        color={lightTheme.primaryColor}
+        animating={true}
+      />
     </View>
   );
 };

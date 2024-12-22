@@ -19,7 +19,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       if (loggedIn) {
         router.replace("/(auth)/login");
       }
-      setLoading(false);
+      setLoading(true);
     }, 500);
   };
   useEffect(() => {
