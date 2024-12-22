@@ -14,9 +14,6 @@ export default function Layout() {
         <SafeAreaView>
           <Stack.Screen
             name="index"
-            options={{
-              title: "x",
-            }}
           />
           <Stack.Screen name="start" options={{ title: "شروع" }} />
         </SafeAreaView>
