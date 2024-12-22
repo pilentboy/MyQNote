@@ -1,10 +1,9 @@
 import { Image, View } from "react-native";
-import LgLink from "@/components/Links/lgLink";
-import { useNavigation } from "expo-router";
-// login screen
+import CustomeLink from "@/components/customLink";
+import ShortTitle from "@/components/shortTitle";
 
+// auth screen
 export default function Index() {
-  const navigate = useNavigation();
   return (
     <View
       style={{
@@ -16,6 +15,7 @@ export default function Index() {
     >
       <Image source={require("@/assets/images/logo.png")} />
 
+      <ShortTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
       <View
         style={{
           flexDirection: "column",
@@ -24,9 +24,13 @@ export default function Index() {
           gap: 10,
         }}
       >
-        <LgLink title="ثبت نام" target={"/"} even />
-        <LgLink title="ورود" target={"/"} even />
-        <LgLink title="ورود آفلاین" target={"../"} even={false} />
+        <CustomeLink title="ثبت نام" target={"/register"} />
+        <CustomeLink title="ورود" target={"/login"} />
+        <CustomeLink
+          title="ورود آفلاین"
+          target={"/registerOffline"}
+          even={false}
+        />
       </View>
     </View>
   );

@@ -1,26 +1,22 @@
-import { Text, View, Image, StyleSheet } from "react-native";
-import LgLink from "@/components/Links/lgLink";
+import { View, StyleSheet } from "react-native";
+import CustomeLink from "@/components/customLink";
+import { Image } from "expo-image";
+import Logo from "@/components/logo";
+import ShortTitle from "@/components/shortTitle";
 
 // welcome screen
-
 export default function Welcome() {
   return (
     <View style={styles.container}>
-      {/* logo */}
-      <Image source={require("@/assets/images/logo.png")} style={styles.img} />
-
-      {/* welcome text */}
-      <Text style={styles.welcomeMessage}>
-        به اپلیکیشن یادداشت برداری خوش اومدی! برای اینکه با قابلیت های این
-        برنامه آشنا بشی و باهاشون کار کنی، فقط کافیه رو دکمه شروع کلیک کنی!
-      </Text>
-      {/* welcome img */}
+      <Logo />
+      <ShortTitle title="به مایک نوت خوش اومدی!" />
       <Image
         source={require("@/assets/images/welcome.png")}
-        style={styles.img}
+        style={styles.welcomeImg}
+        contentFit="contain"
       />
-      {/*  start btn */}
-      <LgLink title="شروع" target="(auth)" even />
+
+      <CustomeLink title="شروع" target="/(auth)" />
     </View>
   );
 }
@@ -31,16 +27,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    gap: 10,
+    gap: 30,
   },
-  img: {
-    objectFit: "contain",
-  },
-  welcomeMessage: {
-    textAlign: "center",
-    fontSize: 15,
-    fontFamily: "Yekan",
-    width: "90%",
-    color: "black",
+  welcomeImg: {
+    width: 250,
+    height: 150,
   },
 });

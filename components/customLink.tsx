@@ -1,12 +1,12 @@
 import { lightTheme } from "@/constants/theme";
-import { ExternalPathString, Link } from "expo-router";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { Link } from "expo-router";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 type Link = {
   title: string;
-  target: any;
-  even: boolean;
+  target: string | any;
+  even?: boolean;
 };
-const LgLink = ({ title, target, even = true }: Link) => {
+const CustomLink = ({ title, target, even = true }: Link) => {
   return (
     <Link
       href={target}
@@ -14,10 +14,13 @@ const LgLink = ({ title, target, even = true }: Link) => {
         styles.startBTN,
         { backgroundColor: even ? lightTheme.primaryColor : "gray" },
       ]}
+      asChild
     >
-      <Text style={{ color: "white", fontSize: 20, fontFamily: "Yekan" }}>
-        {title}
-      </Text>
+      <TouchableOpacity>
+        <Text style={{ color: "white", fontSize: 20, fontFamily: "Yekan" }}>
+          {title}
+        </Text>
+      </TouchableOpacity>
     </Link>
   );
 };
@@ -29,10 +32,10 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 10,
+    borderRadius: 8,
     textAlign: "center",
     paddingVertical: 10,
   },
 });
 
-export default LgLink;
+export default CustomLink;
