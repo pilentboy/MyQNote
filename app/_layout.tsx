@@ -1,16 +1,26 @@
 import { Stack } from "expo-router";
-import { StatusBar } from "react-native";
 import { useFonts } from "expo-font";
+import { SafeAreaView } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Layout() {
-
   const font = useFonts({
     Yekan: require("../assets/fonts/YekanBakh-Regular.ttf"),
   });
 
   return (
     <Stack>
-      <Stack.Screen name="index" options={{ title: "خونه" }} />
+      <SafeAreaProvider>
+        <SafeAreaView>
+          <Stack.Screen
+            name="index"
+            options={{
+              title: "x",
+            }}
+          />
+          <Stack.Screen name="start" options={{ title: "شروع" }} />
+        </SafeAreaView>
+      </SafeAreaProvider>
     </Stack>
   );
 }
