@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function Layout() {
+export default function AuthLayout() {
   return (
     <Stack
       screenOptions={{
@@ -20,6 +20,7 @@ export default function Layout() {
         name="registerOffline"
         options={{ headerTitle: "ورود آفلاین", headerShown: true }}
       />
+      {/* <Stack.Screen name="authOptions" options={{ headerShown: false }} /> */}
     </Stack>
   );
 }
