@@ -1,5 +1,7 @@
-import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { lightTheme } from "@/constants/theme";
+import { Text, View, Image, StyleSheet } from "react-native";
+import LgLink from "@/components/Links/lgLink";
+
+// welcome screen
 
 export default function Welcome() {
   return (
@@ -18,11 +20,7 @@ export default function Welcome() {
         style={styles.img}
       />
       {/*  start btn */}
-      <TouchableOpacity style={styles.startBTN}>
-        <Text style={{ color: "white", fontSize: 20, fontFamily: "Yekan" }}>
-          شروع
-        </Text>
-      </TouchableOpacity>
+      <LgLink title="شروع" target="(auth)" even />
     </View>
   );
 }
@@ -44,14 +42,5 @@ const styles = StyleSheet.create({
     fontFamily: "Yekan",
     width: "90%",
     color: "black",
-  },
-  startBTN: {
-    width: 300,
-    height: 50,
-    backgroundColor: lightTheme.primaryColor,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 10,
   },
 });
