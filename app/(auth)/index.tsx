@@ -25,7 +25,7 @@ export default function index() {
         }}
       >
         <CustomeLink title="ثبت نام" target={"/register"} />
-        <CustomeLink title="ورود" target={"/login"} />
+        <CustomeLink title="ورود" target={"/(home)"} />
         <CustomeLink
           title="ورود آفلاین"
           target={"/registerOffline"}

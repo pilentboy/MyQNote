@@ -16,10 +16,10 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkLogin = () => {
     setTimeout(() => {
-      if (loggedIn) {
-        router.replace("/(auth)/login");
-      }
-      setLoading(true);
+      // if (loggedIn) {
+      //   router.push("/(home)");
+      // }
+      setLoading(false);
     }, 500);
   };
   useEffect(() => {

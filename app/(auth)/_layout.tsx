@@ -20,7 +20,6 @@ export default function AuthLayout() {
         name="registerOffline"
         options={{ headerTitle: "ورود آفلاین", headerShown: true }}
       />
-      {/* <Stack.Screen name="authOptions" options={{ headerShown: false }} /> */}
     </Stack>
   );
 }
