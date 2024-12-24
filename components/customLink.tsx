@@ -1,18 +1,26 @@
 import { lightTheme } from "@/constants/theme";
 import { Link } from "expo-router";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
-type Link = {
+
+type LinkProps = {
   title: string;
-  target: string | any;
-  even?: boolean;
+  target: any | string;
+  bgColor?: boolean;
+  data?: {};
 };
-const CustomLink = ({ title, target, even = true }: Link) => {
+
+const CustomLink = ({
+  title,
+  target,
+  bgColor = true,
+  data = {},
+}: LinkProps) => {
   return (
     <Link
-      href={target}
+      href={{ pathname: target, params: data }}
       style={[
         styles.startBTN,
-        { backgroundColor: even ? lightTheme.primaryColor : "gray" },
+        { backgroundColor: bgColor ? lightTheme.primaryColor : "gray" },
       ]}
       asChild
     >

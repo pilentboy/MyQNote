@@ -16,6 +16,8 @@ export default function index() {
       <Logo />
 
       <ShortTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
+
+      
       <View
         style={{
           flexDirection: "column",
@@ -26,11 +28,7 @@ export default function index() {
       >
         <CustomeLink title="ثبت نام" target={"/register"} />
         <CustomeLink title="ورود" target={"/(home)"} />
-        <CustomeLink
-          title="ورود آفلاین"
-          target={"/registerOffline"}
-          even={false}
-        />
+        <CustomeLink title="ورود آفلاین" target={"/(home)"} bgColor={false} />
       </View>
     </View>
   );

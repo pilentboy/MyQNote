@@ -17,7 +17,7 @@ export default function index() {
     return (
       <View style={styles.container}>
         <Logo />
-        <ShortTitle title="به مایک نوت خوش اومدی!" />
+        <ShortTitle title="به مایک نت خوش اومدی!" />
         <Image
           source={require("@/assets/images/welcome.png")}
           style={styles.welcomeImg}
