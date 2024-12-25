@@ -1,13 +1,9 @@
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
-import { lightTheme } from "@/constants/theme";
-import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import CustomDrawerContent from "@/components/customDrawerContent";
-import Feather from "@expo/vector-icons/Feather";
-import { CroppedLogo } from "@/components/logo";
-import CustomHeader from "@/components/customHeader";
+import DrawerCustomHeader from "@/components/drawerCustomHeader";
 
 export default function Layout() {
   const labelFontSize = 14;
@@ -16,30 +12,9 @@ export default function Layout() {
       <Drawer
         drawerContent={(props) => <CustomDrawerContent {...props} />}
         screenOptions={({ navigation }) => ({
-          header: ({ navigation }) => <CustomHeader navigation={navigation} />,
-          headerLeft: () => {
-            return (
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingLeft: 10,
-                }}
-              >
-                <CroppedLogo size={30} />
-                <Text
-                  style={{
-                    color: "black",
-                    fontSize: 14,
-                    textAlign: "center",
-                    fontFamily: "Yekan",
-                  }}
-                >
-                  مایک نت
-                </Text>
-              </View>
-            );
-          },
+          header: ({ navigation }) => (
+            <DrawerCustomHeader navigation={navigation} />
+          ),
           headerStyle: {
             backgroundColor: "white",
           },

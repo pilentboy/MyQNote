@@ -1,13 +1,12 @@
 import { View, Text, TextInput, Pressable } from "react-native";
-
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import Feather from "@expo/vector-icons/Feather";
 import { lightTheme } from "@/constants/theme";
 import { CroppedLogo } from "./logo";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
-export default function CustomHeader({
+export default function DrawerCustomHeader({
   navigation,
 }: {
   navigation: DrawerNavigationProp<any>;
@@ -64,7 +63,11 @@ export default function CustomHeader({
           style={{ paddingHorizontal: 10 }}
           onPress={() => navigation.toggleDrawer()}
         >
-          <Feather name="menu" size={25} color={lightTheme.primaryColor} />
+          <AntDesign
+            name="menufold"
+            size={24}
+            color={lightTheme.primaryColor}
+          />
         </Pressable>
       </View>
       {/* bottom header */}
@@ -115,4 +118,3 @@ export default function CustomHeader({
     </View>
   );
 }
-// onPress={() => navigation.toggleDrawer()}
