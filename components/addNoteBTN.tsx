@@ -7,8 +7,8 @@ const AddNoteBTN = ({ action }: { action: () => void }) => {
     <TouchableOpacity
       style={{
         position: "absolute",
-        bottom: 20,
-        left: "77%",
+        bottom: 26,
+        left: "76%",
         boxShadow: "0 0 5px #0155B6",
         zIndex: 100,
         display: "flex",
