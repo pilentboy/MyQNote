@@ -15,6 +15,8 @@ export default function Layout() {
           header: ({ navigation }) => (
             <DrawerCustomHeader navigation={navigation} />
           ),
+          drawerStatusBarAnimation: "fade",
+          drawerType:"slide",
           headerStyle: {
             backgroundColor: "white",
           },
@@ -70,6 +72,7 @@ export default function Layout() {
                 <SimpleLineIcons
                   name="settings"
                   size={labelFontSize}
+                  // style={{ marginLeft: 20 }}
                   color={focused ? "white" : "black"}
                 />
               );

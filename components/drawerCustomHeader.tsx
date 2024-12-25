@@ -74,7 +74,7 @@ export default function DrawerCustomHeader({
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-between",
+          justifyContent: "center",
           alignItems: "center",
           width: "100%",
           paddingHorizontal: 5,
@@ -98,7 +98,7 @@ export default function DrawerCustomHeader({
           value={searchValue}
           onChangeText={(text) => setSearchValue(text)}
         />
-        <View
+        {/* <View
           style={{
             borderWidth: 1,
             borderColor: lightTheme.primaryColor,
@@ -113,7 +113,7 @@ export default function DrawerCustomHeader({
           }}
         >
           <SimpleLineIcons name="grid" size={20} color="white" />
-        </View>
+        </View> */}
       </View>
     </View>
   );
