@@ -40,14 +40,6 @@ export default function Layout() {
               </View>
             );
           },
-          headerRight: () => (
-            <Pressable
-              style={{ paddingHorizontal: 10 }}
-              onPress={() => navigation.toggleDrawer()}
-            >
-              <Feather name="menu" size={25} color={lightTheme.primaryColor} />
-            </Pressable>
-          ),
           headerStyle: {
             backgroundColor: "white",
           },
