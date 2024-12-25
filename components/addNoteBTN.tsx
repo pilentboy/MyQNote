@@ -10,7 +10,7 @@ const AddNoteBTN = ({ action }: { action: () => void }) => {
         bottom: 26,
         left: "76%",
         boxShadow: "0 0 5px #0155B6",
-        zIndex: 100,
+        zIndex: 150,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

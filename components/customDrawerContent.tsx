@@ -1,6 +1,6 @@
 import {
   DrawerContentScrollView,
-  DrawerItemList
+  DrawerItemList,
 } from "@react-navigation/drawer";
 import { View, Text, TouchableOpacity } from "react-native";
 import { CroppedLogo } from "./logo";

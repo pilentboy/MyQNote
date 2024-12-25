@@ -15,12 +15,15 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const checkLogin = () => {
-    setTimeout(() => {
-      // if (loggedIn) {
-      //   router.push("/(home)");
-      // }
-      setLoading(false);
-    }, 500);
+    router.replace("/(home)");
+
+    //   setTimeout(() => {
+    //     // if (loggedIn) {
+    //     //   router.push("/(home)");
+    //     // }
+    //     setLoading(false);
+    //   }, 500);
+    // };
   };
   useEffect(() => {
     checkLogin();
