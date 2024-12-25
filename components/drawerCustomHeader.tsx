@@ -97,6 +97,7 @@ export default function DrawerCustomHeader({
           placeholderTextColor="white"
           value={searchValue}
           onChangeText={(text) => setSearchValue(text)}
+          
         />
         {/* <View
           style={{
