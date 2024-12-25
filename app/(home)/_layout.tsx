@@ -7,6 +7,7 @@ import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import CustomDrawerContent from "@/components/customDrawerContent";
 import Feather from "@expo/vector-icons/Feather";
 import { CroppedLogo } from "@/components/logo";
+import CustomHeader from "@/components/customHeader";
 
 export default function Layout() {
   const labelFontSize = 14;
@@ -15,6 +16,7 @@ export default function Layout() {
       <Drawer
         drawerContent={(props) => <CustomDrawerContent {...props} />}
         screenOptions={({ navigation }) => ({
+          header: ({ navigation }) => <CustomHeader navigation={navigation} />,
           headerLeft: () => {
             return (
               <View
@@ -66,7 +68,9 @@ export default function Layout() {
             backgroundColor: "white",
             width: 175,
           },
-
+          sceneStyle: {
+            backgroundColor: "white",
+          },
           drawerItemStyle: {
             borderRadius: 8,
             marginVertical: 3,

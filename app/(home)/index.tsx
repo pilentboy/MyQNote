@@ -13,6 +13,7 @@ const index = () => {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "white",
+   
       }}
     >
       <NoteBox display={display} />
