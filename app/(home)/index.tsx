@@ -7,19 +7,10 @@ import BottomSheet from "@gorhom/bottom-sheet";
 
 const index = () => {
   const [display, setDisplay] = useState<boolean>(false);
+  const [noteTitle, setNoteTitle] = useState<string>("");
+  const [notePara, setNotePara] = useState<string>("");
 
-  // Create a reference for the BottomSheet
   const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // Handler to open the BottomSheet
-  const closeBottomSheet = () => {
-    bottomSheetRef.current?.close();
-    console.log("x");
-  };
-  const openBottomSheet = () => {
-    bottomSheetRef.current?.expand();
-    console.log("x");
-  };
 
   return (
     <View
@@ -34,8 +25,14 @@ const index = () => {
       {/* <Button onPress={closeBottomSheet} title="Open Bottom Sheet" /> */}
 
       {/* <AddNoteBTN action={openBottomSheet} /> */}
-      
-      <HomeBottomSheet bottomSheetRef={bottomSheetRef} />
+
+      <HomeBottomSheet
+        bottomSheetRef={bottomSheetRef}
+        noteTitle={noteTitle}
+        setNoteTitle={setNoteTitle}
+        setNotePara={setNotePara}
+        notePara={notePara}
+      />
     </View>
   );
 };

@@ -57,12 +57,12 @@ export default function CustomDrawerContent(props: any) {
           <Text
             style={{
               color: "black",
-              fontSize: 13,
+              fontSize: 12,
               textAlign: "center",
               fontFamily: "Yekan",
             }}
           >
-            خروج از حساب{" "}
+            خروج از حساب
           </Text>
         </TouchableOpacity>
 
