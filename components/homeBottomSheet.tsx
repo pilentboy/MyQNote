@@ -7,7 +7,6 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetView,
@@ -47,105 +46,99 @@ const HomeBottomSheet = ({
   );
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <BottomSheet
-        ref={bottomSheetRef}
-        onChange={handleSheetChanges}
-        backgroundStyle={{
-          backgroundColor: "white",
-          borderWidth: 1,
-          borderColor: "#A9A9A9",
-        }}
-        snapPoints={snapPoints}
-        handleIndicatorStyle={{ backgroundColor: "gray" }}
-        index={0}
-        // backdropComponent={renderBackrop}
-      >
-        <BottomSheetView style={styles.contentContainer}>
-          <ScrollView style={{ width: "100%", minHeight: 400 }}>
-            <View
+    <BottomSheet
+      ref={bottomSheetRef}
+      onChange={handleSheetChanges}
+      backgroundStyle={{
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: "#A9A9A9",
+      }}
+      snapPoints={snapPoints}
+      handleIndicatorStyle={{ backgroundColor: "gray" }}
+      index={0}
+      // backdropComponent={renderBackrop}
+    >
+      <BottomSheetView style={styles.contentContainer}>
+        <ScrollView style={{ width: "100%", minHeight: 400 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "flex-end",
+              width: "100%",
+              gap: 5,
+              paddingBottom: 10,
+            }}
+          >
+            <Text
               style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "flex-end",
-                width: "100%",
-                gap: 5,
-                paddingBottom: 10,
+                color: "gray",
+                fontFamily: "Vazir",
+                fontSize: 15,
               }}
+            >
+              نوشتن یادداشت
+            </Text>
+
+            <MaterialCommunityIcons name="lead-pencil" size={20} color="gray" />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              width: "100%",
+              height: 400,
+              alignItems: "center",
+              marginTop: 15,
+              gap: 4,
+            }}
+          >
+            <TextInput
+              style={[styles.noteInput, { width: "100%" }]}
+              placeholder="عنوان"
+              placeholderTextColor="#A9A9A9"
+              numberOfLines={1}
+              value={noteTitle}
+              onChangeText={(value) => setNoteTitle(value)}
+            />
+            <TextInput
+              style={[
+                styles.noteInput,
+                {
+                  height: "50%",
+                  textAlignVertical: "top",
+                  marginVertical: 5,
+                },
+              ]}
+              placeholder="یادداشت..."
+              placeholderTextColor="#A9A9A9"
+              multiline
+              value={notePara}
+              onChangeText={(value) => setNotePara(value)}
+            />
+
+            <TouchableOpacity
+              style={{
+                width: 100,
+                height: 40,
+                backgroundColor: lightTheme.primaryColor,
+                borderRadius: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                display: "flex",
+              }}
+              onPress={() => bottomSheetRef.current?.collapse()}
             >
               <Text
-                style={{
-                  color: "gray",
-                  fontFamily: "Vazir",
-                  fontSize: 15,
-                }}
+                style={{ color: "white", fontSize: 16, fontFamily: "Vazir" }}
               >
-                نوشتن یادداشت
+                افزودن
               </Text>
-
-              <MaterialCommunityIcons
-                name="lead-pencil"
-                size={20}
-                color="gray"
-              />
-            </View>
-            <View
-              style={{
-                flex: 1,
-                width: "100%",
-                height: 400,
-                alignItems: "center",
-                marginTop: 15,
-                gap: 4,
-              }}
-            >
-              <TextInput
-                style={[styles.noteInput, { width: "100%" }]}
-                placeholder="عنوان"
-                placeholderTextColor="#A9A9A9"
-                numberOfLines={1}
-                value={noteTitle}
-                onChangeText={(value) => setNoteTitle(value)}
-              />
-              <TextInput
-                style={[
-                  styles.noteInput,
-                  {
-                    height: "50%",
-                    textAlignVertical: "top",
-                    marginVertical: 5,
-                  },
-                ]}
-                placeholder="یادداشت..."
-                placeholderTextColor="#A9A9A9"
-                multiline
-                value={notePara}
-                onChangeText={(value) => setNotePara(value)}
-              />
-
-              <TouchableOpacity
-                style={{
-                  width: 100,
-                  height: 40,
-                  backgroundColor: lightTheme.primaryColor,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  display: "flex",
-                }}
-                onPress={() => bottomSheetRef.current?.collapse()}
-              >
-                <Text
-                  style={{ color: "white", fontSize: 16, fontFamily: "Vazir" }}
-                >
-                  افزودن
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </BottomSheetView>
-      </BottomSheet>
-    </GestureHandlerRootView>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </BottomSheetView>
+    </BottomSheet>
   );
 };
 

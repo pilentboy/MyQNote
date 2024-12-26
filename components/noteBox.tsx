@@ -1,17 +1,48 @@
 import { lightTheme } from "@/constants/theme";
-import { View } from "react-native";
+import { View, Text } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
-const NoteBox = ({ display }: { display: boolean }) => {
+const NoteBox = ({ viewType }: { viewType: string }) => {
   return (
     <View
       style={{
-        display: display ? "flex" : "none",
-        width: 200,
-        height: 200,
+        display: "flex",
+        marginVertical: 5,
+        width: viewType === "grid" ? 200 : "100%",
+        minHeight: 150,
+        maxHeight: "100%",
         backgroundColor: lightTheme.secondryColor,
         borderRadius: 10,
+        padding: 5,
       }}
-    ></View>
+    >
+      {/*  title & edit  */}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text
+          style={{
+            color: "black",
+            fontFamily: "Yekan",
+            fontWeight: "bold",
+            fontSize: 16,
+          }}
+        >
+          پروژه Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minus
+          atque, eaque necessitatibus blanditiis impedit aspernatur sapiente
+          sunt neque ullam esse adipisci eligendi debitis! Fugit id, veritatis
+          voluptate qui harum ut. Lorem ipsum dolor sit amet, consectetur
+          adipisicing elit. Omnis quas nihil facere voluptatem officiis minima
+          in eaque vitae possimus quibusdam iusto recusandae, et sunt molestias
+          consequuntur voluptas soluta exercitationem a?
+        </Text>
+      </View>
+      {/* main content */}
+    </View>
   );
 };
 export default NoteBox;
