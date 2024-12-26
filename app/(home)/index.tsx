@@ -6,7 +6,7 @@ import HomeBottomSheet from "@/components/homeBottomSheet";
 import BottomSheet from "@gorhom/bottom-sheet";
 
 const index = () => {
-  const [display, setDisplay] = useState<boolean>(false);
+  const [display, setDisplay] = useState<boolean>(true);
   const [noteTitle, setNoteTitle] = useState<string>("");
   const [notePara, setNotePara] = useState<string>("");
 
@@ -21,11 +21,16 @@ const index = () => {
         backgroundColor: "white",
       }}
     >
-      <NoteBox display={display} />
-      {/* <Button onPress={closeBottomSheet} title="Open Bottom Sheet" /> */}
-
-      {/* <AddNoteBTN action={openBottomSheet} /> */}
-
+      {/* Main Content */}
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <NoteBox display={display} />
+      </View>
       <HomeBottomSheet
         bottomSheetRef={bottomSheetRef}
         noteTitle={noteTitle}

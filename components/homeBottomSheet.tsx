@@ -59,7 +59,7 @@ const HomeBottomSheet = ({
         snapPoints={snapPoints}
         handleIndicatorStyle={{ backgroundColor: "gray" }}
         index={0}
-        backdropComponent={renderBackrop}
+        // backdropComponent={renderBackrop}
       >
         <BottomSheetView style={styles.contentContainer}>
           <ScrollView style={{ width: "100%", minHeight: 400 }}>
@@ -80,7 +80,7 @@ const HomeBottomSheet = ({
                   fontSize: 15,
                 }}
               >
-                نوشتن
+                نوشتن یادداشت
               </Text>
 
               <MaterialCommunityIcons
@@ -152,8 +152,10 @@ const HomeBottomSheet = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    zIndex: 100,
     width: "100%",
+    position: "absolute",
+    bottom: 0,
+    height: "100%",
   },
   contentContainer: {
     flex: 1,
