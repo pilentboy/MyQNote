@@ -43,7 +43,7 @@ const NoteBox = ({
             color: "black",
             fontFamily: "Vazir",
             fontWeight: "bold",
-            fontSize: 18,
+            fontSize: 16,
           }}
         >
           {title}
