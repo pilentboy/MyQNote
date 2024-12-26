@@ -1,7 +1,8 @@
 import { lightTheme } from "@/constants/theme";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
+import { useState } from "react";
 const NoteBox = ({
   title,
   mainContent,
@@ -11,6 +12,7 @@ const NoteBox = ({
   title: string;
   mainContent: string;
 }) => {
+  const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   return (
     <View
       style={[
@@ -19,9 +21,9 @@ const NoteBox = ({
           backgroundColor: lightTheme.secondryColor,
           borderRadius: 10,
           padding: 10,
+          paddingBottom: 0,
           width: grid ? "49%" : "100%",
-          height: grid ? "auto" : 120,
-          overflow: "hidden",
+          height: displayFullContent || grid ? "auto" : 120,
         },
       ]}
     >
@@ -54,24 +56,26 @@ const NoteBox = ({
         />
       </View>
       {/* main content */}
-      <Text
-        style={{
-          color: "black",
-          fontFamily: "Vazir",
-          fontSize: 12,
-          borderBottomWidth: 1,
-          borderBottomColor: "#e7ce8e",
-          paddingVertical: 5,
-        }}
-      >
-        {grid
-          ? mainContent
-          : mainContent.slice(
-              0,
-              mainContent.length > 100 ? 100 : mainContent.length
-            )}
-        {mainContent.length > 100 ? "..." : null}
-      </Text>
+      <Pressable onPress={() => setDisplayFullContent((pre) => !pre)}>
+        <Text
+          style={{
+            color: "black",
+            fontFamily: "Vazir",
+            fontSize: 12,
+            borderBottomWidth: 1,
+            borderBottomColor: "#e7ce8e",
+            paddingVertical: 5,
+          }}
+        >
+          {displayFullContent || grid
+            ? mainContent
+            : mainContent
+                .replace(/\s+/g, " ")
+                .slice(0, mainContent.length > 100 ? 100 : mainContent.length)}
+          {mainContent.length > 100 ? "..." : null}
+        </Text>
+      </Pressable>
+
       {/* more info */}
       <View
         style={{
