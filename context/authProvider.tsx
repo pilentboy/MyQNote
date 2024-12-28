@@ -11,12 +11,11 @@ const authContext = createContext<{
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const checkLogin = () => {
-    router.replace("/(auth)/register");
-
+    router.replace("/");
     //   setTimeout(() => {
     //     // if (loggedIn) {
     //     //   router.push("/(home)");

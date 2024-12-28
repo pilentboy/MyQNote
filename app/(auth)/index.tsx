@@ -17,7 +17,6 @@ export default function index() {
 
       <ShortTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
 
-      
       <View
         style={{
           flexDirection: "column",
@@ -26,9 +25,14 @@ export default function index() {
           gap: 10,
         }}
       >
-        <CustomeLink title="ثبت نام" target={"/register"} />
-        <CustomeLink title="ورود" target={"/(home)"} />
-        <CustomeLink title="ورود آفلاین" target={"/(home)"} bgColor={false} />
+        <CustomeLink title="ثبت نام" target={"/(auth)/register"} />
+        <CustomeLink title="ورود" target={"/(auth)/login"} />
+        <CustomeLink
+          title="ورود آفلاین"
+          target={"/(home)/"}
+          bgColor={false}
+      
+        />
       </View>
     </View>
   );

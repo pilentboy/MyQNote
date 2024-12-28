@@ -1,8 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -57,7 +53,7 @@ const Register = () => {
 
   return (
     <AuthFormContainer>
-      <View style={{ gap: 10, alignItems: "center" }}>
+      <View style={{ gap: 10, alignItems: "center"}}>
         <Text
           style={{
             fontFamily: "Vazir",
