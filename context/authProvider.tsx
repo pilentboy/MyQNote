@@ -15,7 +15,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const checkLogin = () => {
-    router.replace("/(home)");
+    router.replace("/(auth)/register");
 
     //   setTimeout(() => {
     //     // if (loggedIn) {

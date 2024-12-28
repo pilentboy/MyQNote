@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 const Register = () => {
   return (
     <View
@@ -9,9 +8,10 @@ const Register = () => {
         justifyContent: "center",
         alignItems: "center",
         gap: 20,
+        backgroundColor: "red",
       }}
     >
-      <FontAwesome5 name="user-plus" size={30} color="black" />
+
     </View>
   );
 };
