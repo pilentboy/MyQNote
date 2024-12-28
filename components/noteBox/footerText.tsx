@@ -5,7 +5,7 @@ const FooterText = ({ value }: { value: string }) => (
     style={{
       color: "black",
       fontWeight: "bold",
-      fontSize: 10,
+      fontSize: 11,
       fontFamily: "Vazir",
     }}
   >

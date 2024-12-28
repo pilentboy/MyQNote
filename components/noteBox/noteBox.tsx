@@ -20,8 +20,7 @@ const NoteBox = ({
           display: "flex",
           backgroundColor: lightTheme.secondryColor,
           borderRadius: 10,
-          padding: 10,
-          paddingBottom: 0,
+          padding: 8,
           width: grid ? "49%" : "100%",
           height: displayFullContent || grid ? "auto" : 120,
         },
@@ -35,7 +34,7 @@ const NoteBox = ({
           justifyContent: "space-between",
           borderBottomWidth: 1,
           borderBottomColor: "#e7ce8e",
-          paddingBottom: 5,
+          paddingBottom: 4,
         }}
       >
         <Text
@@ -61,7 +60,7 @@ const NoteBox = ({
           style={{
             color: "black",
             fontFamily: "Vazir",
-            fontSize: 12,
+            fontSize: 14,
             borderBottomWidth: 1,
             borderBottomColor: "#e7ce8e",
             paddingVertical: 5,
@@ -71,19 +70,19 @@ const NoteBox = ({
             ? mainContent
             : mainContent
                 .replace(/\s+/g, " ")
-                .slice(0, mainContent.length > 100 ? 100 : mainContent.length)}
+                .slice(0, mainContent.length > 80 ? 80 : mainContent.length)}
           {mainContent.length > 100 ? "..." : null}
         </Text>
       </Pressable>
 
-      {/* more info */}
+      {/* details -- edited or added time info */}
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
           direction: "rtl",
           gap: 2,
-          paddingVertical: 4,
+          paddingTop: 4,
         }}
       >
         <FooterText value="10:45" />
