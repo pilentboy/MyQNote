@@ -6,9 +6,7 @@ import { useState } from "react";
 const NoteBox = ({
   title,
   mainContent,
-  grid = true,
 }: {
-  grid: boolean;
   title: string;
   mainContent: string;
 }) => {
@@ -21,8 +19,8 @@ const NoteBox = ({
           backgroundColor: lightTheme.secondryColor,
           borderRadius: 10,
           padding: 8,
-          width: grid ? "49%" : "100%",
-          height: displayFullContent || grid ? "auto" : 120,
+          width: "100%",
+          height: displayFullContent ? "auto" : 120,
         },
       ]}
     >
@@ -66,7 +64,7 @@ const NoteBox = ({
             paddingVertical: 5,
           }}
         >
-          {displayFullContent || grid
+          {displayFullContent 
             ? mainContent
             : mainContent
                 .replace(/\s+/g, " ")

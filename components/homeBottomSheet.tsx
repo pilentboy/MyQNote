@@ -31,7 +31,7 @@ const HomeBottomSheet = ({
     console.log("handleSheetChanges", index);
   }, []);
 
-  const snapPoints = ["14%", "85%"];
+  const snapPoints = ["13%", "85%"];
 
   const renderBackrop = useCallback(
     (props: any) => (
@@ -57,7 +57,7 @@ const HomeBottomSheet = ({
       snapPoints={snapPoints}
       handleIndicatorStyle={{ backgroundColor: "gray" }}
       index={0}
-      // backdropComponent={renderBackrop}
+      backdropComponent={renderBackrop}
     >
       <BottomSheetView style={styles.contentContainer}>
         <ScrollView style={{ width: "100%", minHeight: 400 }}>

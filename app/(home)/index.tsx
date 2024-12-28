@@ -8,7 +8,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 const index = () => {
   const [noteTitle, setNoteTitle] = useState<string>("");
   const [notePara, setNotePara] = useState<string>("");
-  const [grid, setGrid] = useState<boolean>(false);
+
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -55,7 +55,7 @@ const index = () => {
             style={{
               flex: 1,
               alignItems: "center",
-              paddingBottom: "18%",
+              paddingBottom: "20%",
               flexDirection: "row",
               alignContent: "center",
               flexWrap: "wrap",
@@ -66,7 +66,6 @@ const index = () => {
             {notes.map((value, index) => (
               <NoteBox
                 key={index}
-                grid={grid}
                 title={value.title}
                 mainContent={value.mainContent}
               />
