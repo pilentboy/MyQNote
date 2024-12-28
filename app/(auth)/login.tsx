@@ -8,10 +8,7 @@ import { Link } from "expo-router";
 import AuthFormContainer from "@/components/formItems/authFormContainer";
 
 const Login = () => {
-  const isEmailUnique = async (email: string) => {
-    const existingEmails = ["pilentboy@gmail.com", "user@example.com"];
-    return !existingEmails.includes(email);
-  };
+
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("نام کاربری نمی تواند خالی باشد"),
