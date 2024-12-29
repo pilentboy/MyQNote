@@ -35,14 +35,20 @@ const Login = () => {
     setLoading(false);
     !res
       ? alert("نام کاربری یا رمز عبور اشتباه است")
-      : router.replace("/(home)");
+      : router.push("/(home)");
   };
 
   if (loading) return <Loading />;
 
   return (
     <AuthFormContainer>
-      <View style={{ paddingTop: 10, gap: 10, alignItems: "center" }}>
+      <View
+        style={{
+          paddingTop: 10,
+          gap: 10,
+          alignItems: "center",
+        }}
+      >
         <Text
           style={{
             fontFamily: "Vazir",
@@ -72,7 +78,6 @@ const Login = () => {
             borderColor: "#C0C0C0",
             borderWidth: 1,
             borderRadius: 15,
-            padding: 12,
             backgroundColor: lightTheme.primaryColor,
             display: "flex",
             alignItems: "center",
@@ -85,7 +90,7 @@ const Login = () => {
             style={{
               color: "white",
               fontFamily: "Yekan",
-              fontSize: 16,
+              fontSize: 18,
             }}
           >
             ورود

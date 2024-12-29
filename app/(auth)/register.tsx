@@ -58,7 +58,9 @@ const Register = () => {
     setLoading(true);
     const res = await handleRegister(data.username, data.email, data.password);
     setLoading(false);
-    !res ? alert("کاربری با این نام کاربری و ایمیل وجود دارد!") : router.replace("/(home)");
+    !res
+      ? alert("کاربری با این نام کاربری و ایمیل وجود دارد!")
+      : router.push("/(home)");
   };
 
   if (loading) return <Loading />;
@@ -100,7 +102,6 @@ const Register = () => {
             borderColor: "#C0C0C0",
             borderWidth: 1,
             borderRadius: 15,
-            padding: 12,
             backgroundColor: lightTheme.primaryColor,
             display: "flex",
             alignItems: "center",
@@ -113,7 +114,7 @@ const Register = () => {
             style={{
               color: "white",
               fontFamily: "Yekan",
-              fontSize: 16,
+              fontSize: 18,
             }}
           >
             ثبت نام

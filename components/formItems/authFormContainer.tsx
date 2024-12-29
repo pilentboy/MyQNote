@@ -19,7 +19,7 @@ const AuthFormContainer = ({ children }: { children: ReactNode }) => {
       >
         <Logo />
         <LinearGradient
-          colors={["rgba(4, 120, 141, 0.27)", "transparent"]}
+          colors={["rgba(1, 196, 202, 0.3)", "transparent"]}
           style={{
             position: "absolute",
             left: 0,

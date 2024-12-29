@@ -51,7 +51,7 @@ export default function CustomDrawerContent(props: any) {
       >
         <TouchableOpacity
           onPress={() => {
-            router.replace("/(auth)");
+            router.push("/(auth)");
           }}
         >
           <Text
