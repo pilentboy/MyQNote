@@ -18,9 +18,12 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Loading from "./loading";
 import { authContext } from "@/context/authProvider";
+import { getData, storeData } from "../utils/handleLocalStorage";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 
 const HomeBottomSheet = ({ bottomSheetRef }: { bottomSheetRef: any }) => {
-  const { loading, setLoading } = useContext(authContext);
+  const { loading, setLoading, setUpdatingNotes } = useContext(authContext);
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
@@ -52,18 +55,20 @@ const HomeBottomSheet = ({ bottomSheetRef }: { bottomSheetRef: any }) => {
     handleSubmit,
     formState: { errors },
     clearErrors,
+    reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
   const onSubmit = async (data: any) => {
     setLoading(true);
-
-    console.log(data);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    const storingNote = await storeData({ ...data, id: uuidv4() });
+    setLoading(false);
+    if (storingNote) {
+      reset();
+      clearErrors();
+      setUpdatingNotes(true);
+    }
   };
 
   return (
