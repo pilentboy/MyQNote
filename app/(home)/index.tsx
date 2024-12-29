@@ -4,7 +4,6 @@ import NoteBox from "@/components/noteBox/noteBox";
 import HomeBottomSheet from "@/components/homeBottomSheet";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
 const index = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
