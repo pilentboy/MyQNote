@@ -4,10 +4,17 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { lightTheme } from "@/constants/theme";
 import FormInput from "@/components/formItems/formInput";
-import { Link } from "expo-router";
+import { Link, router, useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/authFormContainer";
+import handleRegister from "@/utils/handleRegister";
+import Loading from "@/components/loading";
+import { useContext } from "react";
+import { authContext } from "@/context/authProvider";
 
 const Register = () => {
+  const { loading, setLoading } = useContext(authContext);
+  const router = useRouter();
+
   const isEmailUnique = async (email: string) => {
     const existingEmails = ["pilentboy@gmail.com", "user@example.com"];
     return !existingEmails.includes(email);
@@ -47,13 +54,18 @@ const Register = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    setLoading(true);
+    const res = await handleRegister(data.username, data.email, data.password);
+    setLoading(false);
+    !res ? alert("کاربری با این نام کاربری و ایمیل وجود دارد!") : router.replace("/(home)");
   };
+
+  if (loading) return <Loading />;
 
   return (
     <AuthFormContainer>
-      <View style={{ gap: 10, alignItems: "center"}}>
+      <View style={{ gap: 10, alignItems: "center" }}>
         <Text
           style={{
             fontFamily: "Vazir",
@@ -140,3 +152,6 @@ const Register = () => {
   );
 };
 export default Register;
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
