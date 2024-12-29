@@ -2,7 +2,8 @@ import { View } from "react-native";
 import CustomeLink from "@/components/customLink";
 import ShortTitle from "@/components/shortTitle";
 import Logo from "@/components/logo";
-// auth screen
+import CustomLinearGradient from "@/components/linearGradient";
+
 export default function index() {
   return (
     <View
@@ -14,6 +15,7 @@ export default function index() {
       }}
     >
       <Logo />
+      <CustomLinearGradient />
 
       <ShortTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
 
@@ -27,12 +29,7 @@ export default function index() {
       >
         <CustomeLink title="ثبت نام" target={"/(auth)/register"} />
         <CustomeLink title="ورود" target={"/(auth)/login"} />
-        <CustomeLink
-          title="ورود آفلاین"
-          target={"/(home)/"}
-          bgColor={false}
-      
-        />
+        <CustomeLink title="ورود آفلاین" target={"/(home)/"} bgColor={false} />
       </View>
     </View>
   );
