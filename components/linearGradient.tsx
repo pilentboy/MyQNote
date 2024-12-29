@@ -3,7 +3,7 @@ import { Dimensions } from "react-native";
 
 const CustomLinearGradient = () => (
   <LinearGradient
-    colors={["rgba(4, 175, 243, 0.29)", "white"]}
+    colors={["rgba(0, 121, 177, 0.3)", "white"]}
     style={{
       position: "absolute",
       zIndex: -1,
