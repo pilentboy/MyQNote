@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider";
 import { View, StyleSheet } from "react-native";
@@ -9,7 +9,11 @@ import ShortTitle from "@/components/shortTitle";
 
 // welcome screen
 export default function index() {
-  const { loading } = useContext(authContext);
+  const { loading, setLoading } = useContext(authContext);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   if (loading) {
     return <Loading />;

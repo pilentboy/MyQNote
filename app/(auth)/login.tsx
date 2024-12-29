@@ -4,11 +4,16 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { lightTheme } from "@/constants/theme";
 import FormInput from "@/components/formItems/formInput";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/authFormContainer";
+import handleLogin from "@/utils/handleLogin";
+import { useContext } from "react";
+import { authContext } from "@/context/authProvider";
+import Loading from "@/components/loading";
 
 const Login = () => {
-
+  const { loading, setLoading } = useContext(authContext);
+  const router = useRouter();
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("نام کاربری نمی تواند خالی باشد"),
@@ -24,9 +29,16 @@ const Login = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    setLoading(true);
+    const res = await handleLogin(data.username, data.password);
+    setLoading(false);
+    !res
+      ? alert("نام کاربری یا رمز عبور اشتباه است")
+      : router.replace("/(home)");
   };
+
+  if (loading) return <Loading />;
 
   return (
     <AuthFormContainer>

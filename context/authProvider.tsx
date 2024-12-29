@@ -1,5 +1,4 @@
-import { useRouter } from "expo-router";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 const authContext = createContext<{
   loading: boolean;
@@ -10,23 +9,9 @@ const authContext = createContext<{
 });
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
-  const checkLogin = () => {
-    router.replace("/");
-    //   setTimeout(() => {
-    //     // if (loggedIn) {
-    //     //   router.push("/(home)");
-    //     // }
-    //     setLoading(false);
-    //   }, 500);
-    // };
-  };
-  useEffect(() => {
-    checkLogin();
-  }, []);
+
 
   return (
     <authContext.Provider value={{ loading, setLoading }}>
