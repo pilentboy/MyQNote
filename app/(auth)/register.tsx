@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { lightTheme } from "@/constants/theme";
 import FormInput from "@/components/formItems/formInput";
-import { Link, router, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/authFormContainer";
 import handleRegister from "@/utils/handleRegister";
 import Loading from "@/components/loading";

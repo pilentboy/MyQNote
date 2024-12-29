@@ -9,6 +9,7 @@ const Loading = () => {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        zIndex: 999,
       }}
     >
       <WaveIndicator
