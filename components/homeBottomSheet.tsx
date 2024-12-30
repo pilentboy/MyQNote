@@ -67,6 +67,7 @@ const HomeBottomSheet = ({ bottomSheetRef }: { bottomSheetRef: any }) => {
     if (storingNote) {
       reset();
       clearErrors();
+      bottomSheetRef.current?.collapse();
       setUpdatingNotes(true);
     }
   };
@@ -197,7 +198,6 @@ const HomeBottomSheet = ({ bottomSheetRef }: { bottomSheetRef: any }) => {
                   display: "flex",
                 }}
                 onPress={handleSubmit(onSubmit)}
-                // bottomSheetRef.current?.collapse()
               >
                 <Text
                   style={{ color: "white", fontSize: 16, fontFamily: "Vazir" }}

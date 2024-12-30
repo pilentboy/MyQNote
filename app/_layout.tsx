@@ -6,8 +6,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { AuthProvider } from "../context/authProvider";
 import { StatusBar } from "react-native";
 import { lightTheme } from "@/constants/theme";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -15,13 +13,9 @@ export default function RootLayout() {
     Vazir: require("../assets/fonts/Vazir.ttf"),
   });
 
-  const x = async () => {
-    await AsyncStorage.removeItem("notes");
-  };
+
   useEffect(() => {
     async function hideSplashScreen() {
-      x();
-
       if (fontsLoaded) {
         await SplashScreen.hideAsync();
       }
