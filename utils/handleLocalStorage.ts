@@ -1,34 +1,28 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const storeData = async (value: any) => {
+const storeDataInLocalStorage = async (value: any) => {
   try {
-    let newNote;
-    const notes = await getData();
+    const notes = await getLocalStorageData();
     if (notes) {
       notes.push(value);
-      newNote = notes;
-    } else {
-      newNote = [value];
     }
-    await AsyncStorage.setItem("notes", JSON.stringify(newNote));
+    await AsyncStorage.setItem("notes", JSON.stringify(notes));
     return true;
   } catch (error) {
     console.error("خطا در ذخیره‌سازی:", error);
   }
 };
 
-const getData = async () => {
+const getLocalStorageData = async () => {
   try {
     const value = await AsyncStorage.getItem("notes");
-    if (value !== null) {
-      console.log(value, "xxxx");
+    if (value) {
       return JSON.parse(value);
-    } else {
-      console.log("هیچ اطلاعاتی یافت نشد");
     }
+    return [];
   } catch (error) {
     console.error("خطا در بازیابی داده‌ها:", error);
   }
 };
 
-export { storeData, getData };
+export { storeDataInLocalStorage, getLocalStorageData };

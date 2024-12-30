@@ -6,9 +6,15 @@ import { useState } from "react";
 const NoteBox = ({
   title,
   mainContent,
+  date,
+  time,
+  id,
 }: {
   title: string;
   mainContent: string;
+  date: string;
+  time: string;
+  id: string;
 }) => {
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   return (
@@ -18,7 +24,8 @@ const NoteBox = ({
           display: "flex",
           backgroundColor: lightTheme.secondryColor,
           borderRadius: 10,
-          padding: 8,
+          justifyContent: "space-around",
+          padding: 6,
           width: "100%",
           height: displayFullContent ? "auto" : 120,
         },
@@ -64,7 +71,7 @@ const NoteBox = ({
             paddingVertical: 5,
           }}
         >
-          {displayFullContent 
+          {displayFullContent
             ? mainContent
             : mainContent
                 .replace(/\s+/g, " ")
@@ -83,11 +90,11 @@ const NoteBox = ({
           paddingTop: 4,
         }}
       >
-        <FooterText value="10:45" />
+        <FooterText value={time} />
         <Text style={{ color: "black", fontWeight: "bold", fontSize: 14 }}>
           |
         </Text>
-        <FooterText value="1403/12/10" />
+        <FooterText value={date} />
       </View>
     </View>
   );

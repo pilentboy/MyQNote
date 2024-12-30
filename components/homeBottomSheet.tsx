@@ -18,12 +18,17 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Loading from "./loading";
 import { authContext } from "@/context/authProvider";
-import { getData, storeData } from "../utils/handleLocalStorage";
+import {
+  getLocalStorageData,
+  storeDataInLocalStorage,
+} from "../utils/handleLocalStorage";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
+import convertToPersianDigits from "@/utils/convertToPersianDigits";
+import getCurrentDate from "@/utils/convertToPersianDigits";
 
 const HomeBottomSheet = ({ bottomSheetRef }: { bottomSheetRef: any }) => {
-  const { loading, setLoading, setUpdatingNotes } = useContext(authContext);
+  const { loading, setLoading, setUserNotes } = useContext(authContext);
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
@@ -62,14 +67,23 @@ const HomeBottomSheet = ({ bottomSheetRef }: { bottomSheetRef: any }) => {
 
   const onSubmit = async (data: any) => {
     setLoading(true);
-    const storingNote = await storeData({ ...data, id: uuidv4() });
-    setLoading(false);
+
+    const storingNote = await storeDataInLocalStorage({
+      ...data,
+      id: uuidv4(),
+      date: getCurrentDate()[0],
+      time: getCurrentDate()[1],
+    });
+
     if (storingNote) {
+      setUserNotes(await getLocalStorageData());
       reset();
       clearErrors();
       bottomSheetRef.current?.collapse();
-      setUpdatingNotes(true);
+    } else {
+      alert("error storing in localstorage");
     }
+    setLoading(false);
   };
 
   return (
@@ -179,7 +193,7 @@ const HomeBottomSheet = ({ bottomSheetRef }: { bottomSheetRef: any }) => {
                     ]}
                     placeholder="یادداشت"
                     placeholderTextColor="#A9A9A9"
-                    numberOfLines={1}
+                    multiline={true}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}

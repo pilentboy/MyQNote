@@ -1,31 +1,27 @@
-import { ScrollView, View } from "react-native";
-import { useContext, useEffect, useRef, useState } from "react";
+import { ScrollView, View, Text } from "react-native";
+import { useContext, useEffect, useRef } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
 import HomeBottomSheet from "@/components/homeBottomSheet";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { getData } from "@/utils/handleLocalStorage";
 import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider";
-
+import { lightTheme } from "@/constants/theme";
+import { getLocalStorageData } from "@/utils/handleLocalStorage";
 
 const index = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const [notes, setNotes] = useState<any>(null);
-  const { loading, setLoading, updatingNotes, setUpdatingNotes } =
+  const { loading, setLoading, userNotes, setUserNotes } =
     useContext(authContext);
 
-  const setDataLocal = async () => {
+  const setData = async () => {
     setLoading(true);
-    setNotes(await getData());
+    setUserNotes(await getLocalStorageData());
     setLoading(false);
-    setUpdatingNotes(false);
   };
-
   useEffect(() => {
-    updatingNotes ? setDataLocal() : null;
-  }, [updatingNotes]);
-
+    setData();
+  }, []);
   return (
     <GestureHandlerRootView>
       <View
@@ -51,19 +47,43 @@ const index = () => {
                 alignItems: "center",
                 paddingBottom: "20%",
                 flexDirection: "row",
-                alignContent: "center",
+                justifyContent: "center",
                 flexWrap: "wrap",
                 gap: 4,
                 direction: "rtl",
               }}
             >
-              {notes?.map((value: any) => (
-                <NoteBox
-                  key={value.id}
-                  title={value.title}
-                  mainContent={value.mainContent}
-                />
-              ))}
+              {userNotes.length === 0 ? (
+                <View
+                  style={{
+                    height: 400,
+                    alignItems: "center",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: lightTheme.primaryColor,
+                      fontSize: 15,
+                      fontFamily: "Yekan",
+                    }}
+                  >
+                    هیچ یادداشتی نداری!
+                  </Text>
+                </View>
+              ) : (
+                userNotes?.map((note: any) => (
+                  <NoteBox
+                    key={note.id}
+                    title={note.title}
+                    mainContent={note.mainContent}
+                    date={note.date}
+                    time={note.time}
+                    id={note.id}
+                  />
+                ))
+              )}
             </View>
           </ScrollView>
         )}
