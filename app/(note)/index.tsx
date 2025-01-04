@@ -73,24 +73,31 @@ const Note = () => {
   });
 
   const onSubmit = async (data: any) => {
+    let submitState: boolean | undefined;
     setLoading(true);
-    const storingNote = await storeDataInLocalStorage({
-      ...data,
-      id: uuidv4(),
-      date: getCurrentDate()[0],
-      time: getCurrentDate()[1],
-    });
 
-    if (storingNote) {
+    if (editedTitle) {
+      alert("editing");
+      submitState = false;
+    } else {
+      submitState = await storeDataInLocalStorage({
+        ...data,
+        id: uuidv4(),
+        date: getCurrentDate()[0],
+        time: getCurrentDate()[1],
+      });
+    }
+
+    if (submitState) {
       setUserNotes(await getLocalStorageData());
       reset();
       clearErrors();
-      alert("افزوده شد!");
+      alert(editedTitle ? "با موفقیت ویرایش شد" : "افزوده شد!");
+      router.navigate("/(home)");
     } else {
-      alert("خطا در ذخیره اطلاعات!");
+      alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
     }
     setLoading(false);
-    router.navigate("/(home)");
   };
 
   return (
