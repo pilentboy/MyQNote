@@ -11,7 +11,7 @@ import AddNoteBTN from "@/components/addNoteBTN";
 import { useRouter } from "expo-router";
 
 const index = () => {
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  // const bottomSheetRef = useRef<BottomSheet>(null);
   const { loading, setLoading, userNotes, setUserNotes } =
     useContext(authContext);
 
@@ -91,7 +91,7 @@ const index = () => {
           </ScrollView>
         )}
 
-        <AddNoteBTN action={() => route.navigate("/(home)/(note)")} />
+        <AddNoteBTN action={() => route.navigate("/(note)")} />
 
         {/* <HomeBottomSheet bottomSheetRef={bottomSheetRef} /> */}
       </View>
