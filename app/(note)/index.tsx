@@ -18,6 +18,7 @@ import {
   getLocalStorageData,
   storeDataInLocalStorage,
   handleEditingNote,
+  handleDeleteNote,
 } from "../../utils/handleLocalStorage";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -76,7 +77,6 @@ const Note = () => {
   const onSubmit = async (data: any) => {
     let submitState: boolean | undefined;
     setLoading(true);
-
     if (editedTitle) {
       submitState = await handleEditingNote({
         id,
@@ -97,11 +97,23 @@ const Note = () => {
       reset();
       clearErrors();
       alert(editedTitle ? "با موفقیت ویرایش شد" : "افزوده شد!");
-      router.navigate("/(home)");
+      router.replace("/(home)");
     } else {
       alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
     }
     setLoading(false);
+  };
+
+  const deleteNote = async () => {
+    console.log("deleting");
+    const result = await handleDeleteNote(id);
+    if (result) {
+      setUserNotes(await getLocalStorageData());
+      alert("با موفقیت حذف شد");
+      router.replace("/(home)");
+    } else {
+      alert("خطا در حذف نوت");
+    }
   };
 
   return (
@@ -193,7 +205,7 @@ const Note = () => {
                   justifyContent: "center",
                   display: "flex",
                 }}
-                onPress={() => alert("not avaailable")}
+                onPress={() => deleteNote()}
               >
                 <Text
                   style={{ color: "white", fontSize: 16, fontFamily: "Vazir" }}

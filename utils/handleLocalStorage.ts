@@ -53,9 +53,28 @@ const handleEditingNote = async ({
 
     return true;
   } catch (error) {
-    console.error("خطا در بازیابی داده‌ها:", error);
+    console.error("خطا در ویرایش داده‌ها:", error);
     return false;
   }
 };
 
-export { storeDataInLocalStorage, getLocalStorageData, handleEditingNote };
+const handleDeleteNote = async (id: string | string[]) => {
+  try {
+    const notes = await getLocalStorageData();
+    const updatedNotes = notes.filter((note: any) => note.id !== id);
+
+    await AsyncStorage.setItem("notes", JSON.stringify(updatedNotes));
+
+    return true;
+  } catch (error) {
+    console.error("خطا در حذف اطلاعات", error);
+    return false;
+  }
+};
+
+export {
+  storeDataInLocalStorage,
+  getLocalStorageData,
+  handleEditingNote,
+  handleDeleteNote,
+};
