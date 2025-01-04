@@ -1,18 +1,21 @@
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity } from "react-native";
 import { useContext, useEffect, useRef } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
-import HomeBottomSheet from "@/components/homeBottomSheet";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider";
 import { lightTheme } from "@/constants/theme";
 import { getLocalStorageData } from "@/utils/handleLocalStorage";
+import AddNoteBTN from "@/components/addNoteBTN";
+import { useRouter } from "expo-router";
 
 const index = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const { loading, setLoading, userNotes, setUserNotes } =
     useContext(authContext);
+
+  const route = useRouter();
 
   const setData = async () => {
     setLoading(true);
@@ -88,7 +91,9 @@ const index = () => {
           </ScrollView>
         )}
 
-        <HomeBottomSheet bottomSheetRef={bottomSheetRef} />
+        <AddNoteBTN action={() => route.navigate("/(home)/(note)")} />
+
+        {/* <HomeBottomSheet bottomSheetRef={bottomSheetRef} /> */}
       </View>
     </GestureHandlerRootView>
   );

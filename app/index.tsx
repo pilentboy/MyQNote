@@ -28,7 +28,7 @@ export default function index() {
           contentFit="contain"
         />
 
-        <CustomeLink title="شروع" target="/(auth)" />
+        <CustomeLink title="شروع!" target="/(auth)" />
       </View>
     );
   }
