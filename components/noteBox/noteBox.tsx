@@ -3,6 +3,7 @@ import { View, Text, Pressable } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
 import { useState } from "react";
+import { useRouter } from "expo-router";
 const NoteBox = ({
   title,
   mainContent,
@@ -16,6 +17,8 @@ const NoteBox = ({
   time: string;
   id: string;
 }) => {
+  const route = useRouter();
+
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   return (
     <View
@@ -56,7 +59,17 @@ const NoteBox = ({
           name="edit"
           size={16}
           color="black"
-          onPress={() => alert("not ready!")}
+          onPress={() =>
+            route.push({
+              pathname: "/(note)",
+              params: {
+                id: id,
+                editedTitle: title,
+                editedMainContent: mainContent,
+              },
+              
+            })
+          }
         />
       </View>
       {/* main content */}

@@ -1,7 +1,6 @@
 import { ScrollView, View, Text, TouchableOpacity } from "react-native";
 import { useContext, useEffect, useRef } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
-import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider";
@@ -11,7 +10,6 @@ import AddNoteBTN from "@/components/addNoteBTN";
 import { useRouter } from "expo-router";
 
 const index = () => {
-  // const bottomSheetRef = useRef<BottomSheet>(null);
   const { loading, setLoading, userNotes, setUserNotes } =
     useContext(authContext);
 
@@ -42,7 +40,8 @@ const index = () => {
         ) : (
           <ScrollView
             contentContainerStyle={{ paddingVertical: 10 }}
-            style={{ width: "100%" }}
+            style={{ width: "100%"}}
+           
           >
             <View
               style={{
@@ -93,7 +92,6 @@ const index = () => {
 
         <AddNoteBTN action={() => route.navigate("/(note)")} />
 
-        {/* <HomeBottomSheet bottomSheetRef={bottomSheetRef} /> */}
       </View>
     </GestureHandlerRootView>
   );

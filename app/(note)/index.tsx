@@ -22,14 +22,20 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import getCurrentDate from "@/utils/convertToPersianDigits";
 import { lightTheme } from "@/constants/theme";
+import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
-
+  const navigation = useNavigation();
+  const router = useRouter();
   const { loading, setLoading, setUserNotes } = useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 200);
+  const { id, editedTitle, editedMainContent } = useLocalSearchParams();
 
   useEffect(() => {
+    if (editedTitle) {
+      navigation.setOptions({ title: "ویرایش" });
+    }
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => setinputHeight(250)
@@ -59,6 +65,10 @@ const Note = () => {
     clearErrors,
     reset,
   } = useForm({
+    defaultValues: {
+      title: editedTitle?.toString() || "",
+      mainContent: editedMainContent?.toString() || "",
+    },
     resolver: yupResolver(validationSchema),
   });
 
@@ -75,16 +85,17 @@ const Note = () => {
       setUserNotes(await getLocalStorageData());
       reset();
       clearErrors();
-      alert("افزوده شد!")
+      alert("افزوده شد!");
     } else {
       alert("خطا در ذخیره اطلاعات!");
     }
     setLoading(false);
+    router.navigate("/(home)");
   };
 
   return (
     <ScrollView
-      style={{ flex: 1,paddingVertical: 5 }}
+      style={{ flex: 1, paddingVertical: 5 }}
       keyboardShouldPersistTaps="handled"
     >
       {loading ? (
@@ -149,7 +160,7 @@ const Note = () => {
               <Text
                 style={{ color: "white", fontSize: 16, fontFamily: "Vazir" }}
               >
-                افزودن
+                {editedTitle ? "ثبت ویرایش" : "افزودن"}
               </Text>
             </TouchableOpacity>
           </View>
