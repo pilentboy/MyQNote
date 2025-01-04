@@ -17,6 +17,7 @@ import { authContext } from "@/context/authProvider";
 import {
   getLocalStorageData,
   storeDataInLocalStorage,
+  handleEditingNote,
 } from "../../utils/handleLocalStorage";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -77,8 +78,11 @@ const Note = () => {
     setLoading(true);
 
     if (editedTitle) {
-      alert("editing");
-      submitState = false;
+      submitState = await handleEditingNote({
+        id,
+        editedTitle: data.title,
+        editedMainContent: data.mainContent,
+      });
     } else {
       submitState = await storeDataInLocalStorage({
         ...data,
