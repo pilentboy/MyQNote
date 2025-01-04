@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { string } from "yup";
 
 const storeDataInLocalStorage = async (value: any) => {
   try {
@@ -38,9 +37,21 @@ const handleEditingNote = async ({
   editedMainContent,
 }: EditingValues) => {
   try {
-    const notes = await getLocalStorageData();
-    console.log(id, editedTitle);
-    if (notes) return true;
+    const updatedNotes = await getLocalStorageData();
+    const editingNoteIndex = updatedNotes.findIndex(
+      (note: any) => note.id === id
+    );
+    let editedNote = updatedNotes[editingNoteIndex];
+    editedNote = {
+      ...editedNote,
+      title: editedTitle,
+      mainContent: editedMainContent,
+    };
+
+    updatedNotes[editingNoteIndex] = editedNote;
+    await AsyncStorage.setItem("notes", JSON.stringify(updatedNotes));
+
+    return true;
   } catch (error) {
     console.error("خطا در بازیابی داده‌ها:", error);
     return false;

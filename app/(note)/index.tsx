@@ -155,7 +155,14 @@ const Note = () => {
             )}
           />
 
-          <View style={{ flexDirection: "row" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "100%",
+              justifyContent: "space-evenly",
+            }}
+          >
             <TouchableOpacity
               style={{
                 width: 100,
@@ -174,6 +181,27 @@ const Note = () => {
                 {editedTitle ? "ثبت ویرایش" : "افزودن"}
               </Text>
             </TouchableOpacity>
+
+            {editedTitle && (
+              <TouchableOpacity
+                style={{
+                  width: 100,
+                  height: 40,
+                  backgroundColor: lightTheme.primaryColor,
+                  borderRadius: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex",
+                }}
+                onPress={() => alert("not avaailable")}
+              >
+                <Text
+                  style={{ color: "white", fontSize: 16, fontFamily: "Vazir" }}
+                >
+                  حذف
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       )}
