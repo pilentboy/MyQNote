@@ -1,5 +1,5 @@
-import { ScrollView, View, Text, TouchableOpacity } from "react-native";
-import { useContext, useEffect, useRef } from "react";
+import { ScrollView, View, Text } from "react-native";
+import { useContext, useEffect } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
@@ -11,12 +11,15 @@ import {
 } from "@/utils/handleLocalStorage";
 import AddNoteBTN from "@/components/addNoteBTN";
 import { useRouter } from "expo-router";
+import useTheme from "@/context/themeProvider";
 
 const index = () => {
   const { loading, setLoading, userNotes, setUserNotes, searchValue } =
     useContext(authContext);
 
   const route = useRouter();
+
+  const { theme } = useTheme();
 
   // set all notes from local storage
   const setData = async () => {

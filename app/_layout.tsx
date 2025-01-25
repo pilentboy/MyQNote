@@ -6,6 +6,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { AuthProvider } from "../context/authProvider";
 import { StatusBar } from "react-native";
 import { lightTheme } from "@/constants/theme";
+import { ThemeProvider } from "@/context/themeProvider";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -23,16 +24,18 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <AuthProvider>
-      <SafeAreaProvider>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={lightTheme.primaryColor}
-        />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-        </Stack>
-      </SafeAreaProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <SafeAreaProvider>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor={lightTheme.primaryColor}
+          />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+          </Stack>
+        </SafeAreaProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
