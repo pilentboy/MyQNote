@@ -4,6 +4,8 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
 import { useState } from "react";
 import { useRouter } from "expo-router";
+import useTheme from "@/context/themeProvider";
+
 const NoteBox = ({
   title,
   mainContent,
@@ -18,14 +20,16 @@ const NoteBox = ({
   id: string;
 }) => {
   const route = useRouter();
-
+  const { theme } = useTheme();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
+
   return (
     <View
       style={[
         {
           display: "flex",
-          backgroundColor: lightTheme.secondryColor,
+          backgroundColor:
+            theme === "light" ? lightTheme.secondryColor : "#2C394B",
           borderRadius: 10,
           justifyContent: "space-around",
           padding: 6,
@@ -41,13 +45,13 @@ const NoteBox = ({
           alignItems: "center",
           justifyContent: "space-between",
           borderBottomWidth: 1,
-          borderBottomColor: "#e7ce8e",
+          borderBottomColor: theme === "light" ? "#e7ce8e" : "gray",
           paddingBottom: 4,
         }}
       >
         <Text
           style={{
-            color: "black",
+            color: theme == "light" ? "black" : "white",
             fontFamily: "Vazir",
             fontWeight: "bold",
             fontSize: 16,
@@ -58,7 +62,7 @@ const NoteBox = ({
         <MaterialIcons
           name="edit"
           size={16}
-          color="black"
+          color={theme == "light" ? "black" : "white"}
           onPress={() =>
             route.push({
               pathname: "/(note)",
@@ -67,7 +71,6 @@ const NoteBox = ({
                 editedTitle: title,
                 editedMainContent: mainContent,
               },
-              
             })
           }
         />
@@ -76,11 +79,11 @@ const NoteBox = ({
       <Pressable onPress={() => setDisplayFullContent((pre) => !pre)}>
         <Text
           style={{
-            color: "black",
+            color: theme === "light" ? "black" : "white",
             fontFamily: "Vazir",
             fontSize: 14,
             borderBottomWidth: 1,
-            borderBottomColor: "#e7ce8e",
+            borderBottomColor: theme === "light" ? "#e7ce8e" : "gray",
             paddingVertical: 5,
           }}
         >
@@ -98,13 +101,20 @@ const NoteBox = ({
         style={{
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: "flex-end",
           direction: "rtl",
           gap: 2,
           paddingTop: 4,
         }}
       >
         <FooterText value={time} />
-        <Text style={{ color: "black", fontWeight: "bold", fontSize: 14 }}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 14,
+            color: theme == "light" ? "black" : "white",
+          }}
+        >
           |
         </Text>
         <FooterText value={date} />

@@ -25,6 +25,7 @@ import { v4 as uuidv4 } from "uuid";
 import getCurrentDate from "@/utils/convertToPersianDigits";
 import { lightTheme } from "@/constants/theme";
 import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
+import useTheme from "@/context/themeProvider";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -33,6 +34,7 @@ const Note = () => {
   const { loading, setLoading, setUserNotes } = useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 200);
   const { id, editedTitle, editedMainContent } = useLocalSearchParams();
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (editedTitle) {
@@ -118,7 +120,11 @@ const Note = () => {
 
   return (
     <ScrollView
-      style={{ flex: 1, paddingVertical: 5 }}
+      style={{
+        flex: 1,
+        paddingVertical: 5,
+        backgroundColor: theme === "light" ? "white" : "#222831",
+      }}
       keyboardShouldPersistTaps="handled"
     >
       {loading ? (
@@ -134,7 +140,10 @@ const Note = () => {
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                style={styles.noteInput}
+                style={[
+                  styles.noteInput,
+                  { color: theme === "light" ? "black" : "white" },
+                ]}
                 placeholder="عنوان"
                 placeholderTextColor="#A9A9A9"
                 numberOfLines={1}
@@ -155,7 +164,10 @@ const Note = () => {
                 style={[
                   styles.noteInput,
                   styles.textArea,
-                  { height: inputHeight },
+                  {
+                    height: inputHeight,
+                    color: theme === "light" ? "black" : "white",
+                  },
                 ]}
                 placeholder="یادداشت"
                 placeholderTextColor="#A9A9A9"
@@ -233,7 +245,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 45,
     borderColor: "#A9A9A9",
-    backgroundColor: "white",
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
@@ -241,6 +252,7 @@ const styles = StyleSheet.create({
     fontFamily: "Vazir",
     textAlign: "right",
     direction: "rtl",
+    backgroundColor: "transparent",
   },
   textArea: {
     textAlignVertical: "top",

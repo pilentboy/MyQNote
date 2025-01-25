@@ -4,9 +4,12 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import CustomDrawerContent from "@/components/customDrawerContent";
 import DrawerCustomHeader from "@/components/drawerCustomHeader";
+import useTheme from "@/context/themeProvider";
 
 export default function Layout() {
   const labelFontSize = 14;
+  const { theme } = useTheme();
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer
@@ -38,7 +41,7 @@ export default function Layout() {
             width: 175,
           },
           sceneStyle: {
-            backgroundColor: "white",
+            backgroundColor: theme === "light" ? "white" : "#222831",
           },
           drawerItemStyle: {
             borderRadius: 8,

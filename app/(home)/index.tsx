@@ -50,7 +50,7 @@ const index = () => {
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "white",
+          backgroundColor: theme === "light" ? "white" : "#222831",
           paddingHorizontal: 10,
         }}
       >

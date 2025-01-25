@@ -4,20 +4,22 @@ import { lightTheme } from "@/constants/theme";
 import { CroppedLogo } from "./logo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchInput from "./searchInput";
+import useTheme from "@/context/themeProvider";
 
 export default function DrawerCustomHeader({
   navigation,
 }: {
   navigation: DrawerNavigationProp<any>;
 }) {
+  const { theme } = useTheme();
   return (
     <View
       style={{
         height: 110,
         borderBottomEndRadius: 30,
         borderBottomStartRadius: 30,
-        backgroundColor: "white",
-        shadowColor: "#000",
+        backgroundColor: theme === "light" ? "white" : "#222831",
+        shadowColor: theme === "light" ? "#000" : "white",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
@@ -47,7 +49,7 @@ export default function DrawerCustomHeader({
           <CroppedLogo size={30} />
           <Text
             style={{
-              color: "black",
+              color: theme === "light" ? "black" : "white",
               fontSize: 14,
               textAlign: "center",
               fontFamily: "Yekan",
