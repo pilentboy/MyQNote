@@ -26,6 +26,7 @@ import getCurrentDate from "@/utils/convertToPersianDigits";
 import { lightTheme } from "@/constants/theme";
 import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import useTheme from "@/context/themeProvider";
+import Toast from "react-native-toast-message";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -36,6 +37,13 @@ const Note = () => {
   const { id, editedTitle, editedMainContent } = useLocalSearchParams();
   const { theme } = useTheme();
 
+  const showToast = () => {
+    Toast.show({
+      type: "success",
+      // text1: 'Hello',
+      text2: "با موفقیت افزوده شده",
+    });
+  };
   useEffect(() => {
     if (editedTitle) {
       navigation.setOptions({ title: "ویرایش" });
@@ -98,7 +106,8 @@ const Note = () => {
       setUserNotes(await getLocalStorageData());
       reset();
       clearErrors();
-      alert(editedTitle ? "با موفقیت ویرایش شد" : "افزوده شد!");
+      // alert(editedTitle ? "با موفقیت ویرایش شد" : "افزوده شد!");
+      showToast();
       router.replace("/(home)");
     } else {
       alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);

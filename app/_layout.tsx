@@ -5,6 +5,23 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import * as SplashScreen from "expo-splash-screen";
 import { AuthProvider } from "../context/authProvider";
 import { ThemeProvider } from "@/context/themeProvider";
+import Toast, { BaseToast } from "react-native-toast-message";
+
+const toastConfig = {
+  success: (props: any) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: "green" }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text2Style={{
+        fontSize: 14,
+        fontWeight: "400",
+        fontFamily: "Yekan",
+        textAlign: "center",
+      }}
+    />
+  ),
+};
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -30,6 +47,7 @@ export default function RootLayout() {
           </Stack>
         </SafeAreaProvider>
       </AuthProvider>
+      <Toast config={toastConfig} />
     </ThemeProvider>
   );
 }
