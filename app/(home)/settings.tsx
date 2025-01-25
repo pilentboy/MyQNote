@@ -1,9 +1,10 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Switch } from "react-native";
 import {
   handleChangeAppTheme,
   handleGetAppTheme,
 } from "@/utils/handleLocalStorage";
 import useTheme from "@/context/themeProvider";
+import { lightTheme } from "@/constants/theme";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme();
@@ -28,34 +29,19 @@ export default function Settings() {
           alignItems: "center",
           justifyContent: "space-between",
           paddingVertical: 5,
-          borderBottomWidth: 1,
-          borderBottomColor: "gray",
+          width: "100%",
+          height: 50,
+          borderWidth: 1,
+          borderRadius: 10,
+          borderColor: theme === "light" ? lightTheme.primaryColor : "#2C394B",
+          padding: 5,
+          backgroundColor: theme === "dark" ? "#2C394B" : "transparent",
         }}
       >
-        <TouchableOpacity
-          style={{
-            width: 50,
-            height: 25,
-            borderRadius: 5,
-            backgroundColor: theme === "light" ? "black" : "white",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          activeOpacity={0.7}
-          onPress={() => changeAppTheme()}
-        >
-          <Text
-            style={{
-              color: theme === "light" ? "white" : "black",
-              fontFamily: "Yekan",
-              fontWeight: "bold",
-              fontSize: 16,
-            }}
-          >
-            {theme === "light" ? "تاریک" : "روشن"}
-          </Text>
-        </TouchableOpacity>
+        <Switch
+          value={theme === "light" ? true : false}
+          onValueChange={changeAppTheme}
+        />
 
         <Text
           style={{
@@ -65,7 +51,7 @@ export default function Settings() {
             fontSize: 16,
           }}
         >
-          تغییر تم برنامه
+          تغییر تم
         </Text>
       </View>
     </View>

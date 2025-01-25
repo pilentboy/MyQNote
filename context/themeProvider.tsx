@@ -4,8 +4,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { StatusBar } from "react-native";
 
 const themeContext = createContext<{
-  theme: "dark" | "light";
-  setTheme: React.Dispatch<React.SetStateAction<"dark" | "light">>;
+  theme: any;
+  setTheme: React.Dispatch<React.SetStateAction<any>>;
 }>({
   theme: "light",
   setTheme: () => {},
