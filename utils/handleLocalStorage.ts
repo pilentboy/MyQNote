@@ -95,6 +95,23 @@ const handleGetAppMode = async () => {
   return await AsyncStorage.getItem("defaultMode");
 };
 
+const handleGetAppTheme = async () => {
+  const currentTheme = await AsyncStorage.getItem("theme");
+  if (!currentTheme) {
+    await AsyncStorage.setItem("theme", "light");
+    return "light";
+  }
+  return currentTheme;
+};
+
+const handleChangeAppTheme = async () => {
+  const currentTheme = await AsyncStorage.getItem("theme");
+
+  await AsyncStorage.setItem(
+    "theme",
+    currentTheme === "light" ? "dark" : "light"
+  );
+};
 
 export {
   storeDataInLocalStorage,
@@ -103,5 +120,7 @@ export {
   handleDeleteNote,
   handleFilterLocalStorageNote,
   handleDefaultNoteMode,
-  handleGetAppMode
+  handleGetAppMode,
+  handleChangeAppTheme,
+  handleGetAppTheme,
 };
