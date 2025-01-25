@@ -8,13 +8,20 @@ import { useRouter } from "expo-router";
 import { lightTheme } from "@/constants/theme";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
+import useTheme from "@/context/themeProvider";
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
   const { appMode } = useContext(authContext);
-
+  const {theme} = useTheme();
   return (
-    <View style={{ flex: 1, paddingVertical: 5 }}>
+    <View
+      style={{
+        flex: 1,
+        paddingVertical: 5,
+        backgroundColor: theme === "light" ? "white" : "#222831",
+      }}
+    >
       <View
         style={{
           height: 60,
@@ -59,7 +66,7 @@ export default function CustomDrawerContent(props: any) {
         >
           <Text
             style={{
-              color: "black",
+              color: theme === "light" ? "black" : "white",
               fontSize: 12,
               textAlign: "center",
               fontFamily: "Yekan",

@@ -5,6 +5,7 @@ import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import CustomDrawerContent from "@/components/customDrawerContent";
 import DrawerCustomHeader from "@/components/drawerCustomHeader";
 import useTheme from "@/context/themeProvider";
+import { lightTheme } from "@/constants/theme";
 
 export default function Layout() {
   const labelFontSize = 14;
@@ -35,7 +36,7 @@ export default function Layout() {
           },
           drawerActiveBackgroundColor: "#0165b6",
           drawerActiveTintColor: "white",
-          drawerInactiveTintColor: "black",
+          drawerInactiveTintColor: theme === "light" ? "black" : "white",
           drawerStyle: {
             backgroundColor: "white",
             width: 175,
@@ -59,7 +60,7 @@ export default function Layout() {
                 <MaterialCommunityIcons
                   name="lead-pencil"
                   size={labelFontSize}
-                  color={focused ? "white" : "black"}
+                  color={focused || theme === "dark" ? "white" : "black"}
                 />
               );
             },
@@ -75,7 +76,7 @@ export default function Layout() {
                 <SimpleLineIcons
                   name="settings"
                   size={labelFontSize}
-                  color={focused ? "white" : "black"}
+                  color={focused || theme === "dark" ? "white" : "black"}
                 />
               );
             },
