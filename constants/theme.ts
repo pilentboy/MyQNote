@@ -4,3 +4,4 @@ export const lightTheme: { [key: string]: string } = {
   bgColor: "white",
   gray: "#7E99A3",
 };
+ 
