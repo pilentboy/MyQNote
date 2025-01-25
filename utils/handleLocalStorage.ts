@@ -25,6 +25,21 @@ const getLocalStorageData = async () => {
   }
 };
 
+const handleFilterLocalStorageNote = async (filterText: string) => {
+  try {
+    const value = await AsyncStorage.getItem("notes");
+    if (value) {
+      const notes = JSON.parse(value);
+      const searchedNotes = notes?.filter((notes: any) =>
+        notes.title.includes(filterText)
+      );
+      return searchedNotes;
+    }
+  } catch (error) {
+    console.error("خطا در فیلتر داده ها :", error);
+  }
+};
+
 interface EditingValues {
   id: string | string[];
   editedTitle: string;
@@ -77,4 +92,5 @@ export {
   getLocalStorageData,
   handleEditingNote,
   handleDeleteNote,
+  handleFilterLocalStorageNote,
 };

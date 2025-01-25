@@ -5,24 +5,41 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider";
 import { lightTheme } from "@/constants/theme";
-import { getLocalStorageData } from "@/utils/handleLocalStorage";
+import {
+  getLocalStorageData,
+  handleFilterLocalStorageNote,
+} from "@/utils/handleLocalStorage";
 import AddNoteBTN from "@/components/addNoteBTN";
 import { useRouter } from "expo-router";
 
 const index = () => {
-  const { loading, setLoading, userNotes, setUserNotes } =
+  const { loading, setLoading, userNotes, setUserNotes, searchValue } =
     useContext(authContext);
 
   const route = useRouter();
 
+  // set all notes from local storage
   const setData = async () => {
     setLoading(true);
     setUserNotes(await getLocalStorageData());
     setLoading(false);
   };
+
+  // filter data based on the search value
+  const setSearchNotes = async () => {
+    setLoading(true);
+    setUserNotes(await handleFilterLocalStorageNote(searchValue));
+    setLoading(false);
+  };
+
   useEffect(() => {
-    setData();
-  }, []);
+    if (searchValue !== "") {
+      setSearchNotes();
+    } else {
+      setData();
+    }
+  }, [searchValue]);
+
   return (
     <GestureHandlerRootView>
       <View
@@ -40,8 +57,7 @@ const index = () => {
         ) : (
           <ScrollView
             contentContainerStyle={{ paddingVertical: 10 }}
-            style={{ width: "100%"}}
-           
+            style={{ width: "100%" }}
           >
             <View
               style={{
@@ -71,7 +87,9 @@ const index = () => {
                       fontFamily: "Yekan",
                     }}
                   >
-                    هیچ یادداشتی نداری!
+                    {searchValue !== ""
+                      ? "چیزی پیدا نشد!"
+                      : "هیچ یادداشتی نداری!"}
                   </Text>
                 </View>
               ) : (
@@ -91,7 +109,6 @@ const index = () => {
         )}
 
         <AddNoteBTN action={() => route.navigate("/(note)")} />
-
       </View>
     </GestureHandlerRootView>
   );
