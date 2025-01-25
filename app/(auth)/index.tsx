@@ -29,7 +29,7 @@ export default function index() {
       >
         <CustomeLink title="ثبت نام" target={"/(auth)/register"} />
         <CustomeLink title="ورود" target={"/(auth)/login"} />
-        <CustomeLink title="ورود آفلاین" target={"/(home)/"} bgColor={false} />
+        <CustomeLink title="ورود آفلاین" target={"/(home)/"} bgColor={false}  />
       </View>
     </View>
   );

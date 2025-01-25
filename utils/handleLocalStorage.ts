@@ -87,10 +87,21 @@ const handleDeleteNote = async (id: string | string[]) => {
   }
 };
 
+const handleDefaultNoteMode = async (mode: "offline" | "online") => {
+  await AsyncStorage.setItem("defaultMode", mode);
+};
+
+const handleGetAppMode = async () => {
+  return await AsyncStorage.getItem("defaultMode");
+};
+
+
 export {
   storeDataInLocalStorage,
   getLocalStorageData,
   handleEditingNote,
   handleDeleteNote,
   handleFilterLocalStorageNote,
+  handleDefaultNoteMode,
+  handleGetAppMode
 };

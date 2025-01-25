@@ -6,13 +6,25 @@ import CustomeLink from "@/components/customLink";
 import { Image } from "expo-image";
 import Logo from "@/components/logo";
 import ShortTitle from "@/components/shortTitle";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 
 // welcome screen
 export default function index() {
   const { loading, setLoading } = useContext(authContext);
 
+  const router = useRouter();
+
   useEffect(() => {
-    setLoading(false);
+    const setAppMode = async () => {
+      const mode = await AsyncStorage.getItem("defaultMode");
+      if (mode) {
+        if (mode === "offline") router.navigate("/(home)");
+      } else {
+        setLoading(false);
+      }
+    };
+    setAppMode();
   }, []);
 
   if (loading) {

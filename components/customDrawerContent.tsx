@@ -6,9 +6,12 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { CroppedLogo } from "./logo";
 import { useRouter } from "expo-router";
 import { lightTheme } from "@/constants/theme";
+import { useContext } from "react";
+import { authContext } from "@/context/authProvider";
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
+  const { appMode } = useContext(authContext);
 
   return (
     <View style={{ flex: 1, paddingVertical: 5 }}>
@@ -62,7 +65,7 @@ export default function CustomDrawerContent(props: any) {
               fontFamily: "Yekan",
             }}
           >
-            خروج از حساب
+            {appMode === "offline" ? "ورود به حساب" : "ورود آفلاین"}
           </Text>
         </TouchableOpacity>
 

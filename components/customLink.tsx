@@ -1,4 +1,5 @@
 import { lightTheme } from "@/constants/theme";
+import { handleDefaultNoteMode } from "@/utils/handleLocalStorage";
 import { Link } from "expo-router";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
@@ -22,6 +23,9 @@ const CustomLink = ({
         styles.startBTN,
         { backgroundColor: bgColor ? lightTheme.primaryColor : "gray" },
       ]}
+      onPress={async () => {
+        if (title === "ورود آفلاین") await handleDefaultNoteMode("offline");
+      }}
       asChild
     >
       <TouchableOpacity>
