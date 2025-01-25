@@ -15,11 +15,6 @@ const Register = () => {
   const { loading, setLoading } = useContext(authContext);
   const router = useRouter();
 
-  const isEmailUnique = async (email: string) => {
-    const existingEmails = ["pilentboy@gmail.com", "user@example.com"];
-    return !existingEmails.includes(email);
-  };
-
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .matches(
@@ -29,13 +24,6 @@ const Register = () => {
       .min(5, "نام کاربری باید حداقل 5 کاراکتر باشد")
       .max(12, "حداکثر کاراکتر مجاز برای نام کاربری 12 عدد می باشد")
       .required("نام کاربری الزامی است"),
-    email: Yup.string()
-      .email("ایمیل وارد شده معتبر نیست")
-      .required("ایمیل الزامی است")
-      .test("is-unique", "این ایمیل قبلاً ثبت شده است", async (value) => {
-        if (!value) return true;
-        return await isEmailUnique(value);
-      }),
     password: Yup.string()
       .min(8, "رمز عبور باید حداقل 8 کاراکتر باشد")
       .matches(
@@ -82,12 +70,6 @@ const Register = () => {
           control={control}
           label="نام کاربری"
           name="username"
-        />
-        <FormInput
-          errors={errors.email}
-          control={control}
-          label="ایمیل"
-          name="email"
         />
         <FormInput
           errors={errors.password}

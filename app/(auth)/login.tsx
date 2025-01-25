@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -34,7 +34,7 @@ const Login = () => {
     const res = await handleLogin(data.username, data.password);
     setLoading(false);
     !res
-      ? alert("نام کاربری یا رمز عبور اشتباه است")
+      ? Alert.alert("خطا", "نام کاربری یا رمز عبور اشتباه است.")
       : router.push("/(home)");
   };
 
