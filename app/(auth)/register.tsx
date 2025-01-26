@@ -11,6 +11,9 @@ import Loading from "@/components/loading";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import useTheme from "@/context/themeProvider";
+import FormTitle from "@/components/formItems/formTitle";
+import SubmitBTN from "@/components/formItems/submitBTN";
+import BottomGuideText from "@/components/formItems/bottomGuideText";
 
 const Register = () => {
   const { loading, setLoading } = useContext(authContext);
@@ -48,9 +51,7 @@ const Register = () => {
     setLoading(true);
     const res = await handleRegister(data.username, data.email, data.password);
     setLoading(false);
-    !res
-      ? alert("کاربری با این نام کاربری و ایمیل وجود دارد!")
-      : router.push("/(home)");
+    !res ? alert("خطا در ثبت نام!") : router.push("/(home)");
   };
 
   if (loading) return <Loading />;
@@ -58,16 +59,7 @@ const Register = () => {
   return (
     <AuthFormContainer>
       <View style={{ gap: 10, alignItems: "center", paddingTop: 10 }}>
-        <Text
-          style={{
-            fontFamily: "Vazir",
-            fontSize: 21,
-            paddingTop: 70,
-            color: theme === "light" ? "black" : "white",
-          }}
-        >
-          ثبت نام و شروع کن!
-        </Text>
+        <FormTitle title="ثبت نام و شروع کن!" />
         <FormInput
           errors={errors.username}
           control={control}
@@ -80,30 +72,7 @@ const Register = () => {
           label="رمز عبور"
           name="password"
         />
-        <TouchableOpacity
-          style={{
-            width: 300,
-            height: 45,
-            borderWidth: 0,
-            borderRadius: 15,
-            backgroundColor: lightTheme.primary,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onPress={handleSubmit(onSubmit)}
-          activeOpacity={0.8}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontFamily: "Yekan",
-              fontSize: 18,
-            }}
-          >
-            ثبت نام
-          </Text>
-        </TouchableOpacity>
+        <SubmitBTN title="ثبت نام" action={handleSubmit(onSubmit)} />
         <View
           style={{
             flexDirection: "row",
@@ -116,15 +85,7 @@ const Register = () => {
             borderColor: "#C0C0C0",
           }}
         >
-          <Text
-            style={{
-              fontFamily: "Vazir",
-              fontSize: 14,
-              color: theme === "light" ? "black" : "white",
-            }}
-          >
-            قبلا ثبت نام کردی؟
-          </Text>
+          <BottomGuideText title="قبلا ثبت نام کردی؟" />
 
           <Link
             href={"/(auth)/login"}
@@ -142,7 +103,3 @@ const Register = () => {
     </AuthFormContainer>
   );
 };
-export default Register;
-function setLoading(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}

@@ -10,7 +10,8 @@ import handleLogin from "@/utils/handleLogin";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import Loading from "@/components/loading";
-import useTheme from "@/context/themeProvider";
+import FormTitle from "@/components/formItems/formTitle";
+import BottomGuideText from "@/components/formItems/bottomGuideText";
 
 const Login = () => {
   const { loading, setLoading } = useContext(authContext);
@@ -30,7 +31,6 @@ const Login = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const { theme } = useTheme();
 
   const onSubmit = async (data: any) => {
     setLoading(true);
@@ -52,16 +52,7 @@ const Login = () => {
           alignItems: "center",
         }}
       >
-        <Text
-          style={{
-            fontFamily: "Vazir",
-            fontSize: 21,
-            paddingTop: 70,
-            color: theme === "light" ? "black" : "white",
-          }}
-        >
-          ورود
-        </Text>
+        <FormTitle title="ورود" />
         <FormInput
           errors={errors.username}
           control={control}
@@ -111,15 +102,7 @@ const Login = () => {
             borderColor: "#C0C0C0",
           }}
         >
-          <Text
-            style={{
-              fontFamily: "Vazir",
-              fontSize: 14,
-              color: theme === "light" ? "black" : "white",
-            }}
-          >
-            ثبت نام نکردی؟
-          </Text>
+          <BottomGuideText title="ثبت نام نکردی؟" />
 
           <Link
             href={"/(auth)/register"}

@@ -1,3 +1,4 @@
+import { lightTheme } from "@/constants/theme";
 import useTheme from "@/context/themeProvider";
 import { Controller } from "react-hook-form";
 import { View, Text, TextInput, StyleSheet } from "react-native";
@@ -53,7 +54,7 @@ const FormInput = ({
               fontFamily: "Vazir",
               fontSize: 16,
               padding: 12,
-              borderColor: errors ? "red" : "#C0C0C0",
+              borderColor: errors ? "red" : lightTheme.primary,
             }}
             onBlur={onBlur}
             onChangeText={onChange}
