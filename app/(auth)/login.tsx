@@ -10,6 +10,7 @@ import handleLogin from "@/utils/handleLogin";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import Loading from "@/components/loading";
+import useTheme from "@/context/themeProvider";
 
 const Login = () => {
   const { loading, setLoading } = useContext(authContext);
@@ -28,6 +29,8 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
+
+  const { theme } = useTheme();
 
   const onSubmit = async (data: any) => {
     setLoading(true);
@@ -54,6 +57,7 @@ const Login = () => {
             fontFamily: "Vazir",
             fontSize: 21,
             paddingTop: 70,
+            color: theme === "light" ? "black" : "white",
           }}
         >
           ورود
@@ -75,8 +79,7 @@ const Login = () => {
           style={{
             width: 300,
             height: 45,
-            borderColor: "#C0C0C0",
-            borderWidth: 1,
+            borderWidth:0,
             borderRadius: 15,
             backgroundColor: lightTheme.primaryColor,
             display: "flex",
@@ -108,7 +111,13 @@ const Login = () => {
             borderColor: "#C0C0C0",
           }}
         >
-          <Text style={{ fontFamily: "Vazir", fontSize: 14 }}>
+          <Text
+            style={{
+              fontFamily: "Vazir",
+              fontSize: 14,
+              color: theme === "light" ? "black" : "white",
+            }}
+          >
             ثبت نام نکردی؟
           </Text>
 

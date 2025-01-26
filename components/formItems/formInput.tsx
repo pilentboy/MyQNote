@@ -1,3 +1,4 @@
+import useTheme from "@/context/themeProvider";
 import { Controller } from "react-hook-form";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 const FormInput = ({
@@ -11,6 +12,7 @@ const FormInput = ({
   name: string;
   errors: any;
 }) => {
+  const { theme } = useTheme();
   return (
     <View style={{ gap: 6 }}>
       <View
@@ -23,7 +25,6 @@ const FormInput = ({
           style={{
             fontSize: 14,
             color: "#2A3335",
-
             fontFamily: "Yekan",
             fontWeight: "bold",
           }}
@@ -41,13 +42,14 @@ const FormInput = ({
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            secureTextEntry={name === "password"}
             style={{
               textAlign: "left",
               width: 300,
               height: 45,
               borderWidth: 1,
               borderRadius: 15,
-              color: "black",
+              color: theme === "light" ? "black" : "white",
               fontFamily: "Vazir",
               fontSize: 16,
               padding: 12,

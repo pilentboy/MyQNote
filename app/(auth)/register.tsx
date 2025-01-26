@@ -10,10 +10,12 @@ import handleRegister from "@/utils/handleRegister";
 import Loading from "@/components/loading";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
+import useTheme from "@/context/themeProvider";
 
 const Register = () => {
   const { loading, setLoading } = useContext(authContext);
   const router = useRouter();
+  const { theme } = useTheme();
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -55,12 +57,13 @@ const Register = () => {
 
   return (
     <AuthFormContainer>
-      <View style={{ gap: 10, alignItems: "center" }}>
+      <View style={{ gap: 10, alignItems: "center", paddingTop: 10 }}>
         <Text
           style={{
             fontFamily: "Vazir",
             fontSize: 21,
-            marginBottom: 16,
+            paddingTop: 70,
+            color: theme === "light" ? "black" : "white",
           }}
         >
           ثبت نام و شروع کن!
@@ -81,8 +84,7 @@ const Register = () => {
           style={{
             width: 300,
             height: 45,
-            borderColor: "#C0C0C0",
-            borderWidth: 1,
+            borderWidth: 0,
             borderRadius: 15,
             backgroundColor: lightTheme.primaryColor,
             display: "flex",
@@ -114,7 +116,13 @@ const Register = () => {
             borderColor: "#C0C0C0",
           }}
         >
-          <Text style={{ fontFamily: "Vazir", fontSize: 14 }}>
+          <Text
+            style={{
+              fontFamily: "Vazir",
+              fontSize: 14,
+              color: theme === "light" ? "black" : "white",
+            }}
+          >
             قبلا ثبت نام کردی؟
           </Text>
 
