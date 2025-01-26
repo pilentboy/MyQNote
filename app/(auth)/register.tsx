@@ -103,3 +103,5 @@ const Register = () => {
     </AuthFormContainer>
   );
 };
+
+export default Register;
