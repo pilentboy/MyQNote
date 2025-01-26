@@ -1,72 +1,77 @@
-import { View, Switch, TouchableOpacity } from "react-native";
+import { View, Switch } from "react-native"; 
 import {
   getLocalStorageData,
   handleChangeAppTheme,
   HandleDeleteNotes,
   handleGetAppTheme,
-} from "@/utils/handleLocalStorage";
+} from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
 import useTheme from "@/context/themeProvider";
-import SettingsItemWrapper from "@/components/settings/settingsItemWrapper";
-import SettingsTitle from "@/components/settings/settingsTitle";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import SettingsItemWrapper from "@/components/settings/settingsItemWrapper"; // Custom wrapper component for settings items
+import SettingsTitle from "@/components/settings/settingsTitle"; // Custom component for displaying settings titles
+import MaterialIcons from "@expo/vector-icons/MaterialIcons"; 
 import CustomAlert from "@/components/cutstomAlert";
-import Toast from "react-native-toast-message";
-import { useContext } from "react";
-import { authContext } from "@/context/authProvider";
-export default function Settings() {
-  const { setTheme, theme } = useTheme();
-  const { setUserNotes } = useContext(authContext);
+import Toast from "react-native-toast-message"; // Library for displaying toast notifications
+import { useContext } from "react"; 
+import { authContext } from "@/context/authProvider"; // Context for managing authentication and user-related data
 
+export default function Settings() {
+  const { setTheme, theme } = useTheme(); // Access and set the app's current theme
+  const { setUserNotes } = useContext(authContext); // Access and update user notes from the context
+
+  // Function to display a success toast message
   const showToast = () => {
     Toast.show({
-      type: "success",
-      text2: "با موفقیت حذف شدند",
+      type: "success", // Toast type
+      text2: "با موفقیت حذف شدند", // Success message
     });
   };
 
+  // Function to change the app's theme
   const changeAppTheme = async () => {
-    await handleChangeAppTheme();
-    setTheme(await handleGetAppTheme());
+    await handleChangeAppTheme(); // Toggle theme in local storage
+    setTheme(await handleGetAppTheme()); // Update theme state based on the new value
   };
 
+  // Function to delete all notes from local storage
   const deleteLocalNotes = async () => {
-    await HandleDeleteNotes();
-    setUserNotes(await getLocalStorageData());
-    showToast();
+    await HandleDeleteNotes(); // Delete notes in local storage
+    setUserNotes(await getLocalStorageData()); // Update state with the new data
+    showToast(); // Show success toast
   };
 
   return (
     <View
       style={{
-        gap: 5,
-        padding: 10,
-        flex: 1,
-        backgroundColor: theme === "light" ? "white" : "#222831",
+        gap: 5, 
+        padding: 10, 
+        flex: 1, 
+        backgroundColor: theme === "light" ? "white" : "#222831", 
       }}
     >
+      {/* Theme toggle setting */}
       <SettingsItemWrapper theme={theme}>
         <Switch
-          value={theme === "light" ? true : false}
-          onValueChange={changeAppTheme}
+          value={theme === "light"} 
+          onValueChange={changeAppTheme} // Handler for theme change
         />
-
         <SettingsTitle title="تم برنامه" theme={theme} />
       </SettingsItemWrapper>
+
+      {/* Delete notes setting */}
       <SettingsItemWrapper theme={theme}>
         <MaterialIcons
           onPress={() =>
             CustomAlert(
-              "حذف",
-              "آیا از حذف تمام نوشته ها مطئن هستید؟",
-              deleteLocalNotes
+              "حذف", // Alert title
+              "آیا از حذف تمام نوشته ها مطئن هستید؟", 
+              deleteLocalNotes // Callback for confirming deletion
             )
           }
-          name="delete-forever"
-          size={28}
-          color="red"
-          style={{ marginStart: 10 }}
+          name="delete-forever" 
+          size={28} 
+          color="red" 
+          style={{ marginStart: 10 }} 
         />
-
         <SettingsTitle title="حذف نوشته ها" theme={theme} />
       </SettingsItemWrapper>
     </View>
