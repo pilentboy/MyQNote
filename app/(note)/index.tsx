@@ -38,13 +38,13 @@ const Note = () => {
   const { id, editedTitle, editedMainContent } = useLocalSearchParams();
   const { theme } = useTheme();
 
-  const showToast = () => {
+  const showToast = (text: string) => {
     Toast.show({
       type: "success",
-      text2: "با موفقیت افزوده شده",
+      text2: text,
     });
   };
-  
+
   useEffect(() => {
     if (editedTitle) {
       navigation.setOptions({ title: "ویرایش" });
@@ -107,7 +107,7 @@ const Note = () => {
       setUserNotes(await getLocalStorageData());
       reset();
       clearErrors();
-      showToast();
+      showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
       router.replace("/(home)");
     } else {
       alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
@@ -119,7 +119,7 @@ const Note = () => {
     const result = await handleDeleteNote(id);
     if (result) {
       setUserNotes(await getLocalStorageData());
-      alert("با موفقیت حذف شد");
+      showToast("با موفقیت حذف شد");
       router.replace("/(home)");
     } else {
       alert("خطا در حذف نوت");
