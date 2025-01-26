@@ -113,6 +113,9 @@ const handleChangeAppTheme = async () => {
   );
 };
 
+const HandleDeleteNotes = async () => {
+  await AsyncStorage.setItem("notes", JSON.stringify([]));
+};
 export {
   storeDataInLocalStorage,
   getLocalStorageData,
@@ -123,4 +126,5 @@ export {
   handleGetAppMode,
   handleChangeAppTheme,
   handleGetAppTheme,
+  HandleDeleteNotes
 };

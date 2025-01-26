@@ -9,7 +9,7 @@ const SettingsTitle = ({ title, theme }: { title: string; theme: string }) => (
       fontSize: 16,
     }}
   >
-    تغییر تم
+    {title}
   </Text>
 );
 
