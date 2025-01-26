@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
-  TouchableOpacity,
   Dimensions,
   Keyboard,
 } from "react-native";
@@ -27,6 +26,8 @@ import { lightTheme } from "@/constants/theme";
 import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import Toast from "react-native-toast-message";
+import CustomAlert from "@/components/cutstomAlert";
+import NoteSmallBTN from "@/components/noteBox/noteSmallBTN";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -40,10 +41,10 @@ const Note = () => {
   const showToast = () => {
     Toast.show({
       type: "success",
-      // text1: 'Hello',
       text2: "با موفقیت افزوده شده",
     });
   };
+  
   useEffect(() => {
     if (editedTitle) {
       navigation.setOptions({ title: "ویرایش" });
@@ -106,7 +107,6 @@ const Note = () => {
       setUserNotes(await getLocalStorageData());
       reset();
       clearErrors();
-      // alert(editedTitle ? "با موفقیت ویرایش شد" : "افزوده شد!");
       showToast();
       router.replace("/(home)");
     } else {
@@ -116,7 +116,6 @@ const Note = () => {
   };
 
   const deleteNote = async () => {
-    console.log("deleting");
     const result = await handleDeleteNote(id);
     if (result) {
       setUserNotes(await getLocalStorageData());
@@ -196,44 +195,21 @@ const Note = () => {
               justifyContent: "space-evenly",
             }}
           >
-            <TouchableOpacity
-              style={{
-                width: 100,
-                height: 40,
-                backgroundColor: lightTheme.primary,
-                borderRadius: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                display: "flex",
-              }}
-              onPress={handleSubmit(onSubmit)}
-            >
-              <Text
-                style={{ color: "white", fontSize: 16, fontFamily: "Vazir" }}
-              >
-                {editedTitle ? "ثبت ویرایش" : "افزودن"}
-              </Text>
-            </TouchableOpacity>
-
+            <NoteSmallBTN
+              title={editedTitle ? "ثبت ویرایش" : "افزودن"}
+              action={handleSubmit(onSubmit)}
+            />
             {editedTitle && (
-              <TouchableOpacity
-                style={{
-                  width: 100,
-                  height: 40,
-                  backgroundColor: lightTheme.primary,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  display: "flex",
-                }}
-                onPress={() => deleteNote()}
-              >
-                <Text
-                  style={{ color: "white", fontSize: 16, fontFamily: "Vazir" }}
-                >
-                  حذف
-                </Text>
-              </TouchableOpacity>
+              <NoteSmallBTN
+                title="حذف"
+                action={() =>
+                  CustomAlert(
+                    "حذف",
+                    "آیا از حذف این نوشته مطمئن هستید؟",
+                    deleteNote
+                  )
+                }
+              />
             )}
           </View>
         </View>
