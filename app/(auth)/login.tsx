@@ -79,9 +79,9 @@ const Login = () => {
           style={{
             width: 300,
             height: 45,
-            borderWidth:0,
+            borderWidth: 0,
             borderRadius: 15,
-            backgroundColor: lightTheme.primaryColor,
+            backgroundColor: lightTheme.primary,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -125,7 +125,7 @@ const Login = () => {
             href={"/(auth)/register"}
             onPress={() => clearErrors()}
             style={{
-              color: lightTheme.primaryColor,
+              color: lightTheme.primary,
               fontSize: 15,
               fontFamily: "Vazir",
             }}

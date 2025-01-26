@@ -33,7 +33,7 @@ export default function Settings() {
           height: 50,
           borderWidth: 1,
           borderRadius: 10,
-          borderColor: theme === "light" ? lightTheme.primaryColor : "#2C394B",
+          borderColor: theme === "light" ? lightTheme.primary : "#2C394B",
           padding: 5,
           backgroundColor: theme === "dark" ? "#2C394B" : "transparent",
         }}

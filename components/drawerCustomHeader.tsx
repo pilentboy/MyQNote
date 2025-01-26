@@ -62,11 +62,7 @@ export default function DrawerCustomHeader({
           style={{ paddingHorizontal: 10 }}
           onPress={() => navigation.toggleDrawer()}
         >
-          <AntDesign
-            name="menufold"
-            size={24}
-            color={lightTheme.primaryColor}
-          />
+          <AntDesign name="menufold" size={24} color={lightTheme.primary} />
         </Pressable>
       </View>
       {/* bottom header */}

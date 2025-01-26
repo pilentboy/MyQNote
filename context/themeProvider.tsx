@@ -25,9 +25,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     <themeContext.Provider value={{ theme, setTheme }}>
       <StatusBar
         barStyle="light-content"
-        backgroundColor={
-          theme === "light" ? lightTheme.primaryColor : "#222831"
-        }
+        backgroundColor={theme === "light" ? lightTheme.primary : "#222831"}
       />
       {children}
     </themeContext.Provider>

@@ -12,7 +12,7 @@ const ShortTitle = ({ title, size = 25 }: { title: string; size?: number }) => {
         fontFamily: "Yekan",
         fontWeight: "bold",
         width: "90%",
-        color: theme === "light" ? lightTheme.primaryColor : "white",
+        color: theme === "light" ? lightTheme.primary : "white",
       }}
     >
       {title}

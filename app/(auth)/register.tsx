@@ -86,7 +86,7 @@ const Register = () => {
             height: 45,
             borderWidth: 0,
             borderRadius: 15,
-            backgroundColor: lightTheme.primaryColor,
+            backgroundColor: lightTheme.primary,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -130,7 +130,7 @@ const Register = () => {
             href={"/(auth)/login"}
             onPress={() => clearErrors()}
             style={{
-              color: lightTheme.primaryColor,
+              color: lightTheme.primary,
               fontSize: 15,
               fontFamily: "Vazir",
             }}

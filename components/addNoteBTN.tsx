@@ -14,7 +14,7 @@ const AddNoteBTN = ({ action }: { action: () => void }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: lightTheme.primaryColor,
+        backgroundColor: lightTheme.primary,
         borderRadius: 50,
         padding: 10,
         width: 60,
@@ -22,7 +22,6 @@ const AddNoteBTN = ({ action }: { action: () => void }) => {
       }}
       onPress={action}
       activeOpacity={0.8}
-      
     >
       <Ionicons name="add" size={40} color="white" />
     </TouchableOpacity>

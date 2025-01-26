@@ -21,14 +21,14 @@ const CustomLink = ({
       href={{ pathname: target, params: data }}
       style={[
         styles.startBTN,
-        { backgroundColor: bgColor ? lightTheme.primaryColor : "gray" },
+        { backgroundColor: bgColor ? lightTheme.primary : "gray" },
       ]}
       onPress={async () => {
         if (title === "ورود آفلاین") await handleDefaultNoteMode("offline");
       }}
       asChild
     >
-      <TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.7}>
         <Text style={{ color: "white", fontSize: 20, fontFamily: "Yekan" }}>
           {title}
         </Text>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   startBTN: {
     width: 300,
     height: 50,
-    backgroundColor: lightTheme.primaryColor,
+    backgroundColor: lightTheme.primary,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

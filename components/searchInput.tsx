@@ -23,7 +23,7 @@ const SearchInput = () => {
           direction: "rtl",
           textAlign: "right",
           color: "white",
-          backgroundColor: lightTheme.primaryColor,
+          backgroundColor: lightTheme.primary,
           borderRadius: 10,
           paddingHorizontal: 20,
           fontSize: 15,

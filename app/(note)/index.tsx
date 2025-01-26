@@ -200,7 +200,7 @@ const Note = () => {
               style={{
                 width: 100,
                 height: 40,
-                backgroundColor: lightTheme.primaryColor,
+                backgroundColor: lightTheme.primary,
                 borderRadius: 10,
                 alignItems: "center",
                 justifyContent: "center",
@@ -220,7 +220,7 @@ const Note = () => {
                 style={{
                   width: 100,
                   height: 40,
-                  backgroundColor: lightTheme.primaryColor,
+                  backgroundColor: lightTheme.primary,
                   borderRadius: 10,
                   alignItems: "center",
                   justifyContent: "center",

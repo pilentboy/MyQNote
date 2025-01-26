@@ -85,7 +85,7 @@ const index = () => {
                 >
                   <Text
                     style={{
-                      color: lightTheme.primaryColor,
+                      color: lightTheme.primary,
                       fontSize: 15,
                       fontFamily: "Yekan",
                     }}

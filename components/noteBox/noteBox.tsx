@@ -28,8 +28,7 @@ const NoteBox = ({
       style={[
         {
           display: "flex",
-          backgroundColor:
-            theme === "light" ? lightTheme.secondryColor : "#2C394B",
+          backgroundColor: theme === "light" ? lightTheme.secondry : "#2C394B",
           borderRadius: 10,
           justifyContent: "space-around",
           padding: 6,
