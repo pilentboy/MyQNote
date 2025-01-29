@@ -10,7 +10,6 @@ export default function AuthLayout() {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="register" />
       <Stack.Screen name="login" />
-      <Stack.Screen name="registerOffline" />
     </Stack>
   );
 }

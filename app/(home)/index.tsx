@@ -1,8 +1,8 @@
-import { ScrollView, View, Text } from "react-native"; // Core components for building UI
-import { useContext, useEffect } from "react"; // React hooks for state and lifecycle management
-import NoteBox from "@/components/noteBox/noteBox"; // Custom component for displaying individual notes
-import { GestureHandlerRootView } from "react-native-gesture-handler"; // Provides a root view for handling gestures
-import Loading from "@/components/loading"; // Custom loading spinner component
+import { ScrollView, View, Text } from "react-native";
+import { useContext, useEffect } from "react"; 
+import NoteBox from "@/components/noteBox/noteBox"; 
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Loading from "@/components/loading"; 
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user data
 import { lightTheme } from "@/constants/theme"; // Constants for the light theme colors
 import {
@@ -10,7 +10,7 @@ import {
   handleFilterLocalStorageNote,
 } from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
 import AddNoteBTN from "@/components/addNoteBTN"; // Custom button component for adding notes
-import { useRouter } from "expo-router"; // Router for navigation
+import { useRouter } from "expo-router"; 
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 
 const index = () => {
@@ -87,9 +87,9 @@ const index = () => {
                 >
                   <Text
                     style={{
-                      color: theme === "light" ? lightTheme.primary : "white", // Text color based on theme
+                      color: theme === "light" ? lightTheme.primary : "white", 
                       fontSize: 15,
-                      fontFamily: "Yekan", // Custom font
+                      fontFamily: "Yekan", 
                     }}
                   >
                     {searchValue !== ""
@@ -100,7 +100,7 @@ const index = () => {
               ) : (
                 userNotes?.map((note: any) => (
                   <NoteBox
-                    key={note.id} // Unique key for each note
+                    key={note.id}
                     title={note.title}
                     mainContent={note.mainContent}
                     date={note.date}
