@@ -1,8 +1,8 @@
 import { ScrollView, View, Text } from "react-native";
-import { useContext, useEffect } from "react"; 
-import NoteBox from "@/components/noteBox/noteBox"; 
+import { useContext, useEffect } from "react";
+import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import Loading from "@/components/loading"; 
+import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user data
 import { lightTheme } from "@/constants/theme"; // Constants for the light theme colors
 import {
@@ -10,7 +10,7 @@ import {
   handleFilterLocalStorageNote,
 } from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
 import AddNoteBTN from "@/components/addNoteBTN"; // Custom button component for adding notes
-import { useRouter } from "expo-router"; 
+import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 
 const index = () => {
@@ -87,9 +87,9 @@ const index = () => {
                 >
                   <Text
                     style={{
-                      color: theme === "light" ? lightTheme.primary : "white", 
+                      color: theme === "light" ? lightTheme.primary : "white",
                       fontSize: 15,
-                      fontFamily: "Yekan", 
+                      fontFamily: "Yekan",
                     }}
                   >
                     {searchValue !== ""

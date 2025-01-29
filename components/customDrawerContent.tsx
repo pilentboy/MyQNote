@@ -13,7 +13,9 @@ import useTheme from "@/context/themeProvider";
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
   const { appMode } = useContext(authContext);
-  const {theme} = useTheme();
+  const { theme } = useTheme();
+
+  console.log(props);
   return (
     <View
       style={{
@@ -46,7 +48,11 @@ export default function CustomDrawerContent(props: any) {
 
       <DrawerContentScrollView {...props}>
         <View style={{ borderTopWidth: 1, borderTopColor: "#EEEDEB" }}>
-          <DrawerItemList {...props} />
+          <DrawerItemList
+            state={props.state}
+            navigation={props.navigation}
+            descriptors={props.descriptors}
+          />
         </View>
       </DrawerContentScrollView>
 

@@ -12,7 +12,7 @@ const Loading = () => {
         zIndex: 999,
       }}
     >
-      <WaveIndicator count={3} color={lightTheme.primary} animating={true} />
+      {/* <WaveIndicator count={3} color={lightTheme.primary} animating={true} /> */}
     </View>
   );
 };
