@@ -6,7 +6,6 @@ import { lightTheme } from "@/constants/theme";
 import FormInput from "@/components/formItems/formInput";
 import { Link, useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/authFormContainer";
-import handleRegister from "@/utils/handleRegister";
 import Loading from "@/components/loading";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
@@ -14,6 +13,7 @@ import useTheme from "@/context/themeProvider";
 import FormTitle from "@/components/formItems/formTitle";
 import SubmitBTN from "@/components/formItems/submitBTN";
 import BottomGuideText from "@/components/formItems/bottomGuideText";
+import Toast from "react-native-toast-message";
 
 const Register = () => {
   const { loading, setLoading } = useContext(authContext);
@@ -31,7 +31,7 @@ const Register = () => {
       .required("نام کاربری الزامی است"),
     password: Yup.string()
       .min(8, "رمز عبور باید حداقل 8 کاراکتر باشد")
-      .max(16,"رمز عبور باید حداثر 16 کاراکتر باشد")
+      .max(16, "رمز عبور باید حداثر 16 کاراکتر باشد")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/,
         "رمز عبور باید شامل حروف کوچک، حروف بزرگ و اعداد باشد"
@@ -43,16 +43,56 @@ const Register = () => {
     control,
     handleSubmit,
     formState: { errors },
+    setError,
     clearErrors,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
+  const showToast = () => {
+    Toast.show({
+      type: "success",
+      text2: "ثبت نام شما با موفقیت انجام شد",
+    });
+  };
+  const handleRegister = async (data: any) => {
+    try {
+      const req = await fetch("http://10.0.2.2:3000/register", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key":
+            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+        },
+      });
+
+      if (!req.ok) {
+        const errorData = await req.json();
+        return errorData;
+      }
+      const res = await req.json();
+      return res;
+    } catch (error: any) {
+      console.log("Error:", error.message);
+    }
+  };
+
   const onSubmit = async (data: any) => {
     setLoading(true);
-    const res = await handleRegister(data.username, data.email, data.password);
+    const res = await handleRegister(data);
     setLoading(false);
-    !res ? alert("خطا در ثبت نام!") : router.push("/(home)");
+
+    if (res.error) {
+      console.log(res.error);
+      setError("username", {
+        type: "manual",
+        message: res.error[0].unique_username,
+      });
+    } else {
+      showToast();
+      router.navigate("/(auth)/login");
+    }
   };
 
   if (loading) return <Loading />;

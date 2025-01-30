@@ -15,7 +15,6 @@ export default function CustomDrawerContent(props: any) {
   const { appMode } = useContext(authContext);
   const { theme } = useTheme();
 
-  console.log(props);
   return (
     <View
       style={{
