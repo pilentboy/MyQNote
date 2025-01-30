@@ -57,7 +57,7 @@ const Register = () => {
   };
   const handleRegister = async (data: any) => {
     try {
-      const req = await fetch("http://10.0.2.2:3000/register", {
+      const res = await fetch("http://10.0.2.2:3000/register", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -67,12 +67,12 @@ const Register = () => {
         },
       });
 
-      if (!req.ok) {
-        const errorData = await req.json();
+      if (!res.ok) {
+        const errorData = await res.json();
         return errorData;
       }
-      const res = await req.json();
-      return res;
+      const success = await res.json();
+      return success;
     } catch (error: any) {
       console.log("Error:", error.message);
     }
