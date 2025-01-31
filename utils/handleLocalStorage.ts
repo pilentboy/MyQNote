@@ -113,8 +113,17 @@ const handleChangeAppTheme = async () => {
   );
 };
 
-const HandleDeleteNotes = async () => {
+const handleDeleteNotes = async () => {
   await AsyncStorage.setItem("notes", JSON.stringify([]));
+};
+
+const handleSetAccessKey = async (refreshKey: string) => {
+  try {
+    await AsyncStorage.setItem("refresh_key", JSON.stringify(refreshKey));
+    console.log("refresh key set");
+  } catch (error) {
+    console.log("error setting refresh key: ", error);
+  }
 };
 export {
   storeDataInLocalStorage,
@@ -126,5 +135,6 @@ export {
   handleGetAppMode,
   handleChangeAppTheme,
   handleGetAppTheme,
-  HandleDeleteNotes
+  handleDeleteNotes,
+  handleSetAccessKey,
 };

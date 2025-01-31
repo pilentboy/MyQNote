@@ -12,6 +12,7 @@ import Loading from "@/components/loading";
 import FormTitle from "@/components/formItems/formTitle";
 import BottomGuideText from "@/components/formItems/bottomGuideText";
 import Toast from "react-native-toast-message";
+import { handleSetAccessKey } from "@/utils/handleLocalStorage";
 
 const Login = () => {
   const { loading, setLoading } = useContext(authContext);
@@ -27,7 +28,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
     clearErrors,
-    setError
+    setError,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -51,6 +52,7 @@ const Login = () => {
 
       if (!res.ok) {
         const errorData = await res.json();
+        console.log(errorData);
         return errorData;
       }
 
@@ -65,14 +67,16 @@ const Login = () => {
     setLoading(true);
     const res = await handleLogin(data);
     setLoading(false);
-    
+
+    console.log(res, "x");
+
     if (res.error) {
       setError("username", {
         type: "manual",
         message: res.error,
       });
     } else {
-      // Next : setting user id in context
+      await handleSetAccessKey(res?.token);
       showToast();
       router.navigate("/(home)");
     }
