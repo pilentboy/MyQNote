@@ -22,7 +22,6 @@ import {
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import getCurrentDate from "@/utils/convertToPersianDigits";
-import { lightTheme } from "@/constants/theme";
 import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import Toast from "react-native-toast-message";
@@ -33,7 +32,8 @@ const Note = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const router = useRouter();
-  const { loading, setLoading, setUserNotes } = useContext(authContext);
+  const { loading, setLoading, setUserNotes, accessKey } =
+    useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 200);
   const { id, editedTitle, editedMainContent } = useLocalSearchParams();
   const { theme } = useTheme();
@@ -85,7 +85,7 @@ const Note = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = async (data: any) => {
+  const handleOfflineAddingNote = async (data: any) => {
     let submitState: boolean | undefined;
     setLoading(true);
     if (editedTitle) {
@@ -113,6 +113,36 @@ const Note = () => {
       alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
     }
     setLoading(false);
+  };
+
+  const handleOnlineAddingNote = async (data: any) => {
+    try {
+      console.log(accessKey);
+      const res = await fetch("http://10.0.2.2:3000/add_note", {
+        method: "POST",
+        body: JSON.stringify({
+          title: data.title,
+          content: data.mainContent,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key":
+            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.log(errorData);
+        return;
+      }
+
+      const success = await res.json();
+      console.log(success);
+    } catch (error: any) {
+      console.log("Error:", error.message);
+    }
   };
 
   const deleteNote = async () => {
@@ -197,7 +227,9 @@ const Note = () => {
           >
             <NoteSmallBTN
               title={editedTitle ? "ثبت ویرایش" : "افزودن"}
-              action={handleSubmit(onSubmit)}
+              action={handleSubmit(
+                accessKey ? handleOnlineAddingNote : handleOfflineAddingNote
+              )}
             />
             {editedTitle && (
               <NoteSmallBTN

@@ -12,10 +12,14 @@ import Loading from "@/components/loading";
 import FormTitle from "@/components/formItems/formTitle";
 import BottomGuideText from "@/components/formItems/bottomGuideText";
 import Toast from "react-native-toast-message";
-import { handleSetAccessKey } from "@/utils/handleLocalStorage";
+import {
+  handleDefaultNoteMode,
+  handleSetAccessKey,
+} from "@/utils/handleLocalStorage";
 
 const Login = () => {
-  const { loading, setLoading } = useContext(authContext);
+  const { loading, setLoading, setAccessKey, setAppMode } =
+    useContext(authContext);
   const router = useRouter();
 
   const validationSchema = Yup.object().shape({
@@ -77,6 +81,9 @@ const Login = () => {
       });
     } else {
       await handleSetAccessKey(res?.token);
+      setAccessKey(res?.token);
+      await handleDefaultNoteMode("online");
+      setAppMode("online");
       showToast();
       router.navigate("/(home)");
     }

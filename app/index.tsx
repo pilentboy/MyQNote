@@ -18,8 +18,11 @@ export default function index() {
   useEffect(() => {
     const setAppMode = async () => {
       const mode = await AsyncStorage.getItem("defaultMode");
+  
       if (mode) {
-        if (mode === "offline") router.navigate("/(home)");
+        if (mode) {
+          router.navigate("/(home)");
+        }
       } else {
         setLoading(false);
       }

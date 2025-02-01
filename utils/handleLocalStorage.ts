@@ -119,8 +119,8 @@ const handleDeleteNotes = async () => {
 
 const handleSetAccessKey = async (refreshKey: string) => {
   try {
-    await AsyncStorage.setItem("refresh_key", JSON.stringify(refreshKey));
-    console.log("refresh key set");
+    await AsyncStorage.setItem("access_key", JSON.stringify(refreshKey));
+    console.log("access_key key set");
   } catch (error) {
     console.log("error setting refresh key: ", error);
   }
