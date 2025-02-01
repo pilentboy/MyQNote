@@ -1,4 +1,7 @@
-import { handleGetAppMode } from "@/utils/handleLocalStorage";
+import {
+  handleDefaultNoteMode,
+  handleGetAppMode,
+} from "@/utils/handleLocalStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
 
@@ -36,8 +39,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const handlesetAccessKey = async () => {
     try {
       const res = await AsyncStorage.getItem("access_key");
-      console.log(res);
-      if (res) setAccessKey(JSON.parse(res));
+      if (res) return setAccessKey(JSON.parse(res));
     } catch (error) {
       console.log(error);
     }
