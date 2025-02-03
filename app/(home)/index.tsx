@@ -64,6 +64,7 @@ const index = () => {
     console.log(appMode, "app mode");
     if (accessKey || appMode === "online") {
       const res = await handleGetUsersNotes();
+      setUserNotes(res);
     } else {
       console.log("yyyyyyyyyyyyy");
       setUserNotes(await getLocalStorageData());
@@ -71,10 +72,21 @@ const index = () => {
     setLoading(false);
   };
 
+  const handleSearchingNotes = (filterText: string) => {
+    try {
+      const searchedNotes = userNotes?.filter((notes: any) =>
+        notes.title.includes(filterText)
+      );
+      return searchedNotes;
+    } catch (error) {
+      console.error("خطا در فیلتر داده ها :", error);
+    }
+  };
+
   // Filter notes based on the search value and update state
-  const setSearchNotes = async () => {
+  const setSearchNotes = () => {
     setLoading(true); // Start loading
-    setUserNotes(await handleFilterLocalStorageNote(searchValue)); // Fetch filtered notes
+    setUserNotes(handleSearchingNotes(searchValue)); // Fetch filtered notes
     setLoading(false); // End loading
   };
 

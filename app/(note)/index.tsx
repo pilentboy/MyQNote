@@ -123,6 +123,8 @@ const Note = () => {
         body: JSON.stringify({
           title: data.title,
           content: data.content,
+          date: getCurrentDate()[0],
+          time: getCurrentDate()[1],
         }),
         headers: {
           "Content-Type": "application/json",
@@ -135,11 +137,18 @@ const Note = () => {
       if (!res.ok) {
         const errorData = await res.json();
         console.log(errorData);
+        alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
         return;
       }
 
       const success = await res.json();
-      console.log(success);
+
+      // setUserNotes(await getLocalStorageData());
+      reset();
+      clearErrors();
+      showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
+      router.replace("/(home)");
+
     } catch (error: any) {
       console.log("Error:", error.message);
     }
