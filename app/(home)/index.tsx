@@ -12,6 +12,7 @@ import {
 import AddNoteBTN from "@/components/addNoteBTN"; // Custom button component for adding notes
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
+import handleGetUsersNotes from "@/api/handleGetUsersNotes";
 
 const index = () => {
   const {
@@ -27,32 +28,6 @@ const index = () => {
   const route = useRouter();
   const { theme } = useTheme();
 
-  const handleGetUsersNotes = async () => {
-    try {
-      const res = await fetch(`http://10.0.2.2:3000/user_notes`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.log(errorData);
-        return;
-      }
-
-      const data = await res.json();
-      console.log(data);
-      return data;
-    } catch (error: any) {
-      console.log("Error:", error.message);
-    }
-  };
-
   useEffect(() => {
     console.log(accessKey, "xx");
   }, [accessKey]);
@@ -63,7 +38,8 @@ const index = () => {
     setLoading(true);
     console.log(appMode, "app mode");
     if (accessKey || appMode === "online") {
-      const res = await handleGetUsersNotes();
+      const res = await handleGetUsersNotes(accessKey);
+      console.log(res, "xxxxxxxxx");
       setUserNotes(res);
     } else {
       console.log("yyyyyyyyyyyyy");
@@ -72,6 +48,7 @@ const index = () => {
     setLoading(false);
   };
 
+  // display search notes
   const handleSearchingNotes = (filterText: string) => {
     try {
       const searchedNotes = userNotes?.filter((notes: any) =>
@@ -131,7 +108,7 @@ const index = () => {
               }}
             >
               {/* Display message if there are no notes, otherwise map through notes */}
-              {userNotes.length === 0 ? (
+              {!userNotes || userNotes.length === 0 ? (
                 <View
                   style={{
                     height: 400,

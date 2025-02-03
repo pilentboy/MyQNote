@@ -17,7 +17,7 @@ import {
   getLocalStorageData,
   storeDataInLocalStorage,
   handleEditingNote,
-  handleDeleteNote,
+  handleDeleteLocalNote,
 } from "../../utils/handleLocalStorage";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -27,6 +27,7 @@ import useTheme from "@/context/themeProvider";
 import Toast from "react-native-toast-message";
 import CustomAlert from "@/components/cutstomAlert";
 import NoteSmallBTN from "@/components/noteBox/noteSmallBTN";
+import handleGetUsersNotes from "@/api/handleGetUsersNotes";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -148,20 +149,38 @@ const Note = () => {
       clearErrors();
       showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
       router.replace("/(home)");
-
     } catch (error: any) {
       console.log("Error:", error.message);
     }
   };
 
-  const deleteNote = async () => {
-    const result = await handleDeleteNote(id);
+  const deleteLocalNote = async () => {
+    const result = await handleDeleteLocalNote(id);
     if (result) {
       setUserNotes(await getLocalStorageData());
       showToast("با موفقیت حذف شد");
       router.replace("/(home)");
     } else {
       alert("خطا در حذف نوت");
+    }
+  };
+
+  const handleDeleteCloudNote = async () => {
+    try {
+      const res = await fetch(`http://10.0.2.2:3000/delete_note/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key":
+            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
+      setUserNotes(await handleGetUsersNotes(accessKey));
+      showToast("با موفقیت حذف شد");
+      router.replace("/(home)");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -247,7 +266,7 @@ const Note = () => {
                   CustomAlert(
                     "حذف",
                     "آیا از حذف این نوشته مطمئن هستید؟",
-                    deleteNote
+                    accessKey ? handleDeleteCloudNote : deleteLocalNote
                   )
                 }
               />

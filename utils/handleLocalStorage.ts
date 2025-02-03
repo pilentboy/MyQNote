@@ -73,7 +73,7 @@ const handleEditingNote = async ({
   }
 };
 
-const handleDeleteNote = async (id: string | string[]) => {
+const handleDeleteLocalNote = async (id: string | string[]) => {
   try {
     const notes = await getLocalStorageData();
     const updatedNotes = notes.filter((note: any) => note.id !== id);
@@ -134,11 +134,13 @@ const handleRemoveAccessKey = async () => {
     console.log("error setting refresh key: ", error);
   }
 };
+
+
 export {
   storeDataInLocalStorage,
   getLocalStorageData,
   handleEditingNote,
-  handleDeleteNote,
+  handleDeleteLocalNote,
   handleFilterLocalStorageNote,
   handleDefaultNoteMode,
   handleGetAppMode,
