@@ -35,7 +35,7 @@ const Note = () => {
   const { loading, setLoading, setUserNotes, accessKey } =
     useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 200);
-  const { id, editedTitle, editedMainContent } = useLocalSearchParams();
+  const { id, editedTitle, editedContent } = useLocalSearchParams();
   const { theme } = useTheme();
 
   const showToast = (text: string) => {
@@ -68,7 +68,7 @@ const Note = () => {
     title: Yup.string()
       .max(20, "حداکثر 20 کاراکتر برای عنوان مجاز می باشد.")
       .required("عنوان نمی تواند خالی باشد"),
-    mainContent: Yup.string().required("یادداشت نمی تواند خالی باشد"),
+    content: Yup.string().required("یادداشت نمی تواند خالی باشد"),
   });
 
   const {
@@ -80,7 +80,7 @@ const Note = () => {
   } = useForm({
     defaultValues: {
       title: editedTitle?.toString() || "",
-      mainContent: editedMainContent?.toString() || "",
+      content: editedContent?.toString() || "",
     },
     resolver: yupResolver(validationSchema),
   });
@@ -92,7 +92,7 @@ const Note = () => {
       submitState = await handleEditingNote({
         id,
         editedTitle: data.title,
-        editedMainContent: data.mainContent,
+        editedContent: data.content,
       });
     } else {
       submitState = await storeDataInLocalStorage({
@@ -122,7 +122,7 @@ const Note = () => {
         method: "POST",
         body: JSON.stringify({
           title: data.title,
-          content: data.mainContent,
+          content: data.content,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -191,11 +191,11 @@ const Note = () => {
               />
             )}
           />
-          {errors.mainContent && (
-            <Text style={styles.errorText}>{errors.mainContent.message}</Text>
+          {errors.content && (
+            <Text style={styles.errorText}>{errors.content.message}</Text>
           )}
           <Controller
-            name="mainContent"
+            name="content"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput

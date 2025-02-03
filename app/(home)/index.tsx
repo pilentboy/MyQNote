@@ -14,7 +14,6 @@ import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 
 const index = () => {
-  // Extracting state and functions from the authentication context
   const {
     loading,
     setLoading,
@@ -25,8 +24,8 @@ const index = () => {
     appMode,
   } = useContext(authContext);
 
-  const route = useRouter(); // Router instance for navigation
-  const { theme } = useTheme(); // Accessing the current theme (light or dark)
+  const route = useRouter();
+  const { theme } = useTheme();
 
   const handleGetUsersNotes = async () => {
     try {
@@ -146,7 +145,7 @@ const index = () => {
                   <NoteBox
                     key={note.id}
                     title={note.title}
-                    mainContent={note.mainContent}
+                    content={note.content}
                     date={note.date}
                     time={note.time}
                     id={note.id}

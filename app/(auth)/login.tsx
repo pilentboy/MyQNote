@@ -56,7 +56,6 @@ const Login = () => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        console.log(errorData);
         return errorData;
       }
 
@@ -81,8 +80,8 @@ const Login = () => {
       });
     } else {
       await handleSetAccessKey(res?.token);
-      setAccessKey(res?.token);
       await handleDefaultNoteMode("online");
+      setAccessKey(res.token);
       setAppMode("online");
       showToast();
       router.navigate("/(home)");

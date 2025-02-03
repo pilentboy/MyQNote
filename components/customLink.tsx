@@ -1,6 +1,8 @@
 import { lightTheme } from "@/constants/theme";
-import { handleDefaultNoteMode } from "@/utils/handleLocalStorage";
+import { authContext } from "@/context/authProvider";
+import { handleDefaultNoteMode, handleRemoveAccessKey } from "@/utils/handleLocalStorage";
 import { Link } from "expo-router";
+import { useContext } from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
 type LinkProps = {
@@ -16,6 +18,8 @@ const CustomLink = ({
   bgColor = true,
   data = {},
 }: LinkProps) => {
+  const { setAppMode, setAccessKey } = useContext(authContext);
+
   return (
     <Link
       href={{ pathname: target, params: data }}
@@ -24,7 +28,12 @@ const CustomLink = ({
         { backgroundColor: bgColor ? lightTheme.primary : "gray" },
       ]}
       onPress={async () => {
-        if (title === "ورود آفلاین") await handleDefaultNoteMode("offline");
+        if (title === "ورود آفلاین") {
+          setAppMode("offline");
+          setAccessKey(undefined);
+          await handleDefaultNoteMode("offline");
+          await handleRemoveAccessKey();
+        }
       }}
       asChild
     >

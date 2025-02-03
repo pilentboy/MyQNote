@@ -16,6 +16,10 @@ export default function index() {
   const router = useRouter();
 
   useEffect(() => {
+    // const x = async () => {
+    //   const y = await AsyncStorage.setItem("notes", JSON.stringify([]));
+    // };
+    // x();
     const setAppMode = async () => {
       const mode = await AsyncStorage.getItem("defaultMode");
 

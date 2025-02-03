@@ -72,7 +72,7 @@ export default function CustomDrawerContent(props: any) {
           <Text
             style={{
               color: theme === "light" ? "black" : "white",
-              fontSize: 12,
+              fontSize: 11,
               textAlign: "center",
               fontFamily: "Yekan",
             }}

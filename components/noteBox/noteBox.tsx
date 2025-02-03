@@ -8,13 +8,13 @@ import useTheme from "@/context/themeProvider";
 
 const NoteBox = ({
   title,
-  mainContent,
+  content,
   date,
   time,
   id,
 }: {
   title: string;
-  mainContent: string;
+  content: string;
   date: string;
   time: string;
   id: string;
@@ -68,7 +68,7 @@ const NoteBox = ({
               params: {
                 id: id,
                 editedTitle: title,
-                editedMainContent: mainContent,
+                editedContent: content,
               },
             })
           }
@@ -87,11 +87,11 @@ const NoteBox = ({
           }}
         >
           {displayFullContent
-            ? mainContent
-            : mainContent
+            ? content
+            : content
                 .replace(/\s+/g, " ")
-                .slice(0, mainContent.length > 80 ? 80 : mainContent.length)}
-          {mainContent.length > 100 ? "..." : null}
+                .slice(0, content.length > 80 ? 80 : content.length)}
+          {content.length > 100 ? "..." : null}
         </Text>
       </Pressable>
 

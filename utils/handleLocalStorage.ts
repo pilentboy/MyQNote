@@ -43,13 +43,13 @@ const handleFilterLocalStorageNote = async (filterText: string) => {
 interface EditingValues {
   id: string | string[];
   editedTitle: string;
-  editedMainContent: string;
+  editedContent: string;
 }
 
 const handleEditingNote = async ({
   id,
   editedTitle,
-  editedMainContent,
+  editedContent,
 }: EditingValues) => {
   try {
     const updatedNotes = await getLocalStorageData();
@@ -60,7 +60,7 @@ const handleEditingNote = async ({
     editedNote = {
       ...editedNote,
       title: editedTitle,
-      mainContent: editedMainContent,
+      content: editedContent,
     };
 
     updatedNotes[editingNoteIndex] = editedNote;
@@ -117,10 +117,19 @@ const handleDeleteNotes = async () => {
   await AsyncStorage.setItem("notes", JSON.stringify([]));
 };
 
-const handleSetAccessKey = async (refreshKey: string) => {
+const handleSetAccessKey = async (accessKey: string) => {
   try {
-    await AsyncStorage.setItem("access_key", JSON.stringify(refreshKey));
+    await AsyncStorage.setItem("access_key", JSON.stringify(accessKey));
     console.log("access_key key set");
+  } catch (error) {
+    console.log("error setting refresh key: ", error);
+  }
+};
+
+const handleRemoveAccessKey = async () => {
+  try {
+    await AsyncStorage.removeItem("access_key");
+    console.log("access_key deleted");
   } catch (error) {
     console.log("error setting refresh key: ", error);
   }
@@ -137,4 +146,5 @@ export {
   handleGetAppTheme,
   handleDeleteNotes,
   handleSetAccessKey,
+  handleRemoveAccessKey,
 };

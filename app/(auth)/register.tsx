@@ -9,7 +9,6 @@ import AuthFormContainer from "@/components/formItems/authFormContainer";
 import Loading from "@/components/loading";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
-import useTheme from "@/context/themeProvider";
 import FormTitle from "@/components/formItems/formTitle";
 import SubmitBTN from "@/components/formItems/submitBTN";
 import BottomGuideText from "@/components/formItems/bottomGuideText";
@@ -18,7 +17,6 @@ import Toast from "react-native-toast-message";
 const Register = () => {
   const { loading, setLoading } = useContext(authContext);
   const router = useRouter();
-  const { theme } = useTheme();
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
