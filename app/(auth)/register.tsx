@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,7 +18,6 @@ import handleRegister from "@/api/handleRegister";
 const Register = () => {
   const { loading, setLoading } = useContext(authContext);
   const router = useRouter();
-
 
   // registering schema
   const validationSchema = Yup.object().shape({
@@ -57,7 +56,6 @@ const Register = () => {
       text2: "ثبت نام شما با موفقیت انجام شد",
     });
   };
-
 
   // handle register form
   const onSubmit = async (data: any) => {
