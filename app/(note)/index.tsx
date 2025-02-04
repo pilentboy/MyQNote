@@ -181,7 +181,7 @@ const Note = () => {
     }
   };
 
-  const handleOnlineAddingNote = async (data: any) => {
+  const handleAddingCloudNotes = async (data: any) => {
     try {
       const res = await fetch("http://10.0.2.2:3000/add_note", {
         method: "POST",
@@ -296,7 +296,7 @@ const Note = () => {
                 accessKey && editedTitle
                   ? handleEditingCloudNote
                   : accessKey
-                  ? handleOnlineAddingNote
+                  ? handleAddingCloudNotes
                   : handleOfflineAddingNote
               )}
             />
