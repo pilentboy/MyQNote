@@ -6,7 +6,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import Logo from "@/components/logo";
+import  { CroppedLogo } from "@/components/logo";
 import CustomLinearGradient from "../linearGradient";
 
 const AuthFormContainer = ({ children }: { children: ReactNode }) => {
@@ -23,7 +23,7 @@ const AuthFormContainer = ({ children }: { children: ReactNode }) => {
         }}
       >
         <CustomLinearGradient />
-        <Logo />
+        <CroppedLogo />
         <KeyboardAvoidingView>{children}</KeyboardAvoidingView>
       </View>
     </ScrollView>

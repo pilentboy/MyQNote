@@ -8,7 +8,7 @@ const Logo = ({ size = 150 }: { size?: number }) => (
   />
 );
 
-const CroppedLogo = ({ size = 200 }: { size?: number }) => (
+const CroppedLogo = ({ size = 100 }: { size?: number }) => (
   <Image
     source={require("@/assets/images/icon.png")}
     style={{ height: size, width: size }}

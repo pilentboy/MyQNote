@@ -1,11 +1,9 @@
 import { View } from "react-native";
 import CustomeLink from "@/components/customLink";
 import ShortTitle from "@/components/shortTitle";
-import Logo from "@/components/logo";
+import Logo, { CroppedLogo } from "@/components/logo";
 import CustomLinearGradient from "@/components/linearGradient";
-import useTheme from "@/context/themeProvider";
 export default function index() {
-  
   return (
     <View
       style={{
@@ -15,7 +13,7 @@ export default function index() {
         alignItems: "center",
       }}
     >
-      <Logo />
+      <CroppedLogo />
       <CustomLinearGradient />
 
       <ShortTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
