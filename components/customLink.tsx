@@ -1,6 +1,9 @@
 import { lightTheme } from "@/constants/theme";
 import { authContext } from "@/context/authProvider";
-import { handleDefaultNoteMode, handleRemoveAccessKey } from "@/utils/handleLocalStorage";
+import {
+  handleDefaultNoteMode,
+  handleRemoveAccessKey,
+} from "@/utils/handleLocalStorage";
 import { Link } from "expo-router";
 import { useContext } from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
@@ -18,7 +21,7 @@ const CustomLink = ({
   bgColor = true,
   data = {},
 }: LinkProps) => {
-  const { setAppMode, setAccessKey } = useContext(authContext);
+  const { setAppMode, setAccessKey, setUserNotes } = useContext(authContext);
 
   return (
     <Link
@@ -31,6 +34,7 @@ const CustomLink = ({
         if (title === "ورود آفلاین") {
           setAppMode("offline");
           setAccessKey(undefined);
+          setUserNotes([]);
           await handleDefaultNoteMode("offline");
           await handleRemoveAccessKey();
         }
