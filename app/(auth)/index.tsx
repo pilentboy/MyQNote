@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import CustomeLink from "@/components/customLink";
 import ShortTitle from "@/components/shortTitle";
-import Logo, { CroppedLogo } from "@/components/logo";
+import { CroppedLogo } from "@/components/logo";
 import CustomLinearGradient from "@/components/linearGradient";
 export default function index() {
   return (
