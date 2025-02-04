@@ -1,3 +1,5 @@
+// get users note with using the uniqe accessKey
+
 const handleGetUsersNotes = async (accessKey: any) => {
   try {
     const res = await fetch(`http://10.0.2.2:3000/user_notes`, {
@@ -17,7 +19,6 @@ const handleGetUsersNotes = async (accessKey: any) => {
     }
 
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (error: any) {
     console.log("Error:", error.message);

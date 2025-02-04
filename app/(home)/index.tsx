@@ -5,16 +5,14 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user data
 import { lightTheme } from "@/constants/theme"; // Constants for the light theme colors
-import {
-  getLocalStorageData,
-  handleFilterLocalStorageNote,
-} from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
+import { getLocalStorageData } from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
 import AddNoteBTN from "@/components/addNoteBTN"; // Custom button component for adding notes
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 import handleGetUsersNotes from "@/api/handleGetUsersNotes";
 
 const index = () => {
+  
   const {
     loading,
     setLoading,
@@ -28,21 +26,14 @@ const index = () => {
   const route = useRouter();
   const { theme } = useTheme();
 
-  useEffect(() => {
-    console.log(accessKey, "xx");
-  }, [accessKey]);
-
   // Fetch all notes from local storage and set them in state
   const setData = async () => {
     setUserNotes([]);
     setLoading(true);
-    console.log(appMode, "app mode");
     if (accessKey || appMode === "online") {
       const res = await handleGetUsersNotes(accessKey);
-      console.log(res, "xxxxxxxxx");
       setUserNotes(res);
     } else {
-      console.log("yyyyyyyyyyyyy");
       setUserNotes(await getLocalStorageData());
     }
     setLoading(false);
@@ -62,9 +53,9 @@ const index = () => {
 
   // Filter notes based on the search value and update state
   const setSearchNotes = () => {
-    setLoading(true); // Start loading
+    setLoading(true);
     setUserNotes(handleSearchingNotes(searchValue)); // Fetch filtered notes
-    setLoading(false); // End loading
+    setLoading(false);
   };
 
   // Effect: Trigger fetching or filtering notes when `searchValue` changes
@@ -74,7 +65,7 @@ const index = () => {
     } else {
       setData(); // Fetch all notes
     }
-  }, [searchValue, accessKey]); // Dependency: Executes when `searchValue` changes
+  }, [searchValue, accessKey]);
 
   return (
     <GestureHandlerRootView>

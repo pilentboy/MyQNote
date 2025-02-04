@@ -22,6 +22,7 @@ const Login = () => {
     useContext(authContext);
   const router = useRouter();
 
+  // log in schema
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("نام کاربری نمی تواند خالی باشد"),
     password: Yup.string().required("رمز عبور الزامی است"),
@@ -36,12 +37,16 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
+
+  // display toast after a successfull log in
   const showToast = () => {
     Toast.show({
       type: "success",
       text2: "ورود با موفقیت",
     });
   };
+
+  // handle login action
   const handleLogin = async (data: any) => {
     try {
       const res = await fetch("http://10.0.2.2:3000/login", {
@@ -66,12 +71,11 @@ const Login = () => {
     }
   };
 
+  // submit log in form
   const onSubmit = async (data: any) => {
     setLoading(true);
     const res = await handleLogin(data);
     setLoading(false);
-
-    console.log(res, "x");
 
     if (res.error) {
       setError("username", {

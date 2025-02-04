@@ -86,6 +86,7 @@ const Note = () => {
     resolver: yupResolver(validationSchema),
   });
 
+  //------------ offline action handleres
   const handleOfflineAddingNote = async (data: any) => {
     let submitState: boolean | undefined;
     setLoading(true);
@@ -116,43 +117,6 @@ const Note = () => {
     setLoading(false);
   };
 
-  const handleOnlineAddingNote = async (data: any) => {
-    try {
-      const res = await fetch("http://10.0.2.2:3000/add_note", {
-        method: "POST",
-        body: JSON.stringify({
-          title: data.title,
-          content: data.content,
-          date: getCurrentDate()[0],
-          time: getCurrentDate()[1],
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.log(errorData);
-        alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
-        return;
-      }
-
-      const success = await res.json();
-
-      // setUserNotes(await getLocalStorageData());
-      reset();
-      clearErrors();
-      showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
-      router.replace("/(home)");
-    } catch (error: any) {
-      console.log("Error:", error.message);
-    }
-  };
-
   const deleteLocalNote = async () => {
     const result = await handleDeleteLocalNote(id);
     if (result) {
@@ -163,7 +127,9 @@ const Note = () => {
       alert("خطا در حذف نوت");
     }
   };
+  //------------ end offline action handleres
 
+  //------------  cloud action handlers
   const handleDeleteCloudNote = async () => {
     try {
       const res = await fetch(`http://10.0.2.2:3000/delete_note/${id}`, {
@@ -214,6 +180,44 @@ const Note = () => {
       console.log(error);
     }
   };
+
+  const handleOnlineAddingNote = async (data: any) => {
+    try {
+      const res = await fetch("http://10.0.2.2:3000/add_note", {
+        method: "POST",
+        body: JSON.stringify({
+          title: data.title,
+          content: data.content,
+          date: getCurrentDate()[0],
+          time: getCurrentDate()[1],
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key":
+            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.log(errorData);
+        alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
+        return;
+      }
+
+      const success = await res.json();
+
+      // setUserNotes(await getLocalStorageData());
+      reset();
+      clearErrors();
+      showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
+      router.replace("/(home)");
+    } catch (error: any) {
+      console.log("Error:", error.message);
+    }
+  };
+  //------------ end cloud action handlere
 
   return (
     <ScrollView

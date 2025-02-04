@@ -18,6 +18,8 @@ const Register = () => {
   const { loading, setLoading } = useContext(authContext);
   const router = useRouter();
 
+
+  // registering schema
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .matches(
@@ -47,12 +49,16 @@ const Register = () => {
     resolver: yupResolver(validationSchema),
   });
 
+  // display toast after a successfull registration
   const showToast = () => {
     Toast.show({
       type: "success",
       text2: "ثبت نام شما با موفقیت انجام شد",
     });
   };
+
+  // handle register action
+
   const handleRegister = async (data: any) => {
     try {
       const res = await fetch("http://10.0.2.2:3000/register", {
@@ -76,13 +82,13 @@ const Register = () => {
     }
   };
 
+  // handle register form
   const onSubmit = async (data: any) => {
     setLoading(true);
     const res = await handleRegister(data);
     setLoading(false);
 
     if (res.error) {
-      console.log(res.error);
       setError("username", {
         type: "manual",
         message: res.error[0].unique_username,
