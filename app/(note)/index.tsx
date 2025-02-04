@@ -39,9 +39,9 @@ const Note = () => {
   const { id, editedTitle, editedContent } = useLocalSearchParams();
   const { theme } = useTheme();
 
-  const showToast = (text: string) => {
+  const showToast = (text: string, type?: string) => {
     Toast.show({
-      type: "success",
+      type: type || "success",
       text2: text,
     });
   };
@@ -194,7 +194,7 @@ const Note = () => {
         headers: {
           "Content-Type": "application/json",
           "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAO2lta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
           Authorization: `Bearer ${accessKey}`,
         },
       });
@@ -202,7 +202,10 @@ const Note = () => {
       if (!res.ok) {
         const errorData = await res.json();
         console.log(errorData);
-        alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
+        showToast(
+          `خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`,
+          "error"
+        );
         return;
       }
 

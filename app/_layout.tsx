@@ -21,6 +21,19 @@ const toastConfig = {
       }}
     />
   ),
+  error: (props: any) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: "red" }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text2Style={{
+        fontSize: 14,
+        fontWeight: "400",
+        fontFamily: "Yekan",
+        textAlign: "center",
+      }}
+    />
+  ),
 };
 
 export default function RootLayout() {
