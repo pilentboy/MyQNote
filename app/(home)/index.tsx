@@ -10,9 +10,9 @@ import AddNoteBTN from "@/components/addNoteBTN"; // Custom button component for
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 import handleGetUsersNotes from "@/api/handleGetUsersNotes";
+import handleSearchingNotes from "@/utils/handleSearchingNotes";
 
 const index = () => {
-  
   const {
     loading,
     setLoading,
@@ -39,22 +39,10 @@ const index = () => {
     setLoading(false);
   };
 
-  // display search notes
-  const handleSearchingNotes = (filterText: string) => {
-    try {
-      const searchedNotes = userNotes?.filter((notes: any) =>
-        notes.title.includes(filterText)
-      );
-      return searchedNotes;
-    } catch (error) {
-      console.error("خطا در فیلتر داده ها :", error);
-    }
-  };
-
   // Filter notes based on the search value and update state
   const setSearchNotes = () => {
     setLoading(true);
-    setUserNotes(handleSearchingNotes(searchValue)); // Fetch filtered notes
+    setUserNotes(handleSearchingNotes(userNotes, searchValue)); // Fetch filtered notes
     setLoading(false);
   };
 
