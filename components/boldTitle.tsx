@@ -2,7 +2,7 @@ import { lightTheme } from "@/constants/theme";
 import useTheme from "@/context/themeProvider";
 import { Text } from "react-native";
 
-const ShortTitle = ({ title, size = 25 }: { title: string; size?: number }) => {
+const BoldTitle = ({ title, size = 25 }: { title: string; size?: number }) => {
   const { theme } = useTheme();
   return (
     <Text
@@ -20,4 +20,4 @@ const ShortTitle = ({ title, size = 25 }: { title: string; size?: number }) => {
   );
 };
 
-export default ShortTitle;
+export default BoldTitle;

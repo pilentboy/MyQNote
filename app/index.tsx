@@ -5,9 +5,9 @@ import { View, StyleSheet } from "react-native";
 import CustomeLink from "@/components/customLink";
 import { Image } from "expo-image";
 import Logo from "@/components/logo";
-import ShortTitle from "@/components/shortTitle";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import BoldTitle from "@/components/boldTitle";
 
 // welcome screen
 export default function index() {
@@ -34,7 +34,7 @@ export default function index() {
     return (
       <View style={styles.container}>
         <Logo />
-        <ShortTitle title="به مایک نت خوش اومدی!" />
+        <BoldTitle title="به مایک نت خوش اومدی!" />
         <Image
           source={require("@/assets/images/welcome.png")}
           style={styles.welcomeImg}

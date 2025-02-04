@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import CustomeLink from "@/components/customLink";
-import ShortTitle from "@/components/shortTitle";
+import BoldTitle from "@/components/boldTitle";
 import { CroppedLogo } from "@/components/logo";
 import CustomLinearGradient from "@/components/linearGradient";
 export default function index() {
@@ -16,7 +16,7 @@ export default function index() {
       <CroppedLogo />
       <CustomLinearGradient />
 
-      <ShortTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
+      <BoldTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
 
       <View
         style={{
