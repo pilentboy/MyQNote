@@ -3,10 +3,8 @@ import CustomeLink from "@/components/customLink";
 import ShortTitle from "@/components/shortTitle";
 import Logo from "@/components/logo";
 import CustomLinearGradient from "@/components/linearGradient";
-import { darkTheme } from "@/constants/theme";
 import useTheme from "@/context/themeProvider";
 export default function index() {
-  const { theme } = useTheme();
   
   return (
     <View

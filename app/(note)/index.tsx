@@ -194,7 +194,7 @@ const Note = () => {
         headers: {
           "Content-Type": "application/json",
           "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAO2lta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
           Authorization: `Bearer ${accessKey}`,
         },
       });
@@ -209,9 +209,8 @@ const Note = () => {
         return;
       }
 
-      const success = await res.json();
+      //const success = await res.json();
 
-      // setUserNotes(await getLocalStorageData());
       reset();
       clearErrors();
       showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");

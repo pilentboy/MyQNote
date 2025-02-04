@@ -42,7 +42,7 @@ const Login = () => {
   const showToast = () => {
     Toast.show({
       type: "success",
-      text2: "ورود با موفقیت",
+      text2: "با موفقیت وارد شدید",
     });
   };
 
@@ -76,7 +76,6 @@ const Login = () => {
     setLoading(true);
     const res = await handleLogin(data);
     setLoading(false);
-
 
     if (res.error) {
       setError("username", {

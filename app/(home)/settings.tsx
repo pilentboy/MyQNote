@@ -16,13 +16,13 @@ import { authContext } from "@/context/authProvider"; // Context for managing au
 
 export default function Settings() {
   const { setTheme, theme } = useTheme(); // Access and set the app's current theme
-  const { setUserNotes } = useContext(authContext); // Access and update user notes from the context
+  const { setUserNotes, accessKey } = useContext(authContext); // Access and update user notes from the context
 
   // Function to display a success toast message
-  const showToast = () => {
+  const showToast = (text: string, type?: string) => {
     Toast.show({
-      type: "success", // Toast type
-      text2: "با موفقیت حذف شدند", // Success message
+      type: type || "success",
+      text2: text, // Success message
     });
   };
 
@@ -32,11 +32,40 @@ export default function Settings() {
     setTheme(await handleGetAppTheme()); // Update theme state based on the new value
   };
 
+  const handleDeleteCloudNotes = async () => {
+    console.log("t");
+    try {
+      const res = await fetch("http://10.0.2.2:3000/delete_notes", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key":
+            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
+
+      const resJson = await res.json();
+      return resJson;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Function to delete all notes from local storage
-  const deleteLocalNotes = async () => {
-    await handleDeleteNotes(); // Delete notes from local storage
-    setUserNotes(await getLocalStorageData()); // reset notes state
-    showToast(); // Show success toast
+  const deleteNotes = async () => {
+    if (accessKey) {
+      const res = await handleDeleteCloudNotes();
+      if (res.error) {
+        showToast("خطا در پاک کردن یادداشت ها", "error");
+      } else {
+        showToast("یادداشت ها با موفقیت حذف شدند");
+      }
+    } else {
+      await handleDeleteNotes(); // Delete notes from local storage
+      showToast("یادداشت ها با موفقیت حذف شدند");
+      setUserNotes(await getLocalStorageData()); // reset notes state
+    }
   };
 
   return (
@@ -63,8 +92,8 @@ export default function Settings() {
           onPress={() =>
             CustomAlert(
               "حذف", // Alert title
-              "آیا از حذف تمام نوشته ها مطئن هستید؟",
-              deleteLocalNotes // Callback for confirming deletion
+              "آیا از حذف تمام یادداشت ها مطمئن هستید؟",
+              deleteNotes // Callback for confirming deletion
             )
           }
           name="delete-forever"
