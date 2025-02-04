@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { lightTheme } from "@/constants/theme";
-import { CroppedLogo } from "./logo";
+import { CroppedLogo } from "../logo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchInput from "./searchInput";
 import useTheme from "@/context/themeProvider";
@@ -12,7 +12,7 @@ export default function DrawerCustomHeader({
   navigation: DrawerNavigationProp<any>;
 }) {
   const { theme } = useTheme();
-  
+
   return (
     <View
       style={{

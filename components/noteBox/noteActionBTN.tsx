@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity } from "react-native";
 import { lightTheme } from "@/constants/theme";
-const NoteSmallBTN = ({ title, action }: { title: string; action: any }) => {
+const NoteActionBTN = ({ title, action }: { title: string; action: any }) => {
   return (
     <TouchableOpacity
       style={{
@@ -21,4 +21,4 @@ const NoteSmallBTN = ({ title, action }: { title: string; action: any }) => {
   );
 };
 
-export default NoteSmallBTN;
+export default NoteActionBTN;

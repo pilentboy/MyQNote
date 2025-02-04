@@ -26,7 +26,7 @@ import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import Toast from "react-native-toast-message";
 import CustomAlert from "@/components/cutstomAlert";
-import NoteSmallBTN from "@/components/noteBox/noteSmallBTN";
+import NoteActionBTN from "@/components/noteBox/noteActionBTN";
 import handleGetUsersNotes from "@/api/handleGetUsersNotes";
 
 const Note = () => {
@@ -290,7 +290,7 @@ const Note = () => {
               justifyContent: "space-evenly",
             }}
           >
-            <NoteSmallBTN
+            <NoteActionBTN
               title={editedTitle ? "ثبت ویرایش" : "افزودن"}
               action={handleSubmit(
                 accessKey && editedTitle
@@ -301,7 +301,7 @@ const Note = () => {
               )}
             />
             {editedTitle && (
-              <NoteSmallBTN
+              <NoteActionBTN
                 title="حذف"
                 action={() =>
                   CustomAlert(

@@ -3,7 +3,7 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { View, Text, TouchableOpacity } from "react-native";
-import { CroppedLogo } from "./logo";
+import { CroppedLogo } from "../logo";
 import { useRouter } from "expo-router";
 import { lightTheme } from "@/constants/theme";
 import { useContext } from "react";

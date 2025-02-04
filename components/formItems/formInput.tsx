@@ -1,7 +1,7 @@
 import { lightTheme } from "@/constants/theme";
 import useTheme from "@/context/themeProvider";
 import { Controller } from "react-hook-form";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput } from "react-native";
 const FormInput = ({
   errors,
   label,
@@ -66,9 +66,4 @@ const FormInput = ({
   );
 };
 
-const styles = StyleSheet.create({
-  inputError: {
-    borderColor: "red",
-  },
-});
 export default FormInput;

@@ -3,13 +3,13 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"; // Provid
 import { Drawer } from "expo-router/drawer";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
-import CustomDrawerContent from "@/components/customDrawerContent"; // Custom content for the drawer
-import DrawerCustomHeader from "@/components/drawerCustomHeader"; // Custom header component for the drawer
+import CustomDrawerContent from "@/components/home/customDrawerContent"; // Custom content for the drawer
+import DrawerCustomHeader from "@/components/home/drawerCustomHeader"; // Custom header component for the drawer
 import useTheme from "@/context/themeProvider";
 
 export default function Layout() {
   const labelFontSize = 14; // Font size for drawer labels
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
