@@ -118,7 +118,6 @@ const Note = () => {
 
   const handleOnlineAddingNote = async (data: any) => {
     try {
-      console.log(accessKey);
       const res = await fetch("http://10.0.2.2:3000/add_note", {
         method: "POST",
         body: JSON.stringify({
@@ -180,6 +179,38 @@ const Note = () => {
       showToast("با موفقیت حذف شد");
       router.replace("/(home)");
     } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEditingCloudNote = async (data: any) => {
+    try {
+      const res = await fetch("http://10.0.2.2:3000/edit_note", {
+        method: "PUT",
+        body: JSON.stringify({
+          title: data.title,
+          content: data.content,
+          date: getCurrentDate()[0],
+          time: getCurrentDate()[1],
+          post_id: id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key":
+            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        alert(`خطا در ویرایش اطلاعات!`);
+        console.log(errorData.message);
+        return;
+      }
+      showToast("با موفقیت ویرایش شد");
+      router.replace("/(home)");
+    } catch (error: any) {
       console.log(error);
     }
   };
@@ -256,7 +287,11 @@ const Note = () => {
             <NoteSmallBTN
               title={editedTitle ? "ثبت ویرایش" : "افزودن"}
               action={handleSubmit(
-                accessKey ? handleOnlineAddingNote : handleOfflineAddingNote
+                accessKey && editedTitle
+                  ? handleEditingCloudNote
+                  : accessKey
+                  ? handleOnlineAddingNote
+                  : handleOfflineAddingNote
               )}
             />
             {editedTitle && (
