@@ -306,7 +306,7 @@ const Note = () => {
                 action={() =>
                   CustomAlert(
                     "حذف",
-                    "آیا از حذف این نوشته مطمئن هستید؟",
+                    "آیا از حذف این یادداشت مطمئن هستید؟",
                     accessKey ? handleDeleteCloudNote : deleteLocalNote
                   )
                 }

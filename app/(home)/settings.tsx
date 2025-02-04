@@ -13,6 +13,7 @@ import CustomAlert from "@/components/cutstomAlert";
 import Toast from "react-native-toast-message"; // Library for displaying toast notifications
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user-related data
+import handleDeleteCloudNotes from "@/api/handleDeleteCloudNotes";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme(); // Access and set the app's current theme
@@ -32,36 +33,18 @@ export default function Settings() {
     setTheme(await handleGetAppTheme()); // Update theme state based on the new value
   };
 
-  const handleDeleteCloudNotes = async () => {
-    console.log("t");
-    try {
-      const res = await fetch("http://10.0.2.2:3000/delete_notes", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
-
-      const resJson = await res.json();
-      return resJson;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Function to delete all notes from local storage
+  // Function to delete all notes
   const deleteNotes = async () => {
+    // delete cloud notes
     if (accessKey) {
-      const res = await handleDeleteCloudNotes();
+      const res = await handleDeleteCloudNotes(accessKey);
       if (res.error) {
         showToast("خطا در پاک کردن یادداشت ها", "error");
       } else {
         showToast("یادداشت ها با موفقیت حذف شدند");
       }
     } else {
+      // delete local notes
       await handleDeleteNotes(); // Delete notes from local storage
       showToast("یادداشت ها با موفقیت حذف شدند");
       setUserNotes(await getLocalStorageData()); // reset notes state
