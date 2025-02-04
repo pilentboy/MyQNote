@@ -16,7 +16,7 @@ export default function index() {
       <CroppedLogo />
       <CustomLinearGradient />
 
-      <BoldTitle size={21} title="ثبت نام یا ورود را انتخاب کنید" />
+      <BoldTitle size={21} title="لطفا یک گزینه را برای ورود انتخاب کنید" />
 
       <View
         style={{
