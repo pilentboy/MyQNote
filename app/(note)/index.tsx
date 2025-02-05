@@ -183,7 +183,7 @@ const Note = () => {
 
   const handleAddingCloudNotes = async (data: any) => {
     try {
-      const res = await fetch("http://10.0.2.2:3000/add_note", {
+      const res = await fetch("https://myqnoteapi.liara.run/add_note", {
         method: "POST",
         body: JSON.stringify({
           title: data.title,
