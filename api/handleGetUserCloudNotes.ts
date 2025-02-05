@@ -1,6 +1,6 @@
 // get users note with using the uniqe accessKey
 
-const handleGetUsersNotes = async (accessKey: any) => {
+const handleGetUserCloudNotes = async (accessKey: any) => {
   try {
     const res = await fetch(`http://10.0.2.2:3000/user_notes`, {
       method: "GET",
@@ -25,4 +25,4 @@ const handleGetUsersNotes = async (accessKey: any) => {
   }
 };
 
-export default handleGetUsersNotes;
+export default handleGetUserCloudNotes;

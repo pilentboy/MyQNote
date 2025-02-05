@@ -9,7 +9,7 @@ import { getLocalStorageData } from "@/utils/handleLocalStorage"; // Utility fun
 import AddNoteBTN from "@/components/home/addNoteBTN"; // Custom button component for adding notes
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
-import handleGetUsersNotes from "@/api/handleGetUsersNotes";
+import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
 
 const index = () => {
@@ -31,7 +31,7 @@ const index = () => {
     setUserNotes([]);
     setLoading(true);
     if (accessKey || appMode === "online") {
-      const res = await handleGetUsersNotes(accessKey);
+      const res = await handleGetUserCloudNotes(accessKey);
       setUserNotes(res);
     } else {
       setUserNotes(await getLocalStorageData());

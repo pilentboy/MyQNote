@@ -27,7 +27,7 @@ import useTheme from "@/context/themeProvider";
 import Toast from "react-native-toast-message";
 import CustomAlert from "@/components/cutstomAlert";
 import NoteActionBTN from "@/components/noteBox/noteActionBTN";
-import handleGetUsersNotes from "@/api/handleGetUsersNotes";
+import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -141,7 +141,7 @@ const Note = () => {
           Authorization: `Bearer ${accessKey}`,
         },
       });
-      setUserNotes(await handleGetUsersNotes(accessKey));
+      setUserNotes(await handleGetUserCloudNotes(accessKey));
       showToast("با موفقیت حذف شد");
       router.replace("/(home)");
     } catch (error) {
