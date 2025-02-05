@@ -1,6 +1,6 @@
 const handleDeleteCloudNotes = async (accessKey: any) => {
   try {
-    const res = await fetch("http://10.0.2.2:3000/delete_notes", {
+    const res = await fetch("https://myqnoteapi.liara.run/delete_notes", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
