@@ -11,6 +11,7 @@ import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
+import CustomAlert from "@/components/cutstomAlert";
 
 const index = () => {
   const {
@@ -32,7 +33,11 @@ const index = () => {
     setLoading(true);
     if (accessKey || appMode === "online") {
       const res = await handleGetUserCloudNotes(accessKey);
-      setUserNotes(res);
+      if (res.message) {
+        alert("خطا در دریافت یادداشت ها");
+      } else {
+        setUserNotes(res);
+      }
     } else {
       setUserNotes(await getLocalStorageData());
     }
