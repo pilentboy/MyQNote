@@ -14,7 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Loading from "../../components/loading";
 import { authContext } from "@/context/authProvider";
 import {
-  getLocalStorageData,
+  getLocalStorageUserNotes,
   storeDataInLocalStorage,
   handleEditingNote,
   handleDeleteLocalNote,
@@ -106,7 +106,7 @@ const Note = () => {
     }
 
     if (submitState) {
-      setUserNotes(await getLocalStorageData());
+      setUserNotes(await getLocalStorageUserNotes());
       reset();
       clearErrors();
       showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
@@ -120,7 +120,7 @@ const Note = () => {
   const deleteLocalNote = async () => {
     const result = await handleDeleteLocalNote(id);
     if (result) {
-      setUserNotes(await getLocalStorageData());
+      setUserNotes(await getLocalStorageUserNotes());
       showToast("با موفقیت حذف شد");
       router.replace("/(home)");
     } else {

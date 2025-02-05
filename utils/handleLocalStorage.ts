@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const storeDataInLocalStorage = async (value: any) => {
   try {
-    const notes = await getLocalStorageData();
+    const notes = await getLocalStorageUserNotes();
     if (notes) {
       notes.push(value);
     }
@@ -13,7 +13,7 @@ const storeDataInLocalStorage = async (value: any) => {
   }
 };
 
-const getLocalStorageData = async () => {
+const getLocalStorageUserNotes = async () => {
   try {
     const value = await AsyncStorage.getItem("notes");
     if (value) {
@@ -52,7 +52,7 @@ const handleEditingNote = async ({
   editedContent,
 }: EditingValues) => {
   try {
-    const updatedNotes = await getLocalStorageData();
+    const updatedNotes = await getLocalStorageUserNotes();
     const editingNoteIndex = updatedNotes.findIndex(
       (note: any) => note.id === id
     );
@@ -75,7 +75,7 @@ const handleEditingNote = async ({
 
 const handleDeleteLocalNote = async (id: string | string[]) => {
   try {
-    const notes = await getLocalStorageData();
+    const notes = await getLocalStorageUserNotes();
     const updatedNotes = notes.filter((note: any) => note.id !== id);
 
     await AsyncStorage.setItem("notes", JSON.stringify(updatedNotes));
@@ -137,7 +137,7 @@ const handleRemoveAccessKey = async () => {
 
 export {
   storeDataInLocalStorage,
-  getLocalStorageData,
+  getLocalStorageUserNotes,
   handleEditingNote,
   handleDeleteLocalNote,
   handleFilterLocalStorageNote,

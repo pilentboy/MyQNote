@@ -1,6 +1,6 @@
 import { View, Switch } from "react-native";
 import {
-  getLocalStorageData,
+  getLocalStorageUserNotes,
   handleChangeAppTheme,
   handleDeleteNotes,
   handleGetAppTheme,
@@ -47,7 +47,7 @@ export default function Settings() {
       // delete local notes
       await handleDeleteNotes(); // Delete notes from local storage
       showToast("یادداشت ها با موفقیت حذف شدند");
-      setUserNotes(await getLocalStorageData()); // reset notes state
+      setUserNotes(await getLocalStorageUserNotes()); // reset notes state
     }
   };
 
