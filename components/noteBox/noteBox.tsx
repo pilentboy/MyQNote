@@ -39,7 +39,6 @@ const NoteBox = ({
   };
   // end handle long touch on note box
 
-  
   const goEditingNoteScreen = () => {
     route.push({
       pathname: "/(note)",

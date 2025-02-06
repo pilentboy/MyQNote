@@ -118,6 +118,7 @@ const Note = () => {
   };
 
   const deleteLocalNote = async () => {
+    setLoading(true);
     const result = await handleDeleteLocalNote(id);
     if (result) {
       setUserNotes(await getLocalStorageUserNotes());
@@ -126,11 +127,14 @@ const Note = () => {
     } else {
       alert("خطا در حذف نوت");
     }
+    setLoading(false);
   };
+
   //------------ end offline action handleres
 
   //------------  cloud action handlers
   const handleDeleteCloudNote = async () => {
+    setLoading(true);
     try {
       const res = await fetch(
         `https://myqnoteapi.liara.run/delete_note/${id}`,
@@ -149,10 +153,13 @@ const Note = () => {
       router.replace("/(home)");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleEditingCloudNote = async (data: any) => {
+    setLoading(true);
     try {
       const res = await fetch("https://myqnoteapi.liara.run/edit_note", {
         method: "PUT",
@@ -181,10 +188,13 @@ const Note = () => {
       router.replace("/(home)");
     } catch (error: any) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleAddingCloudNotes = async (data: any) => {
+    setLoading(true);
     try {
       const res = await fetch("https://myqnoteapi.liara.run/add_note", {
         method: "POST",
@@ -220,6 +230,8 @@ const Note = () => {
       router.replace("/(home)");
     } catch (error: any) {
       console.log("Error:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
   //------------ end cloud action handlere
