@@ -91,7 +91,7 @@ const NoteBox = ({
             : content
                 .replace(/\s+/g, " ")
                 .slice(0, content.length > 80 ? 80 : content.length)}
-          {content.length > 100 ? "..." : null}
+          {!displayFullContent ? "..." : null}
         </Text>
       </Pressable>
 
