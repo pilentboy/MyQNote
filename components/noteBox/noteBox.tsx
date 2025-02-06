@@ -2,7 +2,7 @@ import { lightTheme } from "@/constants/theme";
 import { View, Text, Pressable } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
 
@@ -22,9 +22,39 @@ const NoteBox = ({
   const route = useRouter();
   const { theme } = useTheme();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
+  const test = useRef(true);
+
+  // handle log touch on note box
+  const touchStart = () => {
+    test.current = true;
+    console.log(test.current, "from start");
+    setTimeout(() => {
+      if (test.current) goEditingNoteScreen();
+    }, 500);
+  };
+
+  const touchEnd = () => {
+    test.current = false;
+    console.log(test.current, "from end");
+  };
+  // end handle long touch on note box
+
+  
+  const goEditingNoteScreen = () => {
+    route.push({
+      pathname: "/(note)",
+      params: {
+        id: id,
+        editedTitle: title,
+        editedContent: content,
+      },
+    });
+  };
 
   return (
     <View
+      onTouchStart={touchStart}
+      onTouchEnd={touchEnd}
       style={[
         {
           display: "flex",
@@ -62,16 +92,7 @@ const NoteBox = ({
           name="edit"
           size={16}
           color={theme == "light" ? "black" : "white"}
-          onPress={() =>
-            route.push({
-              pathname: "/(note)",
-              params: {
-                id: id,
-                editedTitle: title,
-                editedContent: content,
-              },
-            })
-          }
+          onPress={goEditingNoteScreen}
         />
       </View>
       {/* main content */}
