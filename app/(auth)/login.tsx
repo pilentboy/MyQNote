@@ -64,7 +64,7 @@ const Login = () => {
       setAccessKey(res.token);
       setAppMode("online");
       showToast();
-      router.navigate("/(home)");
+      router.replace("/(home)");
     }
     setLoading(false);
   };

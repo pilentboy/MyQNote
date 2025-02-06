@@ -70,7 +70,7 @@ const Register = () => {
       });
     } else {
       showToast();
-      router.navigate("/(auth)/login");
+      router.replace("/(auth)/login");
     }
   };
 
