@@ -14,10 +14,12 @@ import Toast from "react-native-toast-message"; // Library for displaying toast 
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user-related data
 import handleDeleteCloudNotes from "@/api/handleDeleteCloudNotes";
+import Loading from "@/components/loading";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme(); // Access and set the app's current theme
-  const { setUserNotes, accessKey } = useContext(authContext); // Access and update user notes from the context
+  const { setUserNotes, accessKey, setLoading, loading } =
+    useContext(authContext); // Access and update user notes from the context
 
   // Function to display a success toast message
   const showToast = (text: string, type?: string) => {
@@ -35,6 +37,7 @@ export default function Settings() {
 
   // Function to delete all notes
   const deleteNotes = async () => {
+    setLoading(true);
     // delete cloud notes
     if (accessKey) {
       const res = await handleDeleteCloudNotes(accessKey);
@@ -49,7 +52,10 @@ export default function Settings() {
       showToast("یادداشت ها با موفقیت حذف شدند");
       setUserNotes(await getLocalStorageUserNotes()); // reset notes state
     }
+    setLoading(false);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <View

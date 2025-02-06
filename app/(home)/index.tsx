@@ -11,7 +11,6 @@ import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
-import CustomAlert from "@/components/cutstomAlert";
 
 const index = () => {
   const {
