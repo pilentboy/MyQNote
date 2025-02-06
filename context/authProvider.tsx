@@ -36,6 +36,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [appMode, setAppMode] = useState<any>();
   const [accessKey, setAccessKey] = useState<any>();
 
+  // set access key in state
   const handlesetAccessKey = async () => {
     try {
       const res = await AsyncStorage.getItem("access_key");
@@ -44,6 +45,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     const getAppMode = async () => {
       setAppMode(await handleGetAppMode());
