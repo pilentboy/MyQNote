@@ -15,6 +15,7 @@ import { useContext } from "react";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user-related data
 import handleDeleteCloudNotes from "@/api/handleDeleteCloudNotes";
 import Loading from "@/components/loading";
+import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme(); // Access and set the app's current theme
@@ -40,12 +41,22 @@ export default function Settings() {
     setLoading(true);
     // delete cloud notes
     if (accessKey) {
+      
       const res = await handleDeleteCloudNotes(accessKey);
+
       if (res.error) {
         showToast("خطا در پاک کردن یادداشت ها", "error");
       } else {
         showToast("یادداشت ها با موفقیت حذف شدند");
       }
+      // reset notes state
+      const updatedCloudNotes = await handleGetUserCloudNotes(accessKey);
+      if (updatedCloudNotes.message) {
+        alert("خطا در بروزرسانی یادداشت ها");
+      } else {
+        setUserNotes(updatedCloudNotes);
+      }
+
     } else {
       // delete local notes
       await handleDeleteNotes(); // Delete notes from local storage
