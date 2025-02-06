@@ -84,7 +84,7 @@ export default function Settings() {
           color="red"
           style={{ marginStart: 10 }}
         />
-        <SettingsTitle title="حذف نوشته ها" theme={theme} />
+        <SettingsTitle title="حذف یادداشت ها" theme={theme} />
       </SettingsItemWrapper>
     </View>
   );
