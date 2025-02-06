@@ -2,6 +2,7 @@ import { lightTheme } from "@/constants/theme";
 import useTheme from "@/context/themeProvider";
 import { Controller } from "react-hook-form";
 import { View, Text, TextInput } from "react-native";
+import FormInputLabel from "./formInputTitle";
 const FormInput = ({
   errors,
   label,
@@ -22,16 +23,7 @@ const FormInput = ({
           gap: 1,
         }}
       >
-        <Text
-          style={{
-            fontSize: 14,
-            color: "#2A3335",
-            fontFamily: "Yekan",
-            fontWeight: "bold",
-          }}
-        >
-          {label}
-        </Text>
+        <FormInputLabel label={label} />
         {errors && (
           <Text style={{ color: "red", fontFamily: "Yekan", fontSize: 12 }}>
             {errors.message}

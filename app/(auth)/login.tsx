@@ -83,6 +83,7 @@ const Login = () => {
         }}
       >
         <FormTitle title="ورود" />
+
         <FormInput
           errors={errors.username}
           control={control}
@@ -96,6 +97,7 @@ const Login = () => {
           label="رمز عبور"
           name="password"
         />
+        
         <TouchableOpacity
           style={{
             width: 300,
