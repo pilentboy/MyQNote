@@ -30,6 +30,7 @@ const CustomLink = ({
         styles.startBTN,
         { backgroundColor: bgColor ? lightTheme.primary : "gray" },
       ]}
+      replace={title === "ورود آفلاین"}
       onPress={async () => {
         if (title === "ورود آفلاین") {
           setAppMode("offline");

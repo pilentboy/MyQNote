@@ -47,9 +47,6 @@ const Login = () => {
     });
   };
 
-
-
-
   // submit log in form
   const onSubmit = async (data: any) => {
     setLoading(true);
@@ -69,6 +66,7 @@ const Login = () => {
       showToast();
       router.navigate("/(home)");
     }
+    setLoading(false);
   };
 
   if (loading) return <Loading />;
@@ -97,7 +95,7 @@ const Login = () => {
           label="رمز عبور"
           name="password"
         />
-        
+
         <TouchableOpacity
           style={{
             width: 300,
