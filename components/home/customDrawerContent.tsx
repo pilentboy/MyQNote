@@ -9,6 +9,7 @@ import { lightTheme } from "@/constants/theme";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import useTheme from "@/context/themeProvider";
+import { handleRemoveAccessKey } from "@/utils/handleLocalStorage";
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
@@ -65,8 +66,13 @@ export default function CustomDrawerContent(props: any) {
         }}
       >
         <TouchableOpacity
-          onPress={() => {
-            router.push("/(auth)");
+          onPress={async () => {
+            // remove access key when log in out
+            if (appMode === "online") {
+              alert("y");
+              await handleRemoveAccessKey();
+            }
+            router.replace("/(auth)");
           }}
         >
           <Text
@@ -77,7 +83,7 @@ export default function CustomDrawerContent(props: any) {
               fontFamily: "Yekan",
             }}
           >
-            {appMode === "offline" ? "ورود به حساب" : "ورود آفلاین"}
+            {appMode === "offline" ? "ورود به حساب" : "خروج از حساب"}
           </Text>
         </TouchableOpacity>
 
