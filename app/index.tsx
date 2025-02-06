@@ -20,7 +20,7 @@ export default function index() {
       const mode = await AsyncStorage.getItem("defaultMode");
 
       if (mode) {
-        router.navigate("/(home)");
+        router.replace("/(home)");
       } else {
         setLoading(false);
       }
