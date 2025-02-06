@@ -138,6 +138,7 @@ const Login = () => {
 
           <Link
             href={"/(auth)/register"}
+            replace
             onPress={() => clearErrors()}
             style={{
               color: lightTheme.primary,
