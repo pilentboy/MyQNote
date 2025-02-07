@@ -112,7 +112,7 @@ const Note = () => {
       showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
       router.replace("/(home)");
     } else {
-      alert(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
+      showToast("error", `خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
     }
     setLoading(false);
   };
@@ -125,7 +125,7 @@ const Note = () => {
       showToast("با موفقیت حذف شد");
       router.replace("/(home)");
     } else {
-      alert("خطا در حذف نوت");
+      showToast("error", "خطا در حذف نوت");
     }
     setLoading(false);
   };
