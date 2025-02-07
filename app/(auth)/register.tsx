@@ -66,7 +66,7 @@ const Register = () => {
     if (res.error) {
       setError("username", {
         type: "manual",
-        message: res.error[0].unique_username,
+        message: res.error,
       });
     } else {
       showToast();
