@@ -27,7 +27,6 @@ const NoteBox = ({
   // handle log touch on note box
   const touchStart = () => {
     test.current = true;
-    console.log(test.current, "from start");
     setTimeout(() => {
       if (test.current) goEditingNoteScreen();
     }, 500);
@@ -35,7 +34,6 @@ const NoteBox = ({
 
   const touchEnd = () => {
     test.current = false;
-    console.log(test.current, "from end");
   };
   // end handle long touch on note box
 
