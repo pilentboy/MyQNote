@@ -12,6 +12,7 @@ const handleRegister = async (data: any) => {
 
     if (!res.ok) {
       const errorData = await res.json();
+      console.log(errorData);
       return errorData;
     }
     const result = await res.json();
