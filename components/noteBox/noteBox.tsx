@@ -54,6 +54,7 @@ const NoteBox = ({
     <View
       onTouchStart={touchStart}
       onTouchEnd={touchEnd}
+      onTouchMove={touchEnd}
       style={[
         {
           display: "flex",
