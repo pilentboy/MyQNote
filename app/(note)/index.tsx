@@ -67,7 +67,7 @@ const Note = () => {
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()
-      .max(20, "حداکثر 20 کاراکتر برای عنوان مجاز می باشد.")
+      .max(35, "حداکثر 35 کاراکتر برای عنوان مجاز می باشد.")
       .required("عنوان نمی تواند خالی باشد"),
     content: Yup.string().required("یادداشت نمی تواند خالی باشد"),
   });
