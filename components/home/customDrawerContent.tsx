@@ -70,6 +70,7 @@ export default function CustomDrawerContent(props: any) {
             // remove access key when log in out
             if (appMode === "online") {
               await handleRemoveAccessKey();
+              console.log("yyyyyyy")
               router.replace("/(auth)");
             }
             router.replace("/(auth)");

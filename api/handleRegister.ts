@@ -14,10 +14,10 @@ const handleRegister = async (data: any) => {
       const errorData = await res.json();
       return errorData;
     }
-    const success = await res.json();
-    return success;
+    const result = await res.json();
+    return result;
   } catch (error: any) {
-    console.log("Error:", error.message);
+    return { error: "خطای شبکه" };
   }
 };
 

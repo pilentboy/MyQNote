@@ -18,8 +18,8 @@ const handleGetUserCloudNotes = async (accessKey: any) => {
       return errorData;
     }
 
-    const data = await res.json();
-    return data;
+    const result = await res.json();
+    return result;
   } catch (error: any) {
     console.log("Error:", error.message);
   }

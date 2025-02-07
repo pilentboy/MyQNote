@@ -10,8 +10,8 @@ const handleDeleteCloudNotes = async (accessKey: any) => {
       },
     });
 
-    const resJson = await res.json();
-    return resJson;
+    const result = await res.json();
+    return result;
   } catch (error) {
     console.log(error);
   }
