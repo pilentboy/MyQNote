@@ -91,12 +91,14 @@ const Note = () => {
     let submitState: boolean | undefined;
     setLoading(true);
     if (editedTitle) {
+      // edit local note
       submitState = await handleEditingNote({
         id,
         editedTitle: data.title,
         editedContent: data.content,
       });
     } else {
+      // add a local note
       submitState = await storeDataInLocalStorage({
         ...data,
         id: uuidv4(),
@@ -112,7 +114,7 @@ const Note = () => {
       showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
       router.replace("/(home)");
     } else {
-      showToast("error", `خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`);
+      showToast(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`, "error");
     }
     setLoading(false);
   };
@@ -125,7 +127,7 @@ const Note = () => {
       showToast("با موفقیت حذف شد");
       router.replace("/(home)");
     } else {
-      showToast("error", "خطا در حذف نوت");
+      showToast("خطا در حذف نوت", "error");
     }
     setLoading(false);
   };
@@ -150,7 +152,7 @@ const Note = () => {
       );
       const result = await res.json();
       if (result.error) {
-        showToast("error", result.error);
+        showToast(result.error, "error");
         return;
       }
       setUserNotes(await handleGetUserCloudNotes(accessKey));
@@ -185,7 +187,7 @@ const Note = () => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        alert(`خطا در ویرایش اطلاعات!`);
+        showToast(`خطا در ویرایش اطلاعات!`, "error");
         return;
       }
       showToast("با موفقیت ویرایش شد");
