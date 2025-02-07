@@ -30,7 +30,7 @@ const NoteBox = ({
     console.log(test.current, "from start");
     setTimeout(() => {
       if (test.current) goEditingNoteScreen();
-    }, 300);
+    }, 500);
   };
 
   const touchEnd = () => {
