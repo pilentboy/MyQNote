@@ -103,6 +103,7 @@ const index = () => {
                 </Text>
               </View>
             ) : (
+              // Display notes if there are any in the state
               <FlatList
                 data={userNotes}
                 keyExtractor={(item) => item.id}
