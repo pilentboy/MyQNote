@@ -68,7 +68,7 @@ const NoteBox = ({
       {/*  title & edit  */}
       <View
         style={{
-          flexDirection: "row",
+          flexDirection: "row-reverse",
           alignItems: "center",
           justifyContent: "space-between",
           borderBottomWidth: 1,
@@ -103,6 +103,7 @@ const NoteBox = ({
             borderBottomWidth: 1,
             borderBottomColor: theme === "light" ? "#e7ce8e" : "gray",
             paddingVertical: 5,
+            textAlign: "right",
           }}
         >
           {displayFullContent

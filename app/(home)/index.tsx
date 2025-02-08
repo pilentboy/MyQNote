@@ -1,4 +1,4 @@
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, FlatList } from "react-native";
 import { useContext, useEffect } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -74,58 +74,84 @@ const index = () => {
         {loading || !appMode ? (
           <Loading /> // Show loading spinner if `loading` is true
         ) : (
-          <ScrollView
-            contentContainerStyle={{ paddingVertical: 10 }}
-            style={{ width: "100%" }}
+          <View
+            style={
+              {
+                // flex: 1,
+                // alignItems: "center",
+                // paddingBottom: "20%", // Space for floating add note button
+                // flexDirection: "row",
+                // justifyContent: "center",
+                // flexWrap: "wrap", // Allow wrapping for note boxes
+                // gap: 4, // Space between items
+                // direction: "rtl", // Right-to-left layout
+              }
+            }
           >
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                paddingBottom: "20%", // Space for floating add note button
-                flexDirection: "row",
-                justifyContent: "center",
-                flexWrap: "wrap", // Allow wrapping for note boxes
-                gap: 4, // Space between items
-                direction: "rtl", // Right-to-left layout
-              }}
-            >
-              {/* Display message if there are no notes, otherwise map through notes */}
-              {!userNotes || userNotes.length === 0 ? (
-                <View
+            {/* Display message if there are no notes, otherwise map through notes */}
+            {!userNotes || userNotes.length === 0 ? (
+              <View
+                style={{
+                  height: 400,
+                  alignItems: "center",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <Text
                   style={{
-                    height: 400,
-                    alignItems: "center",
-                    flexDirection: "row",
-                    justifyContent: "center",
+                    color: theme === "light" ? lightTheme.primary : "white",
+                    fontSize: 15,
+                    fontFamily: "Yekan",
                   }}
                 >
-                  <Text
+                  {searchValue !== ""
+                    ? "چیزی پیدا نشد!" // Message if search yields no results
+                    : "هیچ یادداشتی نداری!"}
+                </Text>
+              </View>
+            ) : (
+              <FlatList
+                data={userNotes}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <NoteBox
+                    title={item.title}
+                    content={item.content}
+                    date={item.date}
+                    time={item.time}
+                    id={item.id}
+                  />
+                )}
+                ListEmptyComponent={
+                  <View
                     style={{
-                      color: theme === "light" ? lightTheme.primary : "white",
-                      fontSize: 15,
-                      fontFamily: "Yekan",
+                      height: 400,
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "center",
                     }}
                   >
-                    {searchValue !== ""
-                      ? "چیزی پیدا نشد!" // Message if search yields no results
-                      : "هیچ یادداشتی نداری!"}
-                  </Text>
-                </View>
-              ) : (
-                userNotes?.map((note: any) => (
-                  <NoteBox
-                    key={note.id}
-                    title={note.title}
-                    content={note.content}
-                    date={note.date}
-                    time={note.time}
-                    id={note.id}
-                  />
-                ))
-              )}
-            </View>
-          </ScrollView>
+                    <Text
+                      style={{
+                        color: theme === "light" ? lightTheme.primary : "white",
+                        fontSize: 15,
+                        fontFamily: "Yekan",
+                      }}
+                    >
+                      {searchValue !== ""
+                        ? "چیزی پیدا نشد!" // Message if search yields no results
+                        : "هیچ یادداشتی نداری!"}
+                    </Text>
+                  </View>
+                }
+                contentContainerStyle={{
+                  paddingVertical: 8,
+                  gap: 4,
+                }}
+              />
+            )}
+          </View>
         )}
 
         {/* Floating button to add a new note */}
