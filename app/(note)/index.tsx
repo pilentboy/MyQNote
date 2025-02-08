@@ -151,12 +151,13 @@ const Note = () => {
         }
       );
       const result = await res.json();
+      console.log(result);
       if (result.error) {
         showToast(result.error, "error");
         return;
       }
       setUserNotes(await handleGetUserCloudNotes(accessKey));
-      showToast("با موفقیت حذف شد");
+      showToast(result.message);
       router.replace("/(home)");
     } catch (error) {
       console.log(error);
@@ -187,7 +188,8 @@ const Note = () => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        showToast(`خطا در ویرایش اطلاعات!`, "error");
+        console.log(errorData);
+        showToast(errorData.message || errorData.error, "error");
         return;
       }
       showToast("با موفقیت ویرایش شد");

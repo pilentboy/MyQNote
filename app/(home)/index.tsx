@@ -75,18 +75,10 @@ const index = () => {
           <Loading /> // Show loading spinner if `loading` is true
         ) : (
           <View
-            style={
-              {
-                // flex: 1,
-                // alignItems: "center",
-                // paddingBottom: "20%", // Space for floating add note button
-                // flexDirection: "row",
-                // justifyContent: "center",
-                // flexWrap: "wrap", // Allow wrapping for note boxes
-                // gap: 4, // Space between items
-                // direction: "rtl", // Right-to-left layout
-              }
-            }
+            style={{
+              flex: 1,
+              flexDirection: "row",
+            }}
           >
             {/* Display message if there are no notes, otherwise map through notes */}
             {!userNotes || userNotes.length === 0 ? (
