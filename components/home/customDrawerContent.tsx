@@ -67,14 +67,14 @@ export default function CustomDrawerContent(props: any) {
       >
         <TouchableOpacity
           onPress={async () => {
-            // remove access key when log in out
+            // remove access key 
             if (appMode === "online") {
               await handleRemoveAccessKey();
 			  await handleDefaultNoteMode("offline");
-              router.replace("/(auth)");
+              router.navigate("/(auth)");
               return;
             }
-            router.replace("/(auth)");
+            router.navigate("/(auth)");
           }}
         >
           <Text
