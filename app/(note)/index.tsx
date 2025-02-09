@@ -160,7 +160,9 @@ const Note = () => {
       showToast(result.message);
       router.replace("/(home)");
     } catch (error) {
-      console.log(error);
+      showToast(
+          "خطا در برقراری ارتباط","error"
+        );
     } finally {
       setLoading(false);
     }
@@ -195,7 +197,9 @@ const Note = () => {
       showToast("با موفقیت ویرایش شد");
       router.replace("/(home)");
     } catch (error: any) {
-      console.log(error);
+		showToast(
+          "خطا در برقراری ارتباط","error"
+        );
     } finally {
       setLoading(false);
     }
@@ -236,7 +240,9 @@ const Note = () => {
       showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
       router.replace("/(home)");
     } catch (error: any) {
-      console.log("Error:", error.message);
+		showToast(
+          "خطا در برقراری ارتباط","error"
+        );
     } finally {
       setLoading(false);
     }

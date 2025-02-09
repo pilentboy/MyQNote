@@ -3,7 +3,27 @@ import CustomeLink from "@/components/customLink";
 import BoldTitle from "@/components/boldTitle";
 import { CroppedLogo } from "@/components/logo";
 import CustomLinearGradient from "@/components/linearGradient";
+import { useContext, useEffect } from "react";
+import {
+  handleDefaultNoteMode,
+  handleRemoveAccessKey,
+} from "@/utils/handleLocalStorage";
+import { authContext } from "@/context/authProvider";
 export default function index() {
+  const { setAccessKey, setAppMode } = useContext(authContext);
+
+  useEffect(() => {
+    const init = async () => {
+      await handleRemoveAccessKey();
+      await handleDefaultNoteMode("offline");
+      setAccessKey(null);
+      setAppMode("offline");
+    };
+
+    init();
+    console.log("auth page mounted");
+  }, []);
+
   return (
     <View
       style={{

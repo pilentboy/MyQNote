@@ -2,18 +2,17 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import { CroppedLogo } from "../logo";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { lightTheme } from "@/constants/theme";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import useTheme from "@/context/themeProvider";
-import { handleRemoveAccessKey,handleDefaultNoteMode } from "@/utils/handleLocalStorage";
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
-  const { appMode } = useContext(authContext);
+  const { appMode, setAccessKey, setAppMode } = useContext(authContext);
   const { theme } = useTheme();
 
   return (
@@ -65,29 +64,18 @@ export default function CustomDrawerContent(props: any) {
           height: 60,
         }}
       >
-        <TouchableOpacity
-          onPress={async () => {
-            // remove access key 
-            if (appMode === "online") {
-              await handleRemoveAccessKey();
-			  await handleDefaultNoteMode("offline");
-              router.navigate("/(auth)");
-              return;
-            }
-            router.navigate("/(auth)");
+        <Link
+          href="/(auth)"
+          style={{
+            color: theme === "light" ? "black" : "white",
+            fontSize: 11,
+            textAlign: "center",
+            fontFamily: "Yekan",
           }}
+          replace
         >
-          <Text
-            style={{
-              color: theme === "light" ? "black" : "white",
-              fontSize: 11,
-              textAlign: "center",
-              fontFamily: "Yekan",
-            }}
-          >
-            {appMode === "offline" ? "ورود به حساب" : "خروج از حساب"}
-          </Text>
-        </TouchableOpacity>
+          {appMode === "offline" ? "ورود به حساب" : "خروج از حساب"}
+        </Link>
 
         <Text
           style={{
