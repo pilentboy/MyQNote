@@ -1,5 +1,5 @@
-import { ScrollView, View, Text, FlatList } from "react-native";
-import { useContext, useEffect } from "react";
+import { View, Text, FlatList } from "react-native";
+import { useContext, useEffect, useState } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
@@ -12,6 +12,8 @@ import useTheme from "@/context/themeProvider"; // Hook for accessing the curren
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
 import Toast from "react-native-toast-message";
+import getCurrentDate from "./../../utils/convertToPersianDigits";
+import { set } from "react-hook-form";
 
 const index = () => {
   const {
@@ -26,6 +28,9 @@ const index = () => {
 
   const route = useRouter();
   const { theme } = useTheme();
+
+  const [preFlatListPosition, setPreFlatListPosition] = useState<number>(0);
+  const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true);
 
   const showToast = () => {
     Toast.show({
@@ -155,13 +160,27 @@ const index = () => {
                   paddingVertical: 8,
                   gap: 4,
                 }}
+                onScroll={(e: any) => {
+                  const currentPositon = e.nativeEvent.contentOffset.y;
+
+                  setPreFlatListPosition(currentPositon);
+
+                  if (currentPositon > preFlatListPosition) {
+                    setAddNoteBTNDisplay(false);
+                  } else {
+                    setAddNoteBTNDisplay(true);
+                  }
+                }}
               />
             )}
           </View>
         )}
 
         {/* Floating button to add a new note */}
-        <AddNoteBTN action={() => route.navigate("/(note)")} />
+        <AddNoteBTN
+          display={addNoteBTNDisplay}
+          action={() => route.navigate("/(note)")}
+        />
       </View>
     </GestureHandlerRootView>
   );
