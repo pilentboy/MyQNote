@@ -9,7 +9,7 @@ import { lightTheme } from "@/constants/theme";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import useTheme from "@/context/themeProvider";
-import { handleRemoveAccessKey } from "@/utils/handleLocalStorage";
+import { handleRemoveAccessKey,handleDefaultNoteMode } from "@/utils/handleLocalStorage";
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
@@ -70,6 +70,7 @@ export default function CustomDrawerContent(props: any) {
             // remove access key when log in out
             if (appMode === "online") {
               await handleRemoveAccessKey();
+			  await handleDefaultNoteMode("offline");
               router.replace("/(auth)");
               return;
             }

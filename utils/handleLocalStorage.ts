@@ -89,6 +89,7 @@ const handleDeleteLocalNote = async (id: string | string[]) => {
 
 const handleDefaultNoteMode = async (mode: "offline" | "online") => {
   await AsyncStorage.setItem("defaultMode", mode);
+  console.log('mode changed')
 };
 
 const handleGetAppMode = async () => {
