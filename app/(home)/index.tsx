@@ -63,9 +63,7 @@ const index = () => {
 
   // Filter notes based on the search value and update state
   const setSearchNotes = () => {
-    setLoading(true);
     setUserNotes(handleSearchingNotes(userNotes, searchValue)); // Fetch filtered notes
-    setLoading(false);
   };
 
   // Effect: Trigger fetching or filtering notes when `searchValue` changes
