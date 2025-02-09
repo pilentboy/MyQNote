@@ -11,6 +11,7 @@ import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
+import Toast from "react-native-toast-message";
 
 const index = () => {
   const {
@@ -26,16 +27,28 @@ const index = () => {
   const route = useRouter();
   const { theme } = useTheme();
 
+  const showToast = () => {
+    Toast.show({
+      type: "error",
+      text2: "خطا در برقراری ارتباط",
+    });
+  };
+
   // Fetch all notes from local storage and set them in state
   const setData = async () => {
     setUserNotes([]);
     setLoading(true);
-    if (accessKey || appMode === "online") {
-      const res = await handleGetUserCloudNotes(accessKey);
-      if (res.message) {
-        alert("خطا در دریافت یادداشت ها");
-      } else {
-        setUserNotes(res);
+    if (accessKey) {
+      try {
+        const res = await handleGetUserCloudNotes(accessKey);
+        if (res.message || res.error) {
+          showToast();
+          setUserNotes([]);
+        } else {
+          setUserNotes(res);
+        }
+      } catch (error) {
+        showToast();
       }
     } else {
       setUserNotes(await getLocalStorageUserNotes());
