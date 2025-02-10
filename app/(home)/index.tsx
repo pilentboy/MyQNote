@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, RefreshControl } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -12,6 +12,7 @@ import useTheme from "@/context/themeProvider"; // Hook for accessing the curren
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
 import Toast from "react-native-toast-message";
+import RotateArrow from "@/components/rotateArrow";
 
 const index = () => {
   const {
@@ -82,7 +83,7 @@ const index = () => {
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: theme === "light" ? "white" : "#222831", 
+          backgroundColor: theme === "light" ? "white" : "#222831",
           paddingHorizontal: 10,
         }}
       >
@@ -120,6 +121,7 @@ const index = () => {
               </View>
             ) : (
               // Display notes if there are any in the state
+
               <FlatList
                 data={userNotes}
                 keyExtractor={(item) => item.id}
@@ -133,6 +135,11 @@ const index = () => {
                     id={item.id}
                   />
                 )}
+                refreshControl={
+                  <RefreshControl refreshing={loading} onRefresh={setData}>
+                    <RotateArrow />
+                  </RefreshControl>
+                }
                 ListEmptyComponent={
                   <View
                     style={{
@@ -164,7 +171,10 @@ const index = () => {
 
                   setPreNoteFlastListPosition(currentPositon);
 
-                  if (currentPositon > preNoteFlastListPosition && currentPositon > 50) {
+                  if (
+                    currentPositon > preNoteFlastListPosition &&
+                    currentPositon > 50
+                  ) {
                     setAddNoteBTNDisplay(false);
                   } else {
                     setAddNoteBTNDisplay(true);
