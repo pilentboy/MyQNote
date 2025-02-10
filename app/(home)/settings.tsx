@@ -41,22 +41,24 @@ export default function Settings() {
     setLoading(true);
     // delete cloud notes
     if (accessKey) {
-      
-      const res = await handleDeleteCloudNotes(accessKey);
+      try {
+        const res = await handleDeleteCloudNotes(accessKey);
 
-      if (res.error) {
-        showToast("خطا در پاک کردن یادداشت ها", "error");
-      } else {
-        showToast("یادداشت ها با موفقیت حذف شدند");
+        if (res.error) {
+          showToast("خطا در پاک کردن یادداشت ها", "error");
+        } else {
+          showToast("یادداشت ها با موفقیت حذف شدند");
+        }
+        // reset notes state
+        const updatedCloudNotes = await handleGetUserCloudNotes(accessKey);
+        if (updatedCloudNotes.message) {
+          alert("خطا در بروزرسانی یادداشت ها");
+        } else {
+          setUserNotes(updatedCloudNotes);
+        }
+      } catch (error) {
+        showToast("خطا در برقراری ارتباط", "error");
       }
-      // reset notes state
-      const updatedCloudNotes = await handleGetUserCloudNotes(accessKey);
-      if (updatedCloudNotes.message) {
-        alert("خطا در بروزرسانی یادداشت ها");
-      } else {
-        setUserNotes(updatedCloudNotes);
-      }
-
     } else {
       // delete local notes
       await handleDeleteNotes(); // Delete notes from local storage

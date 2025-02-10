@@ -1,5 +1,4 @@
 import { TouchableOpacity, Animated } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { lightTheme } from "@/constants/theme";
 import { useEffect, useRef } from "react";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
