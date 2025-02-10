@@ -27,7 +27,8 @@ const index = () => {
   const route = useRouter();
   const { theme } = useTheme();
 
-  const [preFlatListPosition, setPreFlatListPosition] = useState<number>(0);
+  const [preNoteFlastListPosition, setPreNoteFlastListPosition] =
+    useState<number>(0);
   const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true);
 
   const showToast = () => {
@@ -161,9 +162,9 @@ const index = () => {
                 onScroll={(e: any) => {
                   const currentPositon = e.nativeEvent.contentOffset.y;
 
-                  setPreFlatListPosition(currentPositon);
+                  setPreNoteFlastListPosition(currentPositon);
 
-                  if (currentPositon > preFlatListPosition) {
+                  if (currentPositon > preNoteFlastListPosition) {
                     setAddNoteBTNDisplay(false);
                   } else {
                     setAddNoteBTNDisplay(true);
