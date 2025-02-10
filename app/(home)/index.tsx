@@ -82,7 +82,7 @@ const index = () => {
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: theme === "light" ? "white" : "#222831", // Background color based on theme
+          backgroundColor: theme === "light" ? "white" : "#222831", 
           paddingHorizontal: 10,
         }}
       >
@@ -164,7 +164,7 @@ const index = () => {
 
                   setPreNoteFlastListPosition(currentPositon);
 
-                  if (currentPositon > preNoteFlastListPosition) {
+                  if (currentPositon > preNoteFlastListPosition && currentPositon > 50) {
                     setAddNoteBTNDisplay(false);
                   } else {
                     setAddNoteBTNDisplay(true);
