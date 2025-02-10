@@ -44,12 +44,14 @@ interface EditingValues {
   id: string | string[];
   editedTitle: string;
   editedContent: string;
+  direction: string;
 }
 
 const handleEditingNote = async ({
   id,
   editedTitle,
   editedContent,
+  direction,
 }: EditingValues) => {
   try {
     const updatedNotes = await getLocalStorageUserNotes();
@@ -89,7 +91,7 @@ const handleDeleteLocalNote = async (id: string | string[]) => {
 
 const handleDefaultNoteMode = async (mode: "offline" | "online") => {
   await AsyncStorage.setItem("defaultMode", mode);
-  console.log('mode changed')
+  console.log("mode changed");
 };
 
 const handleGetAppMode = async () => {

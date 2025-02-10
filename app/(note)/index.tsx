@@ -38,7 +38,7 @@ const Note = () => {
   const { loading, setLoading, setUserNotes, accessKey } =
     useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 260);
-  const { id, editedTitle, editedContent } = useLocalSearchParams();
+  const { id, editedTitle, editedContent, direction } = useLocalSearchParams();
   const { theme } = useTheme();
   const [textDirection, setTextDirection] = useState<"right" | "left">("right");
 
@@ -52,6 +52,9 @@ const Note = () => {
   useEffect(() => {
     if (editedTitle) {
       navigation.setOptions({ title: "ویرایش" });
+      if (direction === "right" || direction === "left") {
+        setTextDirection(direction);
+      }
     }
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -99,6 +102,7 @@ const Note = () => {
         id,
         editedTitle: data.title,
         editedContent: data.content,
+        direction: textDirection,
       });
     } else {
       // add a local note
@@ -107,6 +111,7 @@ const Note = () => {
         id: uuidv4(),
         date: getCurrentDate()[0],
         time: getCurrentDate()[1],
+        direction: textDirection,
       });
     }
 

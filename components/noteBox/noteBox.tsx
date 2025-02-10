@@ -12,12 +12,14 @@ const NoteBox = ({
   date,
   time,
   id,
+  direction,
 }: {
   title: string;
   content: string;
   date: string;
   time: string;
   id: string;
+  direction: "right" | "left";
 }) => {
   const route = useRouter();
   const { theme } = useTheme();
@@ -44,6 +46,7 @@ const NoteBox = ({
         id: id,
         editedTitle: title,
         editedContent: content,
+        direction: direction,
       },
     });
   };
@@ -103,7 +106,7 @@ const NoteBox = ({
             borderBottomWidth: 1,
             borderBottomColor: theme === "light" ? "#e7ce8e" : "gray",
             paddingVertical: 5,
-            textAlign: "right",
+            textAlign: direction,
           }}
         >
           {displayFullContent

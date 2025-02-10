@@ -129,6 +129,7 @@ const index = () => {
                     content={item.content}
                     date={item.date}
                     time={item.time}
+                    direction={item.direction}
                     id={item.id}
                   />
                 )}
