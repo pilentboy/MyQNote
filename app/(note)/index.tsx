@@ -29,15 +29,18 @@ import CustomAlert from "@/components/cutstomAlert";
 import NoteActionBTN from "@/components/noteBox/noteActionBTN";
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 
+import { lightTheme } from "@/constants/theme";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const router = useRouter();
   const { loading, setLoading, setUserNotes, accessKey } =
     useContext(authContext);
-  const [inputHeight, setinputHeight] = useState(windowHeight - 200);
+  const [inputHeight, setinputHeight] = useState(windowHeight - 260);
   const { id, editedTitle, editedContent } = useLocalSearchParams();
   const { theme } = useTheme();
+  const [textDirection, setTextDirection] = useState<"right" | "left">("right");
 
   const showToast = (text: string, type?: string) => {
     Toast.show({
@@ -56,7 +59,7 @@ const Note = () => {
     );
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
-      () => setinputHeight(windowHeight - 200)
+      () => setinputHeight(windowHeight - 260)
     );
 
     return () => {
@@ -160,9 +163,7 @@ const Note = () => {
       showToast(result.message);
       router.replace("/(home)");
     } catch (error) {
-      showToast(
-          "خطا در برقراری ارتباط","error"
-        );
+      showToast("خطا در برقراری ارتباط", "error");
     } finally {
       setLoading(false);
     }
@@ -197,9 +198,7 @@ const Note = () => {
       showToast("با موفقیت ویرایش شد");
       router.replace("/(home)");
     } catch (error: any) {
-		showToast(
-          "خطا در برقراری ارتباط","error"
-        );
+      showToast("خطا در برقراری ارتباط", "error");
     } finally {
       setLoading(false);
     }
@@ -240,9 +239,7 @@ const Note = () => {
       showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
       router.replace("/(home)");
     } catch (error: any) {
-		showToast(
-          "خطا در برقراری ارتباط","error"
-        );
+      showToast("خطا در برقراری ارتباط", "error");
     } finally {
       setLoading(false);
     }
@@ -262,6 +259,31 @@ const Note = () => {
         <Loading />
       ) : (
         <View style={styles.contentContainer}>
+          <View
+            style={{
+              width: "100%",
+              height: 40,
+              backgroundColor: lightTheme.primary,
+              borderRadius: 10,
+              padding: 5,
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
+            <MaterialCommunityIcons
+              name="format-textdirection-l-to-r"
+              size={25}
+              color="white"
+              onPress={() => setTextDirection("left")}
+            />
+            <MaterialCommunityIcons
+              name="format-textdirection-r-to-l"
+              size={25}
+              color="white"
+              onPress={() => setTextDirection("right")}
+            />
+          </View>
           {errors.title && (
             <Text style={styles.errorText}>{errors.title.message}</Text>
           )}
@@ -273,7 +295,10 @@ const Note = () => {
               <TextInput
                 style={[
                   styles.noteInput,
-                  { color: theme === "light" ? "black" : "white" },
+                  {
+                    color: theme === "light" ? "black" : "white",
+                    textAlign: textDirection,
+                  },
                 ]}
                 placeholder="عنوان"
                 placeholderTextColor="#A9A9A9"
@@ -298,6 +323,7 @@ const Note = () => {
                   {
                     height: inputHeight,
                     color: theme === "light" ? "black" : "white",
+                    textAlign: textDirection,
                   },
                 ]}
                 placeholder="یادداشت"
@@ -350,10 +376,10 @@ const Note = () => {
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    height: 400,
     alignItems: "center",
     gap: 8,
     paddingHorizontal: 10,
+    paddingVertical: 15,
   },
   noteInput: {
     width: "100%",
@@ -364,7 +390,6 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 15,
     fontFamily: "Vazir",
-    textAlign: "right",
     writingDirection: "rtl",
     backgroundColor: "transparent",
   },
