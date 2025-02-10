@@ -72,7 +72,7 @@ export default function CustomDrawerContent(props: any) {
             textAlign: "center",
             fontFamily: "Yekan",
           }}
-          replace
+          // replace
         >
           {appMode === "offline" ? "ورود به حساب" : "خروج از حساب"}
         </Link>
