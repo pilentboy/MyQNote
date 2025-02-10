@@ -106,7 +106,7 @@ const NoteBox = ({
             borderBottomWidth: 1,
             borderBottomColor: theme === "light" ? "#e7ce8e" : "gray",
             paddingVertical: 5,
-            textAlign: direction,
+            textAlign: direction === "right" ? "right" : "left",
           }}
         >
           {displayFullContent

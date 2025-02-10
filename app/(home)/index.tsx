@@ -12,8 +12,6 @@ import useTheme from "@/context/themeProvider"; // Hook for accessing the curren
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
 import Toast from "react-native-toast-message";
-import getCurrentDate from "./../../utils/convertToPersianDigits";
-import { set } from "react-hook-form";
 
 const index = () => {
   const {
@@ -46,6 +44,7 @@ const index = () => {
     if (accessKey) {
       try {
         const res = await handleGetUserCloudNotes(accessKey);
+
         if (res.message || res.error) {
           showToast();
           setUserNotes([]);

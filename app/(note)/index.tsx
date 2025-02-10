@@ -40,7 +40,12 @@ const Note = () => {
   const [inputHeight, setinputHeight] = useState(windowHeight - 260);
   const { id, editedTitle, editedContent, direction } = useLocalSearchParams();
   const { theme } = useTheme();
-  const [textDirection, setTextDirection] = useState<"right" | "left">("right");
+
+  const [textDirection, setTextDirection] = useState<"right" | "left">(
+    (direction === "left" || direction === "right" ? direction : "right") as
+      | "right"
+      | "left"
+  );
 
   const showToast = (text: string, type?: string) => {
     Toast.show({
@@ -52,9 +57,6 @@ const Note = () => {
   useEffect(() => {
     if (editedTitle) {
       navigation.setOptions({ title: "ویرایش" });
-      if (direction === "right" || direction === "left") {
-        setTextDirection(direction);
-      }
     }
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -185,6 +187,7 @@ const Note = () => {
           date: getCurrentDate()[0],
           time: getCurrentDate()[1],
           post_id: id,
+          direction: textDirection,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -219,6 +222,7 @@ const Note = () => {
           content: data.content,
           date: getCurrentDate()[0],
           time: getCurrentDate()[1],
+          direction: textDirection,
         }),
         headers: {
           "Content-Type": "application/json",
