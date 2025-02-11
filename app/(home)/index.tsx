@@ -1,4 +1,4 @@
-import { View, Text, FlatList, RefreshControl } from "react-native";
+import { View, Text, FlatList, RefreshControl, ScrollView } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -13,7 +13,7 @@ import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
 import Toast from "react-native-toast-message";
 import RotateArrow from "@/components/rotateArrow";
-
+import Entypo from "@expo/vector-icons/Entypo";
 const index = () => {
   const {
     loading,
@@ -76,6 +76,18 @@ const index = () => {
     }
   }, [searchValue, accessKey]);
 
+  const filterNotesRotation = () => {
+    setUserNotes(userNotes?.filter((note: any) => note.direction === "lefxt"));
+  };
+
+  useEffect(() => {
+    filterNotesRotation();
+  }, []);
+
+  useEffect(() => {
+    console.log(userNotes, "xxx[home]");
+  }, [userNotes]);
+
   return (
     <GestureHandlerRootView>
       <View
@@ -99,26 +111,50 @@ const index = () => {
           >
             {/* Display message if there are no notes, otherwise map through notes */}
             {!userNotes || userNotes.length === 0 ? (
-              <View
-                style={{
-                  height: 400,
-                  alignItems: "center",
-                  flexDirection: "row",
+              <ScrollView
+                contentContainerStyle={{
+                  flex: 1,
                   justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
                 }}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={loading}
+                    onRefresh={filterNotesRotation}
+                  >
+                    <RotateArrow />
+                  </RefreshControl>
+                }
               >
-                <Text
+                <View
                   style={{
-                    color: theme === "light" ? lightTheme.primary : "white",
-                    fontSize: 15,
-                    fontFamily: "Yekan",
+                    height: 400,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 5,
+                    flex: 1,
                   }}
                 >
-                  {searchValue !== ""
-                    ? "چیزی پیدا نشد!" // Message if search yields no results
-                    : "هیچ یادداشتی نداری!"}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      color: theme === "light" ? lightTheme.primary : "white",
+                      fontSize: 15,
+                      fontFamily: "Yekan",
+                    }}
+                  >
+                    {searchValue !== ""
+                      ? "چیزی پیدا نشد!" // Message if search yields no results
+                      : "هیچ یادداشتی نداری!"}
+                  </Text>
+
+                  <Entypo
+                    name="emoji-sad"
+                    size={24}
+                    color={lightTheme.primary}
+                  />
+                </View>
+              </ScrollView>
             ) : (
               // Display notes if there are any in the state
 
@@ -136,31 +172,12 @@ const index = () => {
                   />
                 )}
                 refreshControl={
-                  <RefreshControl refreshing={loading} onRefresh={setData}>
+                  <RefreshControl
+                    refreshing={loading}
+                    onRefresh={filterNotesRotation}
+                  >
                     <RotateArrow />
                   </RefreshControl>
-                }
-                ListEmptyComponent={
-                  <View
-                    style={{
-                      height: 400,
-                      alignItems: "center",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: theme === "light" ? lightTheme.primary : "white",
-                        fontSize: 15,
-                        fontFamily: "Yekan",
-                      }}
-                    >
-                      {searchValue !== ""
-                        ? "چیزی پیدا نشد!" // Message if search yields no results
-                        : "هیچ یادداشتی نداری!"}
-                    </Text>
-                  </View>
                 }
                 contentContainerStyle={{
                   paddingVertical: 8,
