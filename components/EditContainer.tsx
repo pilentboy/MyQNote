@@ -1,13 +1,20 @@
 import { lightTheme } from "@/constants/theme";
+import useEdit from "@/context/editProvider";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View } from "react-native";
 
-const EditContainer = ({ setTextDirection }: { setTextDirection?: any }) => {
+const EditContainer = ({
+  width,
+  setTextDirection,
+}: {
+  setTextDirection?: any;
+  width?: any;
+}) => {
   return (
     <View
       style={{
-        width: "100%",
-        height: 40,
+        width: width || "100%",
+        height: 45,
         backgroundColor: lightTheme.primary,
         borderRadius: 10,
         padding: 5,

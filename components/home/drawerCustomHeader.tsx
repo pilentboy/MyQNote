@@ -5,6 +5,10 @@ import { CroppedLogo } from "../logo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchInput from "./searchInput";
 import useTheme from "@/context/themeProvider";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useState } from "react";
+import EditContainer from "../EditContainer";
+import useEdit from "@/context/editProvider";
 
 export default function DrawerCustomHeader({
   navigation,
@@ -12,6 +16,8 @@ export default function DrawerCustomHeader({
   navigation: DrawerNavigationProp<any>;
 }) {
   const { theme } = useTheme();
+  const { setTextDirection } = useEdit();
+  const [displaySearch, setDisplaySearch] = useState<boolean>(false);
 
   return (
     <View
@@ -67,7 +73,37 @@ export default function DrawerCustomHeader({
         </Pressable>
       </View>
       {/* bottom header */}
-      <SearchInput />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: displaySearch ? "space-between" : "space-between",
+          width: "100%",
+          padding: 10,
+        }}
+      >
+        {displaySearch ? (
+          <>
+            <AntDesign
+              name="closecircleo"
+              size={24}
+              color="red"
+              onPress={() => setDisplaySearch(false)}
+            />
+            <SearchInput />
+          </>
+        ) : (
+          <>
+            <FontAwesome
+              name="search"
+              size={24}
+              color="white"
+              onPress={() => setDisplaySearch(true)}
+            />
+            <EditContainer width={"85%"} setTextDirection={setTextDirection} />
+          </>
+        )}
+      </View>
     </View>
   );
 }

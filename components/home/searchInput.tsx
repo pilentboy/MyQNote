@@ -12,13 +12,13 @@ const SearchInput = () => {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        width: "100%",
+        width: "85%",
         paddingHorizontal: 5,
       }}
     >
       <TextInput
         style={{
-          width: "86%",
+          width: "100%",
           height: 45,
           writingDirection: "rtl",
           textAlign: "right",

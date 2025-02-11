@@ -14,6 +14,8 @@ import handleSearchingNotes from "@/utils/handleSearchingNotes";
 import Toast from "react-native-toast-message";
 import RotateArrow from "@/components/rotateArrow";
 import Entypo from "@expo/vector-icons/Entypo";
+import useEdit from "@/context/editProvider";
+
 const index = () => {
   const {
     loading,
@@ -27,14 +29,12 @@ const index = () => {
 
   const route = useRouter();
   const { theme } = useTheme();
-
-  const [textDirection, setTextDirection] = useState<
-    undefined | "right" | "left"
-  >();
+  const { textDirection, setTextDirection } = useEdit();
 
   const [preNoteFlastListPosition, setPreNoteFlastListPosition] =
     useState<number>(0);
   const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true);
+  const [originalUserNotes, setOriginalUserNotes] = useState([]);
 
   const showToast = () => {
     Toast.show({
@@ -46,22 +46,25 @@ const index = () => {
   // Fetch all notes from local storage and set them in state
   const setData = async () => {
     setUserNotes([]);
+    setTextDirection(undefined);
     setLoading(true);
     if (accessKey) {
       try {
         const res = await handleGetUserCloudNotes(accessKey);
-
         if (res.message || res.error) {
           showToast();
           setUserNotes([]);
         } else {
           setUserNotes(res);
+          setOriginalUserNotes(res); // Set original notes
         }
       } catch (error) {
         showToast();
       }
     } else {
-      setUserNotes(await getLocalStorageUserNotes());
+      const localNotes = await getLocalStorageUserNotes();
+      setUserNotes(localNotes);
+      setOriginalUserNotes(localNotes); // Set original notes
     }
     setLoading(false);
   };
@@ -81,16 +84,14 @@ const index = () => {
   }, [searchValue, accessKey]);
 
   const filterNotesRotation = () => {
-    setUserNotes(userNotes?.filter((note: any) => note.direction === "lefxt"));
+    setUserNotes(
+      originalUserNotes.filter((note: any) => note.direction === textDirection)
+    );
   };
 
   useEffect(() => {
-    filterNotesRotation();
-  }, []);
-
-  useEffect(() => {
-    console.log(userNotes, "xxx[home]");
-  }, [userNotes]);
+    if (textDirection !== undefined && userNotes.length) filterNotesRotation();
+  }, [textDirection]);
 
   return (
     <GestureHandlerRootView>
@@ -123,10 +124,7 @@ const index = () => {
                   width: "100%",
                 }}
                 refreshControl={
-                  <RefreshControl
-                    refreshing={loading}
-                    onRefresh={filterNotesRotation}
-                  >
+                  <RefreshControl refreshing={loading} onRefresh={setData}>
                     <RotateArrow />
                   </RefreshControl>
                 }
@@ -176,10 +174,7 @@ const index = () => {
                   />
                 )}
                 refreshControl={
-                  <RefreshControl
-                    refreshing={loading}
-                    onRefresh={filterNotesRotation}
-                  >
+                  <RefreshControl refreshing={loading} onRefresh={setData}>
                     <RotateArrow />
                   </RefreshControl>
                 }
