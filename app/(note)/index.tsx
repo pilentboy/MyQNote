@@ -28,10 +28,8 @@ import Toast from "react-native-toast-message";
 import CustomAlert from "@/components/cutstomAlert";
 import NoteActionBTN from "@/components/noteBox/noteActionBTN";
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
-
-import { lightTheme } from "@/constants/theme";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import EditContainer from "@/components/EditContainer";
+
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();

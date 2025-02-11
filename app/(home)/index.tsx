@@ -78,9 +78,11 @@ const index = () => {
   useEffect(() => {
     if (searchValue !== "") {
       setSearchNotes(); // Filter notes
+    } else if (!textDirection) {
+      setData();
     } else {
-      setData(); // Fetch all notes
-    }
+      filterNotesRotation();
+    } // Fetch all notes
   }, [searchValue, accessKey]);
 
   const filterNotesRotation = () => {
