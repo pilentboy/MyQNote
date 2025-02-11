@@ -28,6 +28,10 @@ const index = () => {
   const route = useRouter();
   const { theme } = useTheme();
 
+  const [textDirection, setTextDirection] = useState<
+    undefined | "right" | "left"
+  >();
+
   const [preNoteFlastListPosition, setPreNoteFlastListPosition] =
     useState<number>(0);
   const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true);
