@@ -5,7 +5,7 @@ import FooterText from "./footerText";
 import { useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
-import useSubmitNoteType from "@/context/submitNoteType";
+import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 
 const NoteBox = ({
   title,

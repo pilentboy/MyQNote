@@ -7,7 +7,7 @@ import { AuthProvider } from "../context/authProvider";
 import { ThemeProvider } from "@/context/themeProvider";
 import Toast, { BaseToast } from "react-native-toast-message";
 import { EditProvider } from "@/context/editProvider";
-import { SubmitNoteTypeProvider } from "@/context/submitNoteType";
+import { SubmitNoteTypeProvider } from "@/context/submitNoteTypeProvider";
 
 const toastConfig = {
   success: (props: any) => (

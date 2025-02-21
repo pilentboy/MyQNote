@@ -15,7 +15,7 @@ import Toast from "react-native-toast-message";
 import RotateArrow from "@/components/rotateArrow";
 import Entypo from "@expo/vector-icons/Entypo";
 import useEdit from "@/context/editProvider";
-import useSubmitNoteType from "@/context/submitNoteType";
+import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 
 const index = () => {
   const {

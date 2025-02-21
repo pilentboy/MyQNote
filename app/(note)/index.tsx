@@ -29,10 +29,13 @@ import CustomAlert from "@/components/cutstomAlert";
 import NoteActionBTN from "@/components/noteBox/noteActionBTN";
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import EditContainer from "@/components/EditContainer";
+import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
+  const { setSubmitAction, submitNoteType, setDeleteNote } =
+    useSubmitNoteType();
   const router = useRouter();
   const { loading, setLoading, setUserNotes, accessKey } =
     useContext(authContext);
@@ -56,6 +59,23 @@ const Note = () => {
   useEffect(() => {
     if (editedTitle) {
       navigation.setOptions({ title: "ویرایش" });
+    }
+
+    if (submitNoteType === "newNote") {
+      setSubmitAction(() =>
+        handleSubmit(
+          accessKey ? handleAddingCloudNotes : handleOfflineAddingNote
+        )
+      );
+    } else {
+      setSubmitAction(() =>
+        handleSubmit(
+          accessKey ? handleEditingCloudNote : handleOfflineAddingNote
+        )
+      );
+      setDeleteNote(() =>
+        accessKey ? handleDeleteCloudNote : deleteLocalNote
+      );
     }
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -321,7 +341,7 @@ const Note = () => {
             )}
           />
 
-          {/* <View
+          <View
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -351,7 +371,7 @@ const Note = () => {
                 }
               />
             )}
-          </View> */}
+          </View>
         </View>
       )}
     </ScrollView>

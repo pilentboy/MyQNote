@@ -2,11 +2,10 @@ import useTheme from "@/context/themeProvider";
 import { Stack } from "expo-router";
 import { View } from "react-native";
 import SubmitNoteButton from "@/components/note/submitNoteBTN";
-import useSubmitNoteType from "@/context/submitNoteType";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { lightTheme } from "@/constants/theme";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import useSubmitNoteType from "@/context/submitNoteTypeProvider";
+import EditNoteBTN from "@/components/note/editNoteBTN";
+import DeleteNoteBTN from "@/components/note/deleteNoteBTN";
+
 export default function NoteLayout() {
   const { theme } = useTheme();
   const { submitNoteType } = useSubmitNoteType();
@@ -26,12 +25,8 @@ export default function NoteLayout() {
                 <SubmitNoteButton />
               ) : (
                 <>
-                  <FontAwesome name="remove" size={24} color="red" />
-                  <FontAwesome6
-                    name="edit"
-                    size={22}
-                    color={theme === "light" ? lightTheme.primary : "white"}
-                  />
+                  <DeleteNoteBTN />
+                  <EditNoteBTN />
                 </>
               )}
             </View>
