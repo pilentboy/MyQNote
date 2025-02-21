@@ -1,39 +1,36 @@
-import React, { useContext, useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-  Dimensions,
-  Keyboard,
-} from "react-native";
-import { useForm, Controller } from "react-hook-form";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import Loading from "../../components/loading";
-import { authContext } from "@/context/authProvider";
-import {
-  getLocalStorageUserNotes,
-  storeDataInLocalStorage,
-  handleEditingNote,
-  handleDeleteLocalNote,
-} from "../../utils/handleLocalStorage";
-import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
-import getCurrentDate from "@/utils/convertToPersianDigits";
-import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
-import useTheme from "@/context/themeProvider";
-import Toast from "react-native-toast-message";
-import CustomAlert from "@/components/cutstomAlert";
-import NoteActionBTN from "@/components/noteBox/noteActionBTN";
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import EditContainer from "@/components/EditContainer";
+import { authContext } from "@/context/authProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
+import useTheme from "@/context/themeProvider";
+import getCurrentDate from "@/utils/convertToPersianDigits";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useContext, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import {
+  Dimensions,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import "react-native-get-random-values";
+import Toast from "react-native-toast-message";
+import { v4 as uuidv4 } from "uuid";
+import * as Yup from "yup";
+import Loading from "../../components/loading";
+import {
+  getLocalStorageUserNotes,
+  handleDeleteLocalNote,
+  handleEditingNote,
+  storeDataInLocalStorage,
+} from "../../utils/handleLocalStorage";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
-  const navigation = useNavigation();
   const { setSubmitAction, submitNoteType, setDeleteNote } =
     useSubmitNoteType();
   const router = useRouter();
@@ -57,10 +54,6 @@ const Note = () => {
   };
 
   useEffect(() => {
-    if (editedTitle) {
-      navigation.setOptions({ title: "ویرایش" });
-    }
-
     if (submitNoteType === "newNote") {
       setSubmitAction(() =>
         handleSubmit(
@@ -69,9 +62,7 @@ const Note = () => {
       );
     } else {
       setSubmitAction(() =>
-        handleSubmit(
-          accessKey ? handleEditingCloudNote : handleOfflineAddingNote
-        )
+        handleSubmit(accessKey ? handleEditingCloudNote : handleEditLocalNote)
       );
       setDeleteNote(() =>
         accessKey ? handleDeleteCloudNote : deleteLocalNote
@@ -113,37 +104,53 @@ const Note = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  //------------ offline action handleres
+  //------------ offline adding note
   const handleOfflineAddingNote = async (data: any) => {
     let submitState: boolean | undefined;
     setLoading(true);
-    if (editedTitle) {
-      // edit local note
-      submitState = await handleEditingNote({
-        id,
-        editedTitle: data.title,
-        editedContent: data.content,
-        direction: textDirection,
-      });
-    } else {
-      // add a local note
-      submitState = await storeDataInLocalStorage({
-        ...data,
-        id: uuidv4(),
-        date: getCurrentDate()[0],
-        time: getCurrentDate()[1],
-        direction: textDirection,
-      });
-    }
+
+    // add a local note
+    submitState = await storeDataInLocalStorage({
+      ...data,
+      id: uuidv4(),
+      date: getCurrentDate()[0],
+      time: getCurrentDate()[1],
+      direction: textDirection,
+    });
 
     if (submitState) {
       setUserNotes(await getLocalStorageUserNotes());
       reset();
       clearErrors();
-      showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
+      showToast("با موفقیت افزوده شد");
       router.replace("/(home)");
     } else {
-      showToast(`خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`, "error");
+      showToast(`خطا در ذخیره یادداشت`, "error");
+    }
+    setLoading(false);
+  };
+
+  //------------ offline editing note
+  const handleEditLocalNote = async (data: any) => {
+    let submitState: boolean | undefined;
+    setLoading(true);
+
+    // edit local note
+    submitState = await handleEditingNote({
+      id,
+      editedTitle: data.title,
+      editedContent: data.content,
+      direction: textDirection,
+    });
+
+    if (submitState) {
+      setUserNotes(await getLocalStorageUserNotes());
+      reset();
+      clearErrors();
+      showToast("با موفقیت ویرایش شد");
+      router.replace("/(home)");
+    } else {
+      showToast(`خطا در ویرایش یادداشت`, "error");
     }
     setLoading(false);
   };
@@ -341,7 +348,7 @@ const Note = () => {
             )}
           />
 
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -371,7 +378,7 @@ const Note = () => {
                 }
               />
             )}
-          </View>
+          </View> */}
         </View>
       )}
     </ScrollView>
