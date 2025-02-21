@@ -97,7 +97,7 @@ export default function DrawerCustomHeader({
             <FontAwesome
               name="search"
               size={24}
-              color="white"
+              color={theme === "light" ? lightTheme.primary : "white"}
               onPress={() => setDisplaySearch(true)}
             />
             <EditContainer width={"85%"} setTextDirection={setTextDirection} />
