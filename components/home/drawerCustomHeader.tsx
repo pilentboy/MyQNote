@@ -6,9 +6,10 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchInput from "./searchInput";
 import useTheme from "@/context/themeProvider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import EditContainer from "../EditContainer";
 import useEdit from "@/context/editProvider";
+import { authContext } from "@/context/authProvider";
 
 export default function DrawerCustomHeader({
   navigation,
@@ -18,7 +19,12 @@ export default function DrawerCustomHeader({
   const { theme } = useTheme();
   const { setTextDirection } = useEdit();
   const [displaySearch, setDisplaySearch] = useState<boolean>(false);
+  const { setSearchValue } = useContext(authContext);
 
+  const closeSearchingNotes = () => {
+    setDisplaySearch(false);
+    setSearchValue("");
+  };
   return (
     <View
       style={{
@@ -88,7 +94,7 @@ export default function DrawerCustomHeader({
               name="closecircleo"
               size={24}
               color="red"
-              onPress={() => setDisplaySearch(false)}
+              onPress={closeSearchingNotes}
             />
             <SearchInput />
           </>
