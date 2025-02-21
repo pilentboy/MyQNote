@@ -267,7 +267,6 @@ const Note = () => {
         <Loading />
       ) : (
         <View style={styles.contentContainer}>
-          
           <EditContainer setTextDirection={setTextDirection} />
           {errors.title && (
             <Text style={styles.errorText}>{errors.title.message}</Text>
@@ -309,6 +308,7 @@ const Note = () => {
                     height: inputHeight,
                     color: theme === "light" ? "black" : "white",
                     textAlign: textDirection,
+                    borderBottomWidth: 0,
                   },
                 ]}
                 placeholder="یادداشت"
