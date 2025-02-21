@@ -321,7 +321,7 @@ const Note = () => {
             )}
           />
 
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -351,7 +351,7 @@ const Note = () => {
                 }
               />
             )}
-          </View>
+          </View> */}
         </View>
       )}
     </ScrollView>
