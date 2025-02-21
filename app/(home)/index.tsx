@@ -15,6 +15,7 @@ import Toast from "react-native-toast-message";
 import RotateArrow from "@/components/rotateArrow";
 import Entypo from "@expo/vector-icons/Entypo";
 import useEdit from "@/context/editProvider";
+import useSubmitNoteType from "@/context/submitNoteType";
 
 const index = () => {
   const {
@@ -30,6 +31,7 @@ const index = () => {
   const route = useRouter();
   const { theme } = useTheme();
   const { textDirection, setTextDirection } = useEdit();
+  const { setSubmitNoteType } = useSubmitNoteType();
 
   const [preNoteFlastListPosition, setPreNoteFlastListPosition] =
     useState<number>(0);
@@ -206,7 +208,10 @@ const index = () => {
         {/* Floating button to add a new note */}
         <AddNoteBTN
           display={addNoteBTNDisplay}
-          action={() => route.navigate("/(note)")}
+          action={() => {
+            setSubmitNoteType("newNote");
+            route.navigate("/(note)");
+          }}
         />
       </View>
     </GestureHandlerRootView>

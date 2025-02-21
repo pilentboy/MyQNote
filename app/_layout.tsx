@@ -7,6 +7,7 @@ import { AuthProvider } from "../context/authProvider";
 import { ThemeProvider } from "@/context/themeProvider";
 import Toast, { BaseToast } from "react-native-toast-message";
 import { EditProvider } from "@/context/editProvider";
+import { SubmitNoteTypeProvider } from "@/context/submitNoteType";
 
 const toastConfig = {
   success: (props: any) => (
@@ -54,16 +55,18 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <EditProvider>
-        <AuthProvider>
-          <SafeAreaProvider>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="index" />
-            </Stack>
-          </SafeAreaProvider>
-        </AuthProvider>
-        <Toast config={toastConfig} />
-      </EditProvider>
+      <SubmitNoteTypeProvider>
+        <EditProvider>
+          <AuthProvider>
+            <SafeAreaProvider>
+              <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="index" />
+              </Stack>
+            </SafeAreaProvider>
+          </AuthProvider>
+          <Toast config={toastConfig} />
+        </EditProvider>
+      </SubmitNoteTypeProvider>
     </ThemeProvider>
   );
 }

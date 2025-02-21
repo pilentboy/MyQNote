@@ -5,6 +5,7 @@ import FooterText from "./footerText";
 import { useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
+import useSubmitNoteType from "@/context/submitNoteType";
 
 const NoteBox = ({
   title,
@@ -23,6 +24,7 @@ const NoteBox = ({
 }) => {
   const route = useRouter();
   const { theme } = useTheme();
+  const { setSubmitNoteType } = useSubmitNoteType();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   const test = useRef(true);
 
@@ -40,6 +42,7 @@ const NoteBox = ({
   // end handle long touch on note box
 
   const goEditingNoteScreen = () => {
+    setSubmitNoteType("editNote");
     route.push({
       pathname: "/(note)",
       params: {
