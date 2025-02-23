@@ -348,37 +348,7 @@ const Note = () => {
             )}
           />
 
-          {/* <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: "100%",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <NoteActionBTN
-              title={editedTitle ? "ثبت ویرایش" : "افزودن"}
-              action={handleSubmit(
-                accessKey && editedTitle
-                  ? handleEditingCloudNote
-                  : accessKey
-                  ? handleAddingCloudNotes
-                  : handleOfflineAddingNote
-              )}
-            />
-            {editedTitle && (
-              <NoteActionBTN
-                title="حذف"
-                action={() =>
-                  CustomAlert(
-                    "حذف",
-                    "آیا از حذف این یادداشت مطمئن هستید؟",
-                    accessKey ? handleDeleteCloudNote : deleteLocalNote
-                  )
-                }
-              />
-            )}
-          </View> */}
+        
         </View>
       )}
     </ScrollView>
