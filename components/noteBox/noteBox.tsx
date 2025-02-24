@@ -1,11 +1,11 @@
-import { lightTheme } from "@/constants/theme";
+import { useState, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
-import { useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
+import { lightTheme } from "@/constants/theme";
 
 const NoteBox = ({
   title,
@@ -26,21 +26,20 @@ const NoteBox = ({
   const { theme } = useTheme();
   const { setSubmitNoteType } = useSubmitNoteType();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
-  let isLongPress = true;
+  const longPressTimeout = useRef<NodeJS.Timeout | null>(null); // Ref for long press timeout
 
-  // handle log touch on note box
-  const touchStart = () => {
-    console.log("start");
-    isLongPress = true;
-    setTimeout(() => {
-      if (isLongPress) goEditingNoteScreen();
+  // Handle touch start
+  const handleTouchStart = () => {
+    longPressTimeout.current = setTimeout(() => {
+      goEditingNoteScreen();
     }, 800);
   };
 
-  // handle log touch end note box
-  const touchEnd = () => {
-    console.log("end");
-    isLongPress = false;
+  // Handle touch end
+  const handleTouchEnd = () => {
+    if (longPressTimeout.current) {
+      clearTimeout(longPressTimeout.current);
+    }
   };
 
   const goEditingNoteScreen = () => {
@@ -57,23 +56,22 @@ const NoteBox = ({
   };
 
   return (
-    <View
-      onTouchStart={touchStart}
-      onTouchEnd={touchEnd}
-      onTouchMove={touchEnd}
-      style={[
-        {
-          display: "flex",
-          backgroundColor: theme === "light" ? lightTheme.secondry : "#2C394B",
-          borderRadius: 10,
-          justifyContent: "space-around",
-          padding: 6,
-          width: "100%",
-          height: displayFullContent ? "auto" : 120,
-        },
-      ]}
+    <Pressable
+      onPressIn={handleTouchStart}
+      onPressOut={handleTouchEnd}
+      onTouchMove={handleTouchEnd}
+      onPress={() => setDisplayFullContent((pre) => !pre)}
+      style={{
+        display: "flex",
+        backgroundColor: theme === "light" ? lightTheme.secondry : "#2C394B",
+        borderRadius: 10,
+        justifyContent: "space-around",
+        padding: 6,
+        width: "100%",
+        height: displayFullContent ? "auto" : 120,
+      }}
     >
-      {/*  title & edit  */}
+      {/* Title & Edit */}
       <View
         style={{
           flexDirection: "row-reverse",
@@ -101,29 +99,28 @@ const NoteBox = ({
           onPress={goEditingNoteScreen}
         />
       </View>
-      {/* main content */}
-      <Pressable onPress={() => setDisplayFullContent((pre) => !pre)}>
-        <Text
-          style={{
-            color: theme === "light" ? "black" : "white",
-            fontFamily: "Vazir",
-            fontSize: 14,
-            borderBottomWidth: 1,
-            borderBottomColor: theme === "light" ? "#e7ce8e" : "gray",
-            paddingVertical: 5,
-            textAlign: direction === "right" ? "right" : "left",
-          }}
-        >
-          {displayFullContent
-            ? content
-            : content
-                .replace(/\s+/g, " ")
-                .slice(0, content.length > 80 ? 80 : content.length)}
-          {!displayFullContent ? "..." : null}
-        </Text>
-      </Pressable>
 
-      {/* details -- edited or added time info */}
+      {/* Main Content */}
+      <Text
+        style={{
+          color: theme === "light" ? "black" : "white",
+          fontFamily: "Vazir",
+          fontSize: 14,
+          borderBottomWidth: 1,
+          borderBottomColor: theme === "light" ? "#e7ce8e" : "gray",
+          paddingVertical: 5,
+          textAlign: direction === "right" ? "right" : "left",
+        }}
+      >
+        {displayFullContent
+          ? content
+          : content
+              .replace(/\s+/g, " ")
+              .slice(0, content.length > 80 ? 80 : content.length)}
+        {!displayFullContent ? "..." : null}
+      </Text>
+
+      {/* Details -- Edited or Added Time Info */}
       <View
         style={{
           flexDirection: "row",
@@ -146,7 +143,8 @@ const NoteBox = ({
         </Text>
         <FooterText value={date} />
       </View>
-    </View>
+    </Pressable>
   );
 };
+
 export default NoteBox;
