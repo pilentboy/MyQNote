@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
 import { useRouter } from "expo-router";
@@ -93,12 +93,13 @@ const NoteBox = ({
         >
           {title}
         </Text>
-        <MaterialIcons
-          name="edit"
-          size={16}
-          color={theme == "light" ? "black" : "white"}
-          onPress={goEditingNoteScreen}
-        />
+        <TouchableOpacity onPress={goEditingNoteScreen} activeOpacity={0.5}>
+          <MaterialIcons
+            name="edit"
+            size={16}
+            color={theme == "light" ? "black" : "white"}
+          />
+        </TouchableOpacity>
       </View>
 
       {/* Main Content */}
