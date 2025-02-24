@@ -88,6 +88,12 @@ export default function Settings() {
         <SettingsTitle title="تم برنامه" theme={theme} />
       </SettingsItemWrapper>
 
+      {/* change app mode */}
+      <SettingsItemWrapper theme={theme}>
+        <Switch value={true} onValueChange={() => {}} />
+        <SettingsTitle title="منبع یادداشت ها" theme={theme} />
+      </SettingsItemWrapper>
+
       {/* Delete notes setting */}
       <SettingsItemWrapper theme={theme}>
         <MaterialIcons

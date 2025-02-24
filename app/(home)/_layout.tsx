@@ -6,10 +6,13 @@ import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import CustomDrawerContent from "@/components/home/customDrawerContent"; // Custom content for the drawer
 import DrawerCustomHeader from "@/components/home/drawerCustomHeader"; // Custom header component for the drawer
 import useTheme from "@/context/themeProvider";
+import { useContext } from "react";
+import { authContext } from "@/context/authProvider";
 
 export default function Layout() {
   const labelFontSize = 14; // Font size for drawer labels
   const { theme } = useTheme();
+  const { appMode } = useContext(authContext);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

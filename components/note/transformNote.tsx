@@ -1,14 +1,13 @@
 import { TouchableOpacity } from "react-native";
 import CustomAlert from "../cutstomAlert";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
+import useTheme from "@/context/themeProvider";
 
 const TransformNoteBTN = () => {
   const { appMode } = useContext(authContext);
-  useEffect(() => {
-    console.log(appMode);
-  }, []);
+  const { theme } = useTheme();
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -25,7 +24,11 @@ const TransformNoteBTN = () => {
         );
       }}
     >
-      <MaterialIcons name="transform" size={16} color="white" />
+      <MaterialIcons
+        name="transform"
+        size={16}
+        color={theme == "light" ? "black" : "white"}
+      />
     </TouchableOpacity>
   );
 };
