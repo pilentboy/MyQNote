@@ -2,7 +2,10 @@ const handleLogin = async (data: any) => {
   try {
     const res = await fetch("https://myqnoteapi.liara.run/login", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        username: data.username.trim(),
+        ...data,
+      }),
       headers: {
         "Content-Type": "application/json",
         "x-api-key":
