@@ -69,7 +69,7 @@ const Note = () => {
 
   useEffect(() => {
     setDeleteNote(() => (accessKey ? handleDeleteCloudNote : deleteLocalNote));
-    
+
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => setinputHeight(250)

@@ -1,7 +1,7 @@
 import { TouchableOpacity } from "react-native";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import CustomAlert from "../cutstomAlert";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const DeleteNoteBTN = () => {
   const { deleteNote } = useSubmitNoteType();
@@ -12,7 +12,7 @@ const DeleteNoteBTN = () => {
         CustomAlert("حذف", "آیا از حذف این یادداشت مطمئن هستید؟", deleteNote);
       }}
     >
-      <FontAwesome name="remove" size={24} color="red" />
+      <MaterialIcons name="delete-forever" size={24} color="red" />
     </TouchableOpacity>
   );
 };
