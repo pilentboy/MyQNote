@@ -26,20 +26,22 @@ const NoteBox = ({
   const { theme } = useTheme();
   const { setSubmitNoteType } = useSubmitNoteType();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
-  const test = useRef(true);
+  let isLongPress = true;
 
   // handle log touch on note box
   const touchStart = () => {
-    test.current = true;
+    console.log("start");
+    isLongPress = true;
     setTimeout(() => {
-      if (test.current) goEditingNoteScreen();
-    }, 500);
+      if (isLongPress) goEditingNoteScreen();
+    }, 800);
   };
 
+  // handle log touch end note box
   const touchEnd = () => {
-    test.current = false;
+    console.log("end");
+    isLongPress = false;
   };
-  // end handle long touch on note box
 
   const goEditingNoteScreen = () => {
     setSubmitNoteType("editNote");
