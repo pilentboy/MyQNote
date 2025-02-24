@@ -34,7 +34,7 @@ const Note = () => {
   const { setSubmitAction, submitNoteType, setDeleteNote } =
     useSubmitNoteType();
   const router = useRouter();
-  const { loading, setLoading, setUserNotes, accessKey } =
+  const { loading, setLoading, setUserNotes, accessKey, setSearchValue } =
     useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 260);
   const { id, editedTitle, editedContent, direction } = useLocalSearchParams();
@@ -150,6 +150,7 @@ const Note = () => {
       reset();
       clearErrors();
       showToast("با موفقیت ویرایش شد");
+      setSearchValue("");
       router.replace("/(home)");
     } else {
       showToast(`خطا در ویرایش یادداشت`, "error");
@@ -232,6 +233,11 @@ const Note = () => {
         return;
       }
       showToast("با موفقیت ویرایش شد");
+
+      // update user notes after editing
+      setUserNotes(await handleGetUserCloudNotes(accessKey));
+
+      // redirect to home page
       router.replace("/(home)");
     } catch (error: any) {
       showToast("خطا در برقراری ارتباط", "error");
