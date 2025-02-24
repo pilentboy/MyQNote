@@ -69,6 +69,7 @@ const NoteBox = ({
         padding: 6,
         width: "100%",
         height: displayFullContent ? "auto" : 120,
+        minHeight: 120,
       }}
     >
       {/* Title & Edit */}
