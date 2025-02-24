@@ -64,10 +64,12 @@ const Note = () => {
       setSubmitAction(() =>
         handleSubmit(accessKey ? handleEditingCloudNote : handleEditLocalNote)
       );
-      setDeleteNote(() =>
-        accessKey ? handleDeleteCloudNote : deleteLocalNote
-      );
     }
+  }, [textDirection]);
+
+  useEffect(() => {
+    setDeleteNote(() => (accessKey ? handleDeleteCloudNote : deleteLocalNote));
+    
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => setinputHeight(250)
@@ -268,7 +270,6 @@ const Note = () => {
         return;
       }
 
-      //const result = await res.json();
       reset();
       clearErrors();
       showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
@@ -347,8 +348,6 @@ const Note = () => {
               />
             )}
           />
-
-        
         </View>
       )}
     </ScrollView>

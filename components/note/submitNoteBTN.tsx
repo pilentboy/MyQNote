@@ -7,6 +7,8 @@ import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 const SubmitNoteButton = () => {
   const { theme } = useTheme();
   const { submitAction } = useSubmitNoteType();
+
+  
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={submitAction}>
       <FontAwesome
