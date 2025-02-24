@@ -119,7 +119,7 @@ const NoteBox = ({
           : content
               .replace(/\s+/g, " ")
               .slice(0, content.length > 80 ? 80 : content.length)}
-        {!displayFullContent ? "..." : null}
+        {!displayFullContent && content.length > 80 ? "..." : null}
       </Text>
 
       {/* Details -- Edited or Added Time Info */}
