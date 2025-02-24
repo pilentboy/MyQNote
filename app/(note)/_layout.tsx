@@ -6,6 +6,7 @@ import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import EditNoteBTN from "@/components/note/editNoteBTN";
 import DeleteNoteBTN from "@/components/note/deleteNoteBTN";
 
+
 export default function NoteLayout() {
   const { theme } = useTheme();
   const { submitNoteType } = useSubmitNoteType();

@@ -6,6 +6,7 @@ import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import { lightTheme } from "@/constants/theme";
+import TransformNoteBTN from "../note/transformNote";
 
 const NoteBox = ({
   title,
@@ -93,13 +94,16 @@ const NoteBox = ({
         >
           {title}
         </Text>
-        <TouchableOpacity onPress={goEditingNoteScreen} activeOpacity={0.5}>
-          <MaterialIcons
-            name="edit"
-            size={16}
-            color={theme == "light" ? "black" : "white"}
-          />
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", gap: 5 }}>
+          <TouchableOpacity onPress={goEditingNoteScreen} activeOpacity={0.5}>
+            <MaterialIcons
+              name="edit"
+              size={16}
+              color={theme == "light" ? "black" : "white"}
+            />
+          </TouchableOpacity>
+          <TransformNoteBTN />
+        </View>
       </View>
 
       {/* Main Content */}
