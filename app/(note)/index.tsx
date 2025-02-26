@@ -34,8 +34,14 @@ const Note = () => {
   const { setSubmitAction, submitNoteType, setDeleteNote } =
     useSubmitNoteType();
   const router = useRouter();
-  const { loading, setLoading, setUserNotes, accessKey, setSearchValue } =
-    useContext(authContext);
+  const {
+    loading,
+    setLoading,
+    setUserNotes,
+    accessKey,
+    setSearchValue,
+    appMode,
+  } = useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 260);
   const { id, editedTitle, editedContent, direction } = useLocalSearchParams();
   const { theme } = useTheme();
@@ -57,18 +63,28 @@ const Note = () => {
     if (submitNoteType === "newNote") {
       setSubmitAction(() =>
         handleSubmit(
-          accessKey ? handleAddingCloudNotes : handleOfflineAddingNote
+          appMode === "online" && accessKey
+            ? handleAddingCloudNotes
+            : handleOfflineAddingNote
         )
       );
     } else {
       setSubmitAction(() =>
-        handleSubmit(accessKey ? handleEditingCloudNote : handleEditLocalNote)
+        handleSubmit(
+          appMode === "online" && accessKey
+            ? handleEditingCloudNote
+            : handleEditLocalNote
+        )
       );
     }
   }, [textDirection]);
 
   useEffect(() => {
-    setDeleteNote(() => (accessKey ? handleDeleteCloudNote : deleteLocalNote));
+    setDeleteNote(() =>
+      appMode === "online" && accessKey
+        ? handleDeleteCloudNote
+        : deleteLocalNote
+    );
 
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",

@@ -26,6 +26,7 @@ const index = () => {
     searchValue,
     accessKey,
     appMode,
+    setAppMode,
   } = useContext(authContext);
 
   const route = useRouter();
@@ -50,7 +51,7 @@ const index = () => {
     setUserNotes([]);
     setTextDirection(undefined);
     setLoading(true);
-    if (accessKey) {
+    if (appMode === "online" && accessKey) {
       try {
         const res = await handleGetUserCloudNotes(accessKey);
         if (res.message || res.error) {

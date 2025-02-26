@@ -3,7 +3,9 @@ import {
   getLocalStorageUserNotes,
   handleChangeAppTheme,
   handleDeleteNotes,
+  handleGetAppMode,
   handleGetAppTheme,
+  handleDefaultNoteMode,
 } from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
 import useTheme from "@/context/themeProvider";
 import SettingsItemWrapper from "@/components/settings/settingsItemWrapper"; // Custom wrapper component for settings items
@@ -19,7 +21,7 @@ import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme(); // Access and set the app's current theme
-  const { setUserNotes, accessKey, setLoading, loading } =
+  const { setUserNotes, accessKey, setLoading, loading, appMode, setAppMode } =
     useContext(authContext); // Access and update user notes from the context
 
   // Function to display a success toast message
@@ -30,6 +32,23 @@ export default function Settings() {
     });
   };
 
+  // Function to change the app's mode (online/offline)
+  const changeAppMode = async () => {
+    const updatedAppMode = appMode === "online" ? "offline" : "online";
+    await handleDefaultNoteMode(updatedAppMode);
+    setAppMode(updatedAppMode);
+    setUserNotes(
+      updatedAppMode === "online"
+        ? await handleGetUserCloudNotes(accessKey)
+        : await getLocalStorageUserNotes()
+    );
+    // Display a success toast message
+    showToast(
+      `یادداشت های ${
+        updatedAppMode === "online" ? "آنلاین" : "آفلاین"
+      } دریافت شدند`
+    );
+  };
   // Function to change the app's theme
   const changeAppTheme = async () => {
     await handleChangeAppTheme(); // Toggle theme in local storage
@@ -40,7 +59,7 @@ export default function Settings() {
   const deleteNotes = async () => {
     setLoading(true);
     // delete cloud notes
-    if (accessKey) {
+    if (appMode === "online" && accessKey) {
       try {
         const res = await handleDeleteCloudNotes(accessKey);
 
@@ -89,10 +108,12 @@ export default function Settings() {
       </SettingsItemWrapper>
 
       {/* change app mode */}
-      <SettingsItemWrapper theme={theme}>
-        <Switch value={true} onValueChange={() => {}} />
-        <SettingsTitle title="منبع یادداشت ها" theme={theme} />
-      </SettingsItemWrapper>
+      {appMode === "offline" && !accessKey ? (
+        <SettingsItemWrapper theme={theme}>
+          <Switch value={appMode === "online"} onValueChange={changeAppMode} />
+          <SettingsTitle title="منبع یادداشت ها" theme={theme} />
+        </SettingsItemWrapper>
+      ) : null}
 
       {/* Delete notes setting */}
       <SettingsItemWrapper theme={theme}>
