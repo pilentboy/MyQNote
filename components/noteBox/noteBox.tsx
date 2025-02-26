@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
@@ -6,7 +6,8 @@ import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import { lightTheme } from "@/constants/theme";
-import TransformNoteBTN from "../note/transformNote";
+import CopyNoteBTN from "../note/copyNoteBTN";
+import { authContext } from "@/context/authProvider";
 
 const NoteBox = ({
   title,
@@ -25,6 +26,7 @@ const NoteBox = ({
 }) => {
   const route = useRouter();
   const { theme } = useTheme();
+  const { accessKey } = useContext(authContext);
   const { setSubmitNoteType } = useSubmitNoteType();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null); // Ref for long press timeout
@@ -102,7 +104,7 @@ const NoteBox = ({
               color={theme == "light" ? "black" : "white"}
             />
           </TouchableOpacity>
-          <TransformNoteBTN />
+          {accessKey && <CopyNoteBTN />}
         </View>
       </View>
 

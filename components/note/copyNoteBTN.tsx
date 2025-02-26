@@ -4,17 +4,19 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import useTheme from "@/context/themeProvider";
+import { storeDataInLocalStorage } from "@/utils/handleLocalStorage";
 
-const TransformNoteBTN = () => {
+const CopyNoteBTN = () => {
   const { appMode } = useContext(authContext);
   const { theme } = useTheme();
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={() => {
         CustomAlert(
-          "انتقال یادداشت",
-          `آیا از انتقال این یادداشت به ${
+          "کپی یادداشت",
+          `آیا از کپی کردن این یادداشت به ${
             appMode === "online"
               ? "به حافظه آفلاین (محلی)"
               : "حساب آنلاین (ابری)"
@@ -33,4 +35,4 @@ const TransformNoteBTN = () => {
   );
 };
 
-export default TransformNoteBTN;
+export default CopyNoteBTN;

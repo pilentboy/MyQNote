@@ -28,6 +28,7 @@ import {
   handleEditingNote,
   storeDataInLocalStorage,
 } from "../../utils/handleLocalStorage";
+import handleAddingCloudNotes from "@/api/handleAddUserCloudNote";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -64,7 +65,7 @@ const Note = () => {
       setSubmitAction(() =>
         handleSubmit(
           appMode === "online" && accessKey
-            ? handleAddingCloudNotes
+            ? addUserCloudNote
             : handleOfflineAddingNote
         )
       );
@@ -261,34 +262,24 @@ const Note = () => {
       setLoading(false);
     }
   };
-
-  const handleAddingCloudNotes = async (data: any) => {
+  // date: date || getCurrentDate()[0],
+  // time: getCurrentDate()[1],
+  // direction: textDirection,
+  const addUserCloudNote = async (data: any) => {
     setLoading(true);
     try {
-      const res = await fetch("https://myqnoteapi.liara.run/add_note", {
-        method: "POST",
-        body: JSON.stringify({
-          title: data.title,
-          content: data.content,
-          date: getCurrentDate()[0],
-          time: getCurrentDate()[1],
-          direction: textDirection,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
+      const res = await handleAddingCloudNotes(
+        data,
+        getCurrentDate()[0],
+        getCurrentDate()[1],
+        textDirection,
+        accessKey
+      );
 
       if (!res.ok) {
         const errorData = await res.json();
         console.log(errorData);
-        showToast(
-          `خطا در ${editedTitle ? "ویرایش" : "ذخیره"} اطلاعات!`,
-          "error"
-        );
+        showToast(`خطا در ذخیره یادداشت`, "error");
         return;
       }
 
@@ -302,6 +293,7 @@ const Note = () => {
       setLoading(false);
     }
   };
+
   //------------ end cloud action handlere
 
   return (
