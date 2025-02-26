@@ -4,15 +4,14 @@ import {
 } from "@react-navigation/drawer";
 import { View, Text } from "react-native";
 import { CroppedLogo } from "../logo";
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { lightTheme } from "@/constants/theme";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import useTheme from "@/context/themeProvider";
 
 export default function CustomDrawerContent(props: any) {
-  const router = useRouter();
-  const { appMode, setAccessKey, setAppMode } = useContext(authContext);
+  const { appMode, accessKey } = useContext(authContext);
   const { theme } = useTheme();
 
   return (
@@ -74,7 +73,9 @@ export default function CustomDrawerContent(props: any) {
           }}
           // replace
         >
-          {appMode === "offline" ? "ورود به حساب" : "خروج از حساب"}
+          {appMode === "offline" && !accessKey
+            ? "ورود به حساب"
+            : "خروج از حساب"}
         </Link>
 
         <Text

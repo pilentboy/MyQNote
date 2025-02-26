@@ -108,12 +108,12 @@ export default function Settings() {
       </SettingsItemWrapper>
 
       {/* change app mode */}
-      {appMode === "offline" && !accessKey ? (
+      {accessKey && (
         <SettingsItemWrapper theme={theme}>
           <Switch value={appMode === "online"} onValueChange={changeAppMode} />
           <SettingsTitle title="منبع یادداشت ها" theme={theme} />
         </SettingsItemWrapper>
-      ) : null}
+      )}
 
       {/* Delete notes setting */}
       <SettingsItemWrapper theme={theme}>
