@@ -66,7 +66,7 @@ const Note = () => {
         handleSubmit(
           appMode === "online" && accessKey
             ? addUserCloudNote
-            : handleOfflineAddingNote
+            : handleAddingLocalNote
         )
       );
     } else {
@@ -124,7 +124,7 @@ const Note = () => {
   });
 
   //------------ offline adding note
-  const handleOfflineAddingNote = async (data: any) => {
+  const handleAddingLocalNote = async (data: any) => {
     let submitState: boolean | undefined;
     setLoading(true);
 
@@ -262,9 +262,7 @@ const Note = () => {
       setLoading(false);
     }
   };
-  // date: date || getCurrentDate()[0],
-  // time: getCurrentDate()[1],
-  // direction: textDirection,
+
   const addUserCloudNote = async (data: any) => {
     setLoading(true);
     try {
@@ -285,7 +283,7 @@ const Note = () => {
 
       reset();
       clearErrors();
-      showToast(editedTitle ? "با موفقیت ویرایش شد" : "با موفقیت افزوده شد");
+      showToast("یادداشت با موفقیت افزوده شده");
       router.replace("/(home)");
     } catch (error: any) {
       showToast("خطا در برقراری ارتباط", "error");

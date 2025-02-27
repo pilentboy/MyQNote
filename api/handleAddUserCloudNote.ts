@@ -4,8 +4,8 @@ const handleAddingCloudNotes = async (
   time: string,
   direction: string,
   accessKey: string
-) => {
-  const res = await fetch("https://myqnoteapi.liara.run/add_note", {
+) =>
+  await fetch("https://myqnoteapi.liara.run/add_note", {
     method: "POST",
     body: JSON.stringify({
       title: data.title,
@@ -21,7 +21,4 @@ const handleAddingCloudNotes = async (
       Authorization: `Bearer ${accessKey}`,
     },
   });
-  return res;
-};
-
 export default handleAddingCloudNotes;

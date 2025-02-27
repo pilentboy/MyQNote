@@ -104,7 +104,16 @@ const NoteBox = ({
               color={theme == "light" ? "black" : "white"}
             />
           </TouchableOpacity>
-          {accessKey && <CopyNoteBTN />}
+          {/* button for handling copying local/online note to local/online storage */}
+          {accessKey && (
+            <CopyNoteBTN
+              title={title}
+              content={content}
+              date={date}
+              time={time}
+              textDirection={direction}
+            />
+          )}
         </View>
       </View>
 
