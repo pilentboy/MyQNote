@@ -50,7 +50,7 @@ export default function Settings() {
     );
   };
 
-  const radioButtons: RadioButtonProps[] = useMemo(
+  const themeRadioButtons: RadioButtonProps[] = useMemo(
     () => [
       {
         id: "dark",
@@ -65,7 +65,23 @@ export default function Settings() {
     ],
     []
   );
-  
+
+  const noteSourseRadioButtons: RadioButtonProps[] = useMemo(
+    () => [
+      {
+        id: "online",
+        label: "آنلاین",
+        value: "online",
+      },
+      {
+        id: "offline",
+        label: "آفلاین",
+        value: "offline",
+      },
+    ],
+    []
+  );
+
   // Function to change the app's theme
   const changeAppTheme = async () => {
     await handleChangeAppTheme(); // Toggle theme in local storage
@@ -117,12 +133,8 @@ export default function Settings() {
     >
       {/* Theme toggle setting */}
       <SettingsItemWrapper theme={theme}>
-        {/* <Switch
-          value={theme === "light"}
-          onValueChange={changeAppTheme} // Handler for theme change
-        /> */}
         <RadioGroup
-          radioButtons={radioButtons}
+          radioButtons={themeRadioButtons}
           onPress={changeAppTheme}
           layout="row"
           labelStyle={{ color: theme === "light" ? "black" : "white" }}
@@ -134,7 +146,13 @@ export default function Settings() {
       {/* change app mode */}
       {accessKey && (
         <SettingsItemWrapper theme={theme}>
-          <Switch value={appMode === "online"} onValueChange={changeAppMode} />
+          <RadioGroup
+            radioButtons={noteSourseRadioButtons}
+            onPress={changeAppMode}
+            layout="row"
+            labelStyle={{ color: theme === "light" ? "black" : "white" }}
+            selectedId={appMode}
+          />
           <SettingsTitle title="منبع یادداشت ها" theme={theme} />
         </SettingsItemWrapper>
       )}
