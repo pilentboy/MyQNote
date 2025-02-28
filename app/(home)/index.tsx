@@ -6,7 +6,7 @@ import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user data
 import { lightTheme } from "@/constants/theme"; // Constants for the light theme colors
 import { getLocalStorageUserNotes } from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
-import AddNoteBTN from "@/components/home/addNoteBTN"; // Custom button component for adding notes
+import FloatingActionButton from "@/components/home/floatingActionButton"; // Custom button component for adding notes
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
@@ -16,7 +16,7 @@ import RotateArrow from "@/components/rotateArrow";
 import Entypo from "@expo/vector-icons/Entypo";
 import useEdit from "@/context/editProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
-
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 const index = () => {
   const {
     loading,
@@ -233,12 +233,13 @@ const index = () => {
         )}
 
         {/* Floating button to add a new note */}
-        <AddNoteBTN
+        <FloatingActionButton
           display={addNoteBTNDisplay}
           action={() => {
             setSubmitNoteType("newNote");
             route.navigate("/(note)");
           }}
+          icon={<FontAwesome6 name="pencil" size={24} color="white" />}
         />
       </View>
     </GestureHandlerRootView>

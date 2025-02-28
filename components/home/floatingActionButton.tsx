@@ -1,16 +1,22 @@
 import { TouchableOpacity, Animated } from "react-native";
 import { lightTheme } from "@/constants/theme";
-import { useEffect, useRef } from "react";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-const AddNoteBTN = ({
+import { ReactNode, useRef, useEffect } from "react";
+
+const FloatingActionButton = ({
   action,
   display,
+  icon,
 }: {
   action: () => void;
   display: boolean;
+  icon: ReactNode;
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current; // For opacity
   const slideAnim = useRef(new Animated.Value(20)).current; // For translateY
+
+  useEffect(() => {
+    console.log(display, "xx");
+  }, []);
 
   useEffect(() => {
     if (display) {
@@ -48,6 +54,8 @@ const AddNoteBTN = ({
     <Animated.View
       style={{
         opacity: fadeAnim,
+        bottom: 0,
+        position: "absolute",
         width: "100%",
         transform: [
           {
@@ -76,10 +84,10 @@ const AddNoteBTN = ({
         onPress={action}
         activeOpacity={0.8}
       >
-        <FontAwesome6 name="pencil" size={24} color="white" />
+        {icon}
       </TouchableOpacity>
     </Animated.View>
   );
 };
 
-export default AddNoteBTN;
+export default FloatingActionButton;
