@@ -8,11 +8,13 @@ const FormInput = ({
   label,
   control,
   name,
+  placeholder,
 }: {
-  label: string;
+  label?: string;
   control: any;
   name: string;
   errors: any;
+  placeholder?: string;
 }) => {
   const { theme } = useTheme();
   return (
@@ -23,7 +25,7 @@ const FormInput = ({
           gap: 1,
         }}
       >
-        <FormInputLabel label={label} />
+        {label && <FormInputLabel label={label} />}
         {errors && (
           <Text style={{ color: "red", fontFamily: "Yekan", fontSize: 12 }}>
             {errors.message}
@@ -35,17 +37,19 @@ const FormInput = ({
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            placeholder={placeholder}
+            placeholderTextColor={theme === "light" ? "black" : "white"}
             secureTextEntry={name === "password"}
             style={{
               textAlign: "left",
               width: 300,
               height: 45,
-              borderWidth: 1,
+              borderWidth: 2,
               borderRadius: 15,
               color: theme === "light" ? "black" : "white",
               fontFamily: "Vazir",
               fontSize: 16,
-              padding: 12,
+              padding: 10,
               borderColor: errors ? "red" : lightTheme.primary,
             }}
             onBlur={onBlur}
