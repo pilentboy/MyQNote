@@ -6,9 +6,11 @@ import { View } from "react-native";
 const EditContainer = ({
   width,
   setTextDirection,
+  defaultTextDecoration,
 }: {
   setTextDirection?: any;
   width?: any;
+  defaultTextDecoration?: boolean;
 }) => {
   return (
     <View
@@ -38,6 +40,17 @@ const EditContainer = ({
             onPress={() => setTextDirection("right")}
           />
         </>
+      )}
+      {defaultTextDecoration && (
+        <MaterialCommunityIcons
+          name="format-horizontal-align-center"
+          size={24}
+          color="white"
+          onPress={() => {
+            setTextDirection(undefined);
+            console.log("changer");
+          }}
+        />
       )}
     </View>
   );

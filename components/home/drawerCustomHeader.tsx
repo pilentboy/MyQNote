@@ -106,7 +106,7 @@ export default function DrawerCustomHeader({
               color={theme === "light" ? lightTheme.primary : "white"}
               onPress={() => setDisplaySearch(true)}
             />
-            <EditContainer width={"85%"} setTextDirection={setTextDirection} />
+            <EditContainer width={"85%"} setTextDirection={setTextDirection} defaultTextDecoration />
           </>
         )}
       </View>

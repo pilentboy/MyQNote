@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
@@ -8,6 +8,7 @@ import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import { lightTheme } from "@/constants/theme";
 import CopyNoteBTN from "../note/copyNoteBTN";
 import { authContext } from "@/context/authProvider";
+import React from "react";
 
 const NoteBox = ({
   title,
@@ -57,6 +58,10 @@ const NoteBox = ({
       },
     });
   };
+
+  useEffect(() => {
+    console.log("NoteBox Rendered!");
+  }, []);
 
   return (
     <Pressable

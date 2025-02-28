@@ -1,5 +1,5 @@
 import { View, Text, FlatList, RefreshControl, ScrollView } from "react-native";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
@@ -26,7 +26,6 @@ const index = () => {
     searchValue,
     accessKey,
     appMode,
-    setAppMode,
   } = useContext(authContext);
 
   const route = useRouter();
@@ -46,7 +45,7 @@ const index = () => {
     });
   };
 
-  // Fetch all notes from local storage and set them in state
+  // Fetch all notes from local/cloud storage and set them in state
   const setData = async () => {
     setUserNotes([]);
     setTextDirection(undefined);
@@ -82,11 +81,12 @@ const index = () => {
     if (searchValue !== "") {
       setSearchNotes(); // Filter notes
     } else if (!textDirection) {
-      setData();
+      originalUserNotes.length ? setUserNotes(originalUserNotes) : setData(); // Fetch all notes
     } else {
-      filterNotesRotation();
+      if (textDirection !== undefined && userNotes.length)
+        filterNotesRotation();
     } // Fetch all notes
-  }, [searchValue, accessKey]);
+  }, [searchValue, accessKey, textDirection]);
 
   const filterNotesRotation = () => {
     setUserNotes(
@@ -94,9 +94,39 @@ const index = () => {
     );
   };
 
-  useEffect(() => {
-    if (textDirection !== undefined && userNotes.length) filterNotesRotation();
-  }, [textDirection]);
+  interface NoteItem {
+    title: string;
+    content: string;
+    date: string;
+    time: string;
+    direction: "right" | "left";
+    id: string;
+  }
+
+  const renderNoteItem = useCallback(({ item }: { item: NoteItem }) => {
+    return (
+      <NoteBox
+        title={item.title}
+        content={item.content}
+        date={item.date}
+        time={item.time}
+        direction={item.direction}
+        id={item.id}
+      />
+    );
+  }, []);
+
+  interface ItemLayout {
+    length: number;
+    offset: number;
+    index: number;
+  }
+
+  const getItemLayout = (_: any, index: number): ItemLayout => ({
+    length: 120,
+    offset: 120 * index,
+    index,
+  });
 
   return (
     <GestureHandlerRootView>
@@ -168,16 +198,12 @@ const index = () => {
               <FlatList
                 data={userNotes}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <NoteBox
-                    title={item.title}
-                    content={item.content}
-                    date={item.date}
-                    time={item.time}
-                    direction={item.direction}
-                    id={item.id}
-                  />
-                )}
+                renderItem={renderNoteItem}
+                maxToRenderPerBatch={6}
+                initialNumToRender={6}
+                windowSize={10}
+                removeClippedSubviews={true}
+                getItemLayout={getItemLayout}
                 refreshControl={
                   <RefreshControl refreshing={loading} onRefresh={setData}>
                     <RotateArrow />
