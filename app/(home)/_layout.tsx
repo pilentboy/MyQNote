@@ -2,6 +2,7 @@
 import { GestureHandlerRootView } from "react-native-gesture-handler"; // Provides root view for gesture handling
 import { Drawer } from "expo-router/drawer";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import CustomDrawerContent from "@/components/home/customDrawerContent"; // Custom content for the drawer
 import DrawerCustomHeader from "@/components/home/drawerCustomHeader"; // Custom header component for the drawer
@@ -71,7 +72,25 @@ export default function Layout() {
             },
           }}
         />
-        {/* Second screen in the drawer */}
+
+        {/* Second  screen in the drawer */}
+        <Drawer.Screen
+          name="friends"
+          options={{
+            title: "دوستان",
+            drawerLabel: "دوستان",
+            drawerIcon({ focused }) {
+              return (
+                <FontAwesome5
+                  name="user-friends"
+                  size={labelFontSize}
+                  color={focused || theme === "dark" ? "white" : "black"}
+                />
+              );
+            },
+          }}
+        />
+        {/* Third screen in the drawer */}
         <Drawer.Screen
           name="settings"
           options={{

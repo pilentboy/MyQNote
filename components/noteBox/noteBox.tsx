@@ -1,4 +1,4 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useRef, useContext } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
@@ -36,7 +36,7 @@ const NoteBox = ({
   const handleTouchStart = () => {
     longPressTimeout.current = setTimeout(() => {
       goEditingNoteScreen();
-    }, 800);
+    }, 500);
   };
 
   // Handle touch end
@@ -58,10 +58,6 @@ const NoteBox = ({
       },
     });
   };
-
-  useEffect(() => {
-    console.log("NoteBox Rendered!");
-  }, []);
 
   return (
     <Pressable

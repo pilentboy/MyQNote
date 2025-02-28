@@ -8,8 +8,7 @@ import { storeDataInLocalStorage } from "@/utils/handleLocalStorage";
 import handleAddingCloudNotes from "@/api/handleAddUserCloudNote";
 import { v4 as uuidv4 } from "uuid";
 import Toast from "react-native-toast-message";
-import Loading from "../loading";
-import useEdit from "@/context/editProvider";
+
 
 interface CopyNoteBTNProps {
   title: string;
@@ -72,7 +71,7 @@ const CopyNoteBTN: React.FC<CopyNoteBTNProps> = ({
         }
       }
     } catch (error) {
-      showToast("خطا در هنگام کپی", "error");
+      showToast("خطا در برقراری ارتباط", "error");
     } finally {
       setLoading(false);
     }
