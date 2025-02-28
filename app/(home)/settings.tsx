@@ -3,7 +3,6 @@ import {
   getLocalStorageUserNotes,
   handleChangeAppTheme,
   handleDeleteNotes,
-  handleGetAppMode,
   handleGetAppTheme,
   handleDefaultNoteMode,
 } from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
@@ -13,11 +12,12 @@ import SettingsTitle from "@/components/settings/settingsTitle"; // Custom compo
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import CustomAlert from "@/components/cutstomAlert";
 import Toast from "react-native-toast-message"; // Library for displaying toast notifications
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user-related data
 import handleDeleteCloudNotes from "@/api/handleDeleteCloudNotes";
 import Loading from "@/components/loading";
 import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
+import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme(); // Access and set the app's current theme
@@ -49,6 +49,23 @@ export default function Settings() {
       } دریافت شدند`
     );
   };
+
+  const radioButtons: RadioButtonProps[] = useMemo(
+    () => [
+      {
+        id: "dark",
+        label: "تاریک",
+        value: "dark",
+      },
+      {
+        id: "light",
+        label: "روشن",
+        value: "light",
+      },
+    ],
+    []
+  );
+  
   // Function to change the app's theme
   const changeAppTheme = async () => {
     await handleChangeAppTheme(); // Toggle theme in local storage
@@ -100,9 +117,16 @@ export default function Settings() {
     >
       {/* Theme toggle setting */}
       <SettingsItemWrapper theme={theme}>
-        <Switch
+        {/* <Switch
           value={theme === "light"}
           onValueChange={changeAppTheme} // Handler for theme change
+        /> */}
+        <RadioGroup
+          radioButtons={radioButtons}
+          onPress={changeAppTheme}
+          layout="row"
+          labelStyle={{ color: theme === "light" ? "black" : "white" }}
+          selectedId={theme}
         />
         <SettingsTitle title="تم برنامه" theme={theme} />
       </SettingsItemWrapper>
