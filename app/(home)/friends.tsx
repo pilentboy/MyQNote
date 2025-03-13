@@ -4,7 +4,7 @@ import useTheme from "@/context/themeProvider";
 import FloatingActionButton from "./../../components/home/floatingActionButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView ,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,7 +39,6 @@ export default function Friends() {
 		
 	// make an api call for fetching users based on the searchedUsernameValue		
 	const onSubmit = async () => {
-		console.log('x')
 		try{
 			const res = await fetch(`http://10.0.2.2:3000/search_users?username=${searchedUsernameValue}`,{
 			method:'GET',
@@ -94,11 +93,12 @@ export default function Friends() {
           snapPoints={snapPoints}
           index={sheetIndex}
           onChange={(index) => setSheetIndex(index)}
-          onClose={() => setSheetIndex(-1)}
+         onClose={() => setSheetIndex(-1)}
           enablePanDownToClose
           handleStyle={{ backgroundColor: lightTheme.primary }}
           handleIndicatorStyle={{ backgroundColor: "white" }}
         >
+			
           <BottomSheetView
             style={{
               flex: 1,
@@ -117,10 +117,10 @@ export default function Friends() {
               />
 			
 			{usersFound.length && <> 
-			
-			
-					<View style={{gap:5,flex:1,marginTop:10}}> 
-						{usersFound.map((user:any) => <View style={{
+				
+					<BottomSheetScrollView  style={{ flex: 1 }}  contentContainerStyle={{ paddingBottom: 20 }} >
+					<View style={{gap:5,marginTop:10}}> 
+						{usersFound.map((user:any) => <View key={user.id} style={{
 							flexDirection:'row',
 							alignItems:'center',
 							justifyContent:'space-between',
@@ -132,11 +132,20 @@ export default function Friends() {
 						<Text style={{color:'white',fontFamily:'yekan'}}> {user.username} </Text>
 						<MaterialIcons name="person-add-alt-1" size={20} color="green" onPress={handleAddFriendRequest} />
 						</View> )}
+						{usersFound.map((user:any) => <View key={user.id} style={{
+							flexDirection:'row',
+							alignItems:'center',
+							justifyContent:'space-between',
+							borderBottomWidth:1,
+							borderColor:'gray',
+							paddingVertical:5
+						}}> 
 						
-						
-						
-					
+						<Text style={{color:'white',fontFamily:'yekan'}}> {user.username} </Text>
+						<MaterialIcons name="person-add-alt-1" size={20} color="green" onPress={handleAddFriendRequest} />
+						</View> )}
 					</View>
+				</BottomSheetScrollView>
 			
 			</>}
 			  
@@ -146,5 +155,6 @@ export default function Friends() {
         </BottomSheet>
       </View>
     </GestureHandlerRootView>
+	
   );
 }
