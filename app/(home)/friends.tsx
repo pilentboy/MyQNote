@@ -38,16 +38,40 @@ export default function Friends() {
 	
 		
 	// make an api call for fetching users based on the searchedUsernameValue		
-	const onSubmit = async (data: any) => {
-   
-	console.log(data,'22')
+	const onSubmit = async () => {
+		console.log('x')
+		try{
+			const res = await fetch(`http://10.0.2.2:3000/search_users?username=${searchedUsernameValue}`,{
+			method:'GET',
+			 headers: {
+        "Content-Type": "application/json",
+        "x-api-key":
+          "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+		},
+				}
+			);
+			
+			
+			if(!res.ok){
+				setUsersFound([]);
+				return;
+			}
+			
+			const data=await res.json()
+			console.log(data)
+			setUsersFound(data)
+		
+		}catch(error:any){
+			console.log(error)
+			setUsersFound([])
+		}
 	
 
     
 	};
   
   useEffect(()=>{
-	searchedUsernameValue ? onSubmit(searchedUsernameValue) : null;
+	searchedUsernameValue ? onSubmit(searchedUsernameValue) :setUsersFound([]) ;
   },[searchedUsernameValue])
   
   
@@ -94,9 +118,9 @@ export default function Friends() {
 			
 			{usersFound.length && <> 
 			
+			
 					<View style={{gap:5,flex:1,marginTop:10}}> 
-						
-						<View style={{
+						{usersFound.map((user:any) => <View style={{
 							flexDirection:'row',
 							alignItems:'center',
 							justifyContent:'space-between',
@@ -105,9 +129,10 @@ export default function Friends() {
 							paddingVertical:5
 						}}> 
 						
-						<Text style={{color:'white',fontFamily:'yekan'}}> pilentboy </Text>
+						<Text style={{color:'white',fontFamily:'yekan'}}> {user.username} </Text>
 						<MaterialIcons name="person-add-alt-1" size={20} color="green" onPress={handleAddFriendRequest} />
-						</View>
+						</View> )}
+						
 						
 						
 					
