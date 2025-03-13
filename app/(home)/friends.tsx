@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState , useEffect} from "react";
 import { View, Text, ScrollView } from "react-native";
 import useTheme from "@/context/themeProvider";
 import FloatingActionButton from "./../../components/home/floatingActionButton";
@@ -11,12 +11,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "@/components/formItems/formInput";
 import CustomLinearGradient from "@/components/linearGradient";
 import { darkTheme, lightTheme } from "@/constants/theme";
-
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 export default function Friends() {
   const { setTheme, theme } = useTheme();
-  const [sheetIndex, setSheetIndex] = useState(-1); // State to control the sheet index
+  const [sheetIndex, setSheetIndex] = useState(-1); 
+  const [usersFound,setUsersFound]=useState<any>([]);
 
-  const snapPoints = useMemo(() => ["65%"], []);
+  const snapPoints = useMemo(() => ["65%","80%"], []);
 
   // log in schema
   const validationSchema = Yup.object().shape({
@@ -27,11 +28,35 @@ export default function Friends() {
     handleSubmit,
     formState: { errors },
     clearErrors,
+	watch,
     setError,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
+	const searchedUsernameValue=watch('username');
+	
+		
+	// make an api call for fetching users based on the searchedUsernameValue		
+	const onSubmit = async (data: any) => {
+   
+	console.log(data,'22')
+	
+
+    
+	};
+  
+  useEffect(()=>{
+	searchedUsernameValue ? onSubmit(searchedUsernameValue) : null;
+  },[searchedUsernameValue])
+  
+  
+  
+  // add friend request 
+  const handleAddFriendRequest=async()=>{
+	console.log('hi')
+  }
+  
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -53,8 +78,9 @@ export default function Friends() {
           <BottomSheetView
             style={{
               flex: 1,
-              padding: 36,
+              padding: 15,
               alignItems: "center",
+			  gap:4,
               backgroundColor: theme === "light" ? "white" : darkTheme.primary,
             }}
           >
@@ -65,6 +91,31 @@ export default function Friends() {
                 placeholder="نام کاربری"
                 control={control}
               />
+			
+			{usersFound.length && <> 
+			
+					<View style={{gap:5,flex:1,marginTop:10}}> 
+						
+						<View style={{
+							flexDirection:'row',
+							alignItems:'center',
+							justifyContent:'space-between',
+							borderBottomWidth:1,
+							borderColor:'gray',
+							paddingVertical:5
+						}}> 
+						
+						<Text style={{color:'white',fontFamily:'yekan'}}> pilentboy </Text>
+						<MaterialIcons name="person-add-alt-1" size={20} color="green" onPress={handleAddFriendRequest} />
+						</View>
+						
+						
+					
+					</View>
+			
+			</>}
+			  
+			  
             </View>
           </BottomSheetView>
         </BottomSheet>

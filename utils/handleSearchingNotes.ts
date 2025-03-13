@@ -1,4 +1,4 @@
-// display search notes
+// display searched notes
 const handleSearchingNotes = (notes: any, filterText: string) => {
   try {
     const searchedNotes = notes?.filter((notes: any) =>

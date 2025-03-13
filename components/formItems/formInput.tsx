@@ -9,12 +9,14 @@ const FormInput = ({
   control,
   name,
   placeholder,
+ 
 }: {
   label?: string;
   control: any;
   name: string;
   errors: any;
   placeholder?: string;
+
 }) => {
   const { theme } = useTheme();
   return (
@@ -54,6 +56,7 @@ const FormInput = ({
             }}
             onBlur={onBlur}
             onChangeText={onChange}
+			
             value={value}
           />
         )}
