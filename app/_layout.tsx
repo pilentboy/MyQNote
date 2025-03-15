@@ -23,6 +23,19 @@ const toastConfig = {
       }}
     />
   ),
+  info: (props: any) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: "yellow" }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text2Style={{
+        fontSize: 14,
+        fontWeight: "400",
+        fontFamily: "Yekan",
+        textAlign: "center",
+      }}
+    />
+  ),
   error: (props: any) => (
     <BaseToast
       {...props}

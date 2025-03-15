@@ -40,6 +40,10 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const handlesetAccessKey = async () => {
     try {
       const res = await AsyncStorage.getItem("access_key");
+	 
+	  const accessKe2y = res.split('"')[0];
+
+		console.log(accessKe2y)
       if (res) return setAccessKey(JSON.parse(res));
     } catch (error) {
       console.log(error);
