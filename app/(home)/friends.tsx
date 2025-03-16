@@ -14,7 +14,7 @@ import CustomLinearGradient from "@/components/linearGradient";
 import { darkTheme, lightTheme } from "@/constants/theme";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Toast from "react-native-toast-message";
-
+import {useNavigationState} from "@react-navigation/native"
 export default function Friends() {
   const { setTheme, theme } = useTheme();
   const [sheetIndex, setSheetIndex] = useState(-1); 

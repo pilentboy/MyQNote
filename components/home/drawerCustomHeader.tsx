@@ -6,20 +6,26 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchInput from "./searchInput";
 import useTheme from "@/context/themeProvider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useContext, useState } from "react";
+import { useContext, useState ,useEffect} from "react";
 import EditContainer from "../EditContainer";
 import useEdit from "@/context/editProvider";
 import { authContext } from "@/context/authProvider";
 
 export default function DrawerCustomHeader({
   navigation,
+  currentRoute  
 }: {
   navigation: DrawerNavigationProp<any>;
+  currentRoute  :any
 }) {
   const { theme } = useTheme();
   const { setTextDirection } = useEdit();
   const [displaySearch, setDisplaySearch] = useState<boolean>(false);
   const { setSearchValue } = useContext(authContext);
+  
+  useEffect(()=>{
+	console.log(currentRoute.name )
+  },[currentRoute])
 
   const closeSearchingNotes = () => {
     setDisplaySearch(false);
@@ -88,7 +94,7 @@ export default function DrawerCustomHeader({
           padding: 10,
         }}
       >
-        {displaySearch ? (
+        {currentRoute.name === 'friends' ? <EditContainer /> : displaySearch ? (
           <>
             <AntDesign
               name="closecircleo"
@@ -98,7 +104,7 @@ export default function DrawerCustomHeader({
             />
             <SearchInput />
           </>
-        ) : (
+        ) :  (
           <>
             <FontAwesome
               name="search"

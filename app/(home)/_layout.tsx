@@ -9,20 +9,28 @@ import DrawerCustomHeader from "@/components/home/drawerCustomHeader"; // Custom
 import useTheme from "@/context/themeProvider";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
+import {useNavigationState} from "@react-navigation/native"
 
 export default function Layout() {
   const labelFontSize = 14; // Font size for drawer labels
   const { theme } = useTheme();
   const { appMode } = useContext(authContext);
 
+
+
+		  
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* Drawer navigation setup */}
       <Drawer
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
-        screenOptions={({ navigation }) => ({
-          header: ({ navigation }) => (
-            <DrawerCustomHeader navigation={navigation} />
+        drawerContent={(props) => <CustomDrawerContent {...props}  />}
+        screenOptions={({ navigation }) => {
+		
+
+			
+		return {
+          header: ({ navigation,route  }) => (
+            <DrawerCustomHeader navigation={navigation} currentRoute ={route} />
           ),
           drawerStatusBarAnimation: "fade",
           drawerType: "slide",
@@ -52,8 +60,8 @@ export default function Layout() {
           drawerItemStyle: {
             borderRadius: 8,
             marginVertical: 3,
-          },
-        })}
+          },}
+        }}
       >
         {/* First screen in the drawer */}
         <Drawer.Screen
