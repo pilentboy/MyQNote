@@ -2,15 +2,17 @@ import { lightTheme } from "@/constants/theme";
 import useEdit from "@/context/editProvider";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View } from "react-native";
-
+import Ionicons from '@expo/vector-icons/Ionicons';
 const EditContainer = ({
   width,
   setTextDirection,
   defaultTextDecoration,
+  notification
 }: {
   setTextDirection?: any;
   width?: any;
   defaultTextDecoration?: boolean;
+  notification?:any
 }) => {
   return (
     <View
@@ -52,6 +54,7 @@ const EditContainer = ({
           }}
         />
       )}
+	  {notification && <Ionicons name="notifications-outline" size={24} color="white" />}
     </View>
   );
 };

@@ -10,6 +10,7 @@ import { useContext, useState ,useEffect} from "react";
 import EditContainer from "../EditContainer";
 import useEdit from "@/context/editProvider";
 import { authContext } from "@/context/authProvider";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function DrawerCustomHeader({
   navigation,
@@ -94,7 +95,7 @@ export default function DrawerCustomHeader({
           padding: 10,
         }}
       >
-        {currentRoute.name === 'friends' ? <EditContainer /> : displaySearch ? (
+        {currentRoute.name === 'friends' ? <EditContainer notification /> : displaySearch ? (
           <>
             <AntDesign
               name="closecircleo"
