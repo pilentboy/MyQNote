@@ -83,7 +83,7 @@ export default function Layout() {
 
         {/* Second  screen in the drawer */}
         <Drawer.Screen
-          name="friends"
+          name="(friends)"
           options={{
             title: "دوستان",
             drawerLabel: "دوستان",

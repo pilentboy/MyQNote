@@ -3,6 +3,8 @@ import useEdit from "@/context/editProvider";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import {  useRouter } from 'expo-router';
+
 const EditContainer = ({
   width,
   setTextDirection,
@@ -14,6 +16,8 @@ const EditContainer = ({
   defaultTextDecoration?: boolean;
   notification?:any
 }) => {
+  const router = useRouter();
+
   return (
     <View
       style={{
@@ -54,7 +58,7 @@ const EditContainer = ({
           }}
         />
       )}
-	  {notification && <Ionicons name="notifications-outline" size={24} color="white" />}
+	  {notification && (<Ionicons name="notifications-outline" size={24} color="white"  onPress={()=> router.push("./notification")}  />)}
     </View>
   );
 };
