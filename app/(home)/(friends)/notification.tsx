@@ -59,7 +59,9 @@ export default function Notification() {
   
    const handleAcceptFriendRequest=async (friendRequestID:string)=>{
 	try{
-	const res=await fetch ("http://10.0.2.2:3000/notification",{
+	const res=await fetch ("http://10.0.2.2:3000/accept_friend_request",{
+			method:"PUT",
+			body:JSON.stringify({friendRequestID:friendRequestID}),
 			 headers: { 
         "Content-Type": "application/json",
         "x-api-key":
@@ -69,7 +71,7 @@ export default function Notification() {
 		})
 		
 		const data=await res.json()
-		setNotifications(data.notifications)
+		await handleGetNotifications()
 		console.log(data)
 	}catch(e:any){
 		console.log(e,'error Notification')

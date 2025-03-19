@@ -18,6 +18,8 @@ import useEdit from "@/context/editProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import BottomSheet, { BottomSheetView ,BottomSheetScrollView} from "@gorhom/bottom-sheet";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const index = () => {
   const {
@@ -44,7 +46,7 @@ const index = () => {
   const [originalUserNotes, setOriginalUserNotes] = useState([]);
 const [userFriends, setUserFriends] = useState([]);
 const [sheetIndex, setSheetIndex] = useState(-1);
-	const snapPoints = useMemo(() => ["65%","80%"], []);
+	const snapPoints = useMemo(() => ["65%"], []);
   const showToast = () => {
     Toast.show({
       type: "error",
@@ -134,7 +136,56 @@ const [sheetIndex, setSheetIndex] = useState(-1);
     offset: 120 * index,
     index,
   });
+  
+  const handleGetUsersFriends = async () => {
+  console.log('yy')
+		try{
+			const res = await fetch(`http://10.0.2.2:3000/user_friends`,{
+			method:'GET',
+			headers: {
+        "Content-Type": "application/json",
+        "x-api-key":
+          "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+		   Authorization: `
+		   Bearer ${accessKey}`,
+		},
+				}
+			);
+			
+			
+			if(!res.ok){
+				setUserFriends([]);
+				showToast();
+				return;
+			}
+			
+			const data=await res.json()
+			console.log(data.userFriends,'xxx')
+			
+			setUserFriends(data.userFriends)
+		
+		}catch(error:any){
+		showToast();
+			console.log(error)
+			setUserFriends([])
+		}
+	
 
+    
+	};
+	
+	useEffect(()=>{
+	console.log('user friends')
+	setUserFriends([])
+		if(homeBottomSheetDisplay !== -1) {
+		handleGetUsersFriends()
+		}
+	},[homeBottomSheetDisplay])
+
+	useEffect(()=>{
+	console.log(userFriends)
+
+	},[userFriends])
   return (
     <GestureHandlerRootView>
       <View
@@ -271,7 +322,7 @@ const [sheetIndex, setSheetIndex] = useState(-1);
           >
             <View style={{ flex: 1 }}>
 			
-			{userFriends.length && <> 
+			{userFriends.length ? <> 
 				
 					<BottomSheetScrollView  style={{ flex: 1 }}  contentContainerStyle={{ paddingBottom: 20 }} >
 					<View style={{gap:5,marginTop:10}}> 
@@ -281,16 +332,52 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 							justifyContent:'space-between',
 							borderBottomWidth:1,
 							borderColor:'gray',
-							paddingVertical:5
+							paddingVertical:5,
+							width:"100%"
 						}}> 
 						
-						<Text style={{color:'white',fontFamily:'yekan'}}> {user.username} </Text>
-						<MaterialIcons name="person-add-alt-1" size={20} color="green" onPress={()=>handleShareNote(user.username)} />
-						</View> )}
+						<Text style={{color:'white',fontFamily:'yekan'}}> {user.receiver_username} </Text>
+					<Ionicons name="send-outline" size={24} color={'gray'} onPress={()=>handleShareNote(user.receiver_username)}/>
+					
+					</View> )}
 					</View>
 				</BottomSheetScrollView>
 			
-			</>}
+			</> :  <View
+                  style={{
+                    height: 400,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 5,
+                    flex: 1,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: theme === "light" ? lightTheme.primary : "white",
+                      fontSize: 15,
+                      fontFamily: "Yekan",
+                    }}
+                  >
+                   هیچ دوستی برای اشتراک پیدا نشد
+                  </Text>
+
+                  <Entypo
+                    name="emoji-sad"
+                    size={24}
+                    color={lightTheme.primary}
+                  />
+				    <Text
+                    style={{
+                      color: 'gray',
+					  textAlign:'center',
+                      fontSize: 13,
+                      fontFamily: "Yekan",
+                    }}
+                  >
+                  می توانید از طریق صفحه دوستان نسبت به افزودن دوستان اقدام کنید
+                  </Text>
+                </View> }
 			  
 			  
             </View>
