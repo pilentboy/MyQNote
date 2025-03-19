@@ -5,6 +5,7 @@ import { View } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {  useRouter } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 const EditContainer = ({
   width,
   setTextDirection,
@@ -28,7 +29,7 @@ const EditContainer = ({
         padding: 5,
         flexDirection: "row",
         alignItems: "center",
-        gap: 5,
+        gap: 8,
       }}
     >
       {setTextDirection && (
@@ -60,9 +61,10 @@ const EditContainer = ({
       )}
 	  
 	  {friendRequest && (<>
+	  <AntDesign name="message1" size={24} color="white" onPress={()=> router.replace("./")}  />
 	  <Ionicons name="notifications-outline" size={24} color="white"  onPress={()=> router.push("./notification")}  /> 
 		
-		<MaterialIcons name="pending" size={24} color="white"  onPress={()=> router.push("./pending_requests")}/>
+		<MaterialIcons name="pending-actions" size={24} color="white"  onPress={()=> router.push("./pending_requests")}/>
 	  </>)}
     </View>
   );

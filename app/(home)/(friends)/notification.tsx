@@ -7,6 +7,7 @@ import { authContext } from "@/context/authProvider";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+
 export default function Notification() {
 
  const { setTheme, theme } = useTheme();

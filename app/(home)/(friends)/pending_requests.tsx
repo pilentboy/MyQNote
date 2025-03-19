@@ -95,8 +95,10 @@ export default function PendingRequests() {
 
             
 				  
-				  <MaterialIcons name="pending" size={24} color={lightTheme.primary} onPress={()=> router.push("./pending_requests")}/>
-                </View> }
+				  <MaterialIcons name="pending-actions" size={24} color={lightTheme.primary}/>
+      
+
+			   </View> }
 		</View>
 		
 
