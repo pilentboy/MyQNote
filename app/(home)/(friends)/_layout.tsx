@@ -8,6 +8,7 @@ export default function Layout() {
               <Stack screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="index" />
 				 <Stack.Screen name="notification" />
+				 <Stack.Screen name="pending_requests" />
               </Stack>     
   );
 }

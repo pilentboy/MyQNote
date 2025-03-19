@@ -96,7 +96,7 @@ export default function Friends() {
 				method:'POST',
 				 body: JSON.stringify({
 				receiver_username:receiverUsername
-    }),
+		}),
 			 headers: { 
         "Content-Type": "application/json",
         "x-api-key":

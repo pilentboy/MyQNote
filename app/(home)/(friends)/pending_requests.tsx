@@ -6,16 +6,17 @@ import { darkTheme, lightTheme } from "@/constants/theme";
 import { authContext } from "@/context/authProvider";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-export default function Notification() {
+export default function PendingRequests() {
 
  const { setTheme, theme } = useTheme();
   const {accessKey}=useContext(authContext)
-  const [notifications,setNotifications]=useState<any>([])
+  const [pendingRequests,setPendingRequests]=useState<any>([])
   
-  const handleGetNotifications=async ()=>{
+  const handleGetPendingRequests=async ()=>{
 	try{
-	const res=await fetch ("http://10.0.2.2:3000/notification",{
+	const res=await fetch ("http://10.0.2.2:3000/pending_requests",{
 			 headers: { 
         "Content-Type": "application/json",
         "x-api-key":
@@ -25,15 +26,15 @@ export default function Notification() {
 		})
 		
 		const data=await res.json()
-		setNotifications(data.notifications)
-		console.log(data)
+		
+		setPendingRequests(data.pendingRequests)
+		
 	}catch(e:any){
-		console.log(e,'error Notification')
+		console.log(e,'error pending requests')
 	}
   }
   
-  
-    const handleDeleteFriendRequet=async (friendRequestID:string)=>{
+     const handleDeleteFriendRequet=async (friendRequestID:string)=>{
 	try{
 	const res=await fetch ("http://10.0.2.2:3000/delete_friend_request",{
 	method:'DELETE',
@@ -47,48 +48,29 @@ export default function Notification() {
 		  Authorization: `Bearer ${accessKey}`,
 		},
 		})
+		await handleGetPendingRequests()
 		
-		const data=await res.json()
-		//setNotifications(data.notifications)
-		console.log(data)
 	}catch(e:any){
 		console.log(e,'error Notification')
 	}
   }
   
-   const handleAcceptFriendRequest=async (friendRequestID:string)=>{
-	try{
-	const res=await fetch ("http://10.0.2.2:3000/notification",{
-			 headers: { 
-        "Content-Type": "application/json",
-        "x-api-key":
-          "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
-		  Authorization: `Bearer ${accessKey}`,
-		},
-		})
-		
-		const data=await res.json()
-		setNotifications(data.notifications)
-		console.log(data)
-	}catch(e:any){
-		console.log(e,'error Notification')
-	}
-  }
+
+
   
   useEffect(()=>{
-	handleGetNotifications()
+	handleGetPendingRequests()
   },[])
   
-	return  <View style={{ flex: 1 , padding:10, backgroundColor: theme === "light" ? "white" : "#222831"}}>
+	return  <View style={{ flex: 1 , padding:10, backgroundColor: theme === "light" ? "white" : "#222831",gap:8}}>
       
         />
 		
-		{notifications.length ? notifications.map((notif:any) =>  <View key={notif.id} style={{width:'100%',height:45,padding:8,borderRadius:10,borderColor:'gray',flexDirection:'row',alignItems:'center',justifyContent:'space-between',borderWidth:1}}>
+		{pendingRequests.length ? pendingRequests.map((notif:any) =>  <View key={notif.id} style={{width:'100%',height:45,padding:8,borderRadius:10,borderColor:'gray',flexDirection:'row',alignItems:'center',justifyContent:'space-between',borderWidth:1}}>
 			
-			<Text style={{color:'white',fontSize:16}}>{notif.sender_username} </Text>
+			<Text style={{color:'white',fontSize:16}}>{notif.receiver_username} </Text>
 			<View style={{flexDirection:'row',alignItems:'center',gap:10}}> 
 				<Ionicons name="remove-circle-outline" size={26} color="red" onPress={()=> handleDeleteFriendRequet(notif.id)} />
-				<AntDesign name="checkcircleo" size={24} color="green" onPress={()=> handleAcceptFriendRequest(notif.id)}/>
 			</View> 
 			
 			
@@ -108,11 +90,12 @@ export default function Notification() {
                       fontFamily: "Yekan",
                     }}
                   >
-				 هیچ اعلانی ندارید
+				لیست درخواست‌های در انتظار تایید خالی است.
                   </Text>
 
             
-				  <Ionicons name="notifications-off-outline" size={24} color={lightTheme.primary} />
+				  
+				  <MaterialIcons name="pending" size={24} color={lightTheme.primary} onPress={()=> router.push("./pending_requests")}/>
                 </View> }
 		</View>
 		

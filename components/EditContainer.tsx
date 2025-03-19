@@ -4,17 +4,17 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {  useRouter } from 'expo-router';
-
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 const EditContainer = ({
   width,
   setTextDirection,
   defaultTextDecoration,
-  notification
+  friendRequest
 }: {
   setTextDirection?: any;
   width?: any;
   defaultTextDecoration?: boolean;
-  notification?:any
+  friendRequest?:any
 }) => {
   const router = useRouter();
 
@@ -58,7 +58,12 @@ const EditContainer = ({
           }}
         />
       )}
-	  {notification && (<Ionicons name="notifications-outline" size={24} color="white"  onPress={()=> router.push("./notification")}  />)}
+	  
+	  {friendRequest && (<>
+	  <Ionicons name="notifications-outline" size={24} color="white"  onPress={()=> router.push("./notification")}  /> 
+		
+		<MaterialIcons name="pending" size={24} color="white"  onPress={()=> router.push("./pending_requests")}/>
+	  </>)}
     </View>
   );
 };
