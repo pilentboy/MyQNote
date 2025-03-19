@@ -175,17 +175,13 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 	};
 	
 	useEffect(()=>{
-	console.log('user friends')
 	setUserFriends([])
 		if(homeBottomSheetDisplay !== -1) {
 		handleGetUsersFriends()
 		}
 	},[homeBottomSheetDisplay])
 
-	useEffect(()=>{
-	console.log(userFriends)
-
-	},[userFriends])
+	
   return (
     <GestureHandlerRootView>
       <View

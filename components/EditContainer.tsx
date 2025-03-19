@@ -6,7 +6,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import {  useRouter } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 const EditContainer = ({
   width,
   setTextDirection,
@@ -62,11 +63,15 @@ const EditContainer = ({
       )}
 	  
 	  {friendRequest && (<>
+
 	  <AntDesign name="message1" size={24} color="white" onPress={()=> router.replace("./")}  />
+	  	  	  	 
+				 <SimpleLineIcons name="people" size={24} color="white" onPress={()=> router.push("./friends")} />
 	  <Ionicons name="notifications-outline" size={24} color="white"  onPress={()=> router.push("./notification")}  /> 
-		
-		<MaterialIcons name="pending-actions" size={24} color="white"  onPress={()=> router.push("./pending_requests")}/>
-	  </>)}
+
+	<MaterialIcons name="pending-actions" size={24} color="white"  onPress={()=> router.push("./pending_requests")}/>
+
+	 </>)}
     </View>
   );
 };

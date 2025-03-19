@@ -9,6 +9,7 @@ export default function Layout() {
                 <Stack.Screen name="index" />
 				 <Stack.Screen name="notification" />
 				 <Stack.Screen name="pending_requests" />
+				  <Stack.Screen name="friends" />
               </Stack>     
   );
 }
