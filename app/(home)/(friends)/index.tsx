@@ -15,9 +15,11 @@ import { darkTheme, lightTheme } from "@/constants/theme";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Toast from "react-native-toast-message";
 import {useNavigationState} from "@react-navigation/native"
+
 export default function Friends() {
   const { setTheme, theme } = useTheme();
   const [sheetIndex, setSheetIndex] = useState(-1); 
+  const [messages,setMessages]=useState<any>([]);
   const [usersFound,setUsersFound]=useState<any>([]);
   const {accessKey}=useContext(authContext)
 
@@ -122,12 +124,50 @@ export default function Friends() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 ,  backgroundColor: theme === "light" ? "white" : "#222831"}}>
-        <FloatingActionButton
+       
+		{messages.length ? messages.map((notif:any) =>  <View key={notif.id} style={{width:'100%',height:45,padding:8,borderRadius:10,borderColor:'gray',flexDirection:'row',alignItems:'center',justifyContent:'space-between',borderWidth:1}}>
+			
+			<Text style={{color:'white',fontSize:16}}>{notif.receiver_username} </Text>
+			<View style={{flexDirection:'row',alignItems:'center',gap:10}}> 
+				<Ionicons name="remove-circle-outline" size={26} color="red"  />
+			</View> 
+			
+			
+	</View>) :      <View
+                  style={{
+                    height: 400,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 5,
+                    flex: 1,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: theme === "light" ? lightTheme.primary : "white",
+                      fontSize: 15,
+                      fontFamily: "Yekan",
+                    }}
+                  >
+					هیچ یادداشتی برای شما ارسال نشده است
+                  </Text>
+
+            
+				  
+				 
+      <AntDesign name="message1" size={24} color={lightTheme.primary} onPress={()=> router.replace("./")}  />
+
+			   </View> }
+
+
+	   <FloatingActionButton
           display={true}
           action={() => setSheetIndex(0)}
           icon={<AntDesign name="adduser" size={24} color="white" />}
         />
 
+
+	
         <BottomSheet
           snapPoints={snapPoints}
           index={sheetIndex}

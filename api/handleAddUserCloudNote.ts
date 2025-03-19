@@ -5,7 +5,7 @@ const handleAddingCloudNotes = async (
   direction: string,
   accessKey: string
 ) =>
-  await fetch("https://myqnoteapi.liara.run/add_note", {
+  await fetch("http://10.0.2.2:3000/add_note", {
     method: "POST",
     body: JSON.stringify({
       title: data.title,

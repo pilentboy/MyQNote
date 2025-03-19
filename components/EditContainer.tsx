@@ -6,6 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import {  useRouter } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+
 const EditContainer = ({
   width,
   setTextDirection,

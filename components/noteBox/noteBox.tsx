@@ -7,6 +7,7 @@ import useTheme from "@/context/themeProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import { lightTheme } from "@/constants/theme";
 import CopyNoteBTN from "../note/copyNoteBTN";
+import ShareNoteBTN from "../note/shareNoteBTN";
 import { authContext } from "@/context/authProvider";
 import React from "react";
 
@@ -106,7 +107,7 @@ const NoteBox = ({
             />
           </TouchableOpacity>
           {/* button for handling copying local/online note to local/online storage */}
-          {accessKey && (
+       {accessKey && (
             <CopyNoteBTN
               title={title}
               content={content}
@@ -114,6 +115,17 @@ const NoteBox = ({
               time={time}
               textDirection={direction}
             />
+          )}
+		  {/* button for sharing note*/}
+		    {accessKey && (
+				<ShareNoteBTN
+				id={id}
+              title={title}
+              content={content}
+			
+              textDirection={direction}
+            />
+			
           )}
         </View>
       </View>

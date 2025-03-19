@@ -1,10 +1,10 @@
 import { View, Text, FlatList, RefreshControl, ScrollView } from "react-native";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState,useMemo } from "react";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user data
-import { lightTheme } from "@/constants/theme"; // Constants for the light theme colors
+import { lightTheme ,darkTheme} from "@/constants/theme"; // Constants for the light theme colors
 import { getLocalStorageUserNotes } from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
 import FloatingActionButton from "@/components/home/floatingActionButton"; // Custom button component for adding notes
 import { useRouter } from "expo-router";
@@ -17,6 +17,8 @@ import Entypo from "@expo/vector-icons/Entypo";
 import useEdit from "@/context/editProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import BottomSheet, { BottomSheetView ,BottomSheetScrollView} from "@gorhom/bottom-sheet";
+
 const index = () => {
   const {
     loading,
@@ -26,6 +28,9 @@ const index = () => {
     searchValue,
     accessKey,
     appMode,
+	setHomeBottomSheetDisplay,
+	homeBottomSheetDisplay,
+	setSharingNoteID
   } = useContext(authContext);
 
   const route = useRouter();
@@ -37,7 +42,9 @@ const index = () => {
     useState<number>(0);
   const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true);
   const [originalUserNotes, setOriginalUserNotes] = useState([]);
-
+const [userFriends, setUserFriends] = useState([]);
+const [sheetIndex, setSheetIndex] = useState(-1);
+	const snapPoints = useMemo(() => ["65%","80%"], []);
   const showToast = () => {
     Toast.show({
       type: "error",
@@ -242,6 +249,53 @@ const index = () => {
           icon={<FontAwesome6 name="pencil" size={24} color="white" />}
         />
       </View>
+	  
+	  <BottomSheet
+          snapPoints={snapPoints}
+          index={homeBottomSheetDisplay}
+          onChange={(index) => setHomeBottomSheetDisplay(index)}
+			onClose={() => setHomeBottomSheetDisplay(-1)}
+          enablePanDownToClose
+          handleStyle={{ backgroundColor: lightTheme.primary }}
+          handleIndicatorStyle={{ backgroundColor: "white" }}
+        >
+			
+          <BottomSheetView
+            style={{
+              flex: 1,
+              padding: 15,
+              alignItems: "center",
+			  gap:4,
+              backgroundColor: theme === "light" ? "white" : darkTheme.primary,
+            }}
+          >
+            <View style={{ flex: 1 }}>
+			
+			{userFriends.length && <> 
+				
+					<BottomSheetScrollView  style={{ flex: 1 }}  contentContainerStyle={{ paddingBottom: 20 }} >
+					<View style={{gap:5,marginTop:10}}> 
+						{userFriends.map((user:any) => <View key={user.id} style={{
+							flexDirection:'row',
+							alignItems:'center',
+							justifyContent:'space-between',
+							borderBottomWidth:1,
+							borderColor:'gray',
+							paddingVertical:5
+						}}> 
+						
+						<Text style={{color:'white',fontFamily:'yekan'}}> {user.username} </Text>
+						<MaterialIcons name="person-add-alt-1" size={20} color="green" onPress={()=>handleShareNote(user.username)} />
+						</View> )}
+					</View>
+				</BottomSheetScrollView>
+			
+			</>}
+			  
+			  
+            </View>
+          </BottomSheetView>
+        </BottomSheet>
     </GestureHandlerRootView>
   );
 };
