@@ -122,8 +122,9 @@ const NoteBox = ({
 				id={id}
               title={title}
               content={content}
-			
-              textDirection={direction}
+              direction={direction}
+			  date={date}
+			  time={time}
             />
 			
           )}

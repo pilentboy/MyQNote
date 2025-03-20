@@ -20,7 +20,8 @@ const authContext = createContext<{
  setHomeBottomSheetDisplay: React.Dispatch<React.SetStateAction<number>>;
  sharingNoteID:string | undefined;
   setSharingNoteID: React.Dispatch<React.SetStateAction<any>>;
- 
+  sharingNoteData:any;
+  setSharingNoteData: React.Dispatch<React.SetStateAction<any>>;
 }>({
   loading: true,
   setLoading: () => {},
@@ -35,7 +36,9 @@ const authContext = createContext<{
   homeBottomSheetDisplay:-1,
   setHomeBottomSheetDisplay:() => {},
   sharingNoteID:undefined,
-  setSharingNoteID:() => {}
+  setSharingNoteID:() => {},
+   sharingNoteData:undefined,
+  setSharingNoteData: () => {},
 });
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -47,7 +50,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [homeBottomSheetDisplay, setHomeBottomSheetDisplay] = useState(-1);
     const [sharingNoteID, setSharingNoteID] = useState();
 
-  
+    const [sharingNoteData, setSharingNoteData] = useState();
   // set access key in state
   const handlesetAccessKey = async () => {
     try {
@@ -63,7 +66,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-console.log(homeBottomSheetDisplay)  }, [homeBottomSheetDisplay]);
+console.log(sharingNoteData)  }, [sharingNoteData]);
   useEffect(() => {
     const getAppMode = async () => {
       setAppMode(await handleGetAppMode());
@@ -88,7 +91,9 @@ console.log(homeBottomSheetDisplay)  }, [homeBottomSheetDisplay]);
 	homeBottomSheetDisplay,
 	setHomeBottomSheetDisplay,
 	sharingNoteID,
-	setSharingNoteID
+	setSharingNoteID,
+	sharingNoteData,
+	setSharingNoteData
       }}
     >
       {children}

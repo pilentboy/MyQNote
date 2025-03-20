@@ -32,7 +32,8 @@ const index = () => {
     appMode,
 	setHomeBottomSheetDisplay,
 	homeBottomSheetDisplay,
-	setSharingNoteID
+	setSharingNoteID,
+	setSharingNoteData
   } = useContext(authContext);
 
   const route = useRouter();
@@ -137,8 +138,8 @@ const [sheetIndex, setSheetIndex] = useState(-1);
     index,
   });
   
-  const handleGetUsersFriends = async () => {
-  console.log('yy')
+  const handleShareNote = async () => {
+
 		try{
 			const res = await fetch(`http://10.0.2.2:3000/user_friends`,{
 			method:'GET',
@@ -160,7 +161,7 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 			}
 			
 			const data=await res.json()
-			console.log(data.userFriends,'xxx')
+	
 			
 			setUserFriends(data.userFriends)
 		
@@ -180,6 +181,44 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 		handleGetUsersFriends()
 		}
 	},[homeBottomSheetDisplay])
+	
+	
+	 const handleGetUsersFriends = async () => {
+
+		try{
+			const res = await fetch(`http://10.0.2.2:3000/user_friends`,{
+			method:'GET',
+			headers: {
+        "Content-Type": "application/json",
+        "x-api-key":
+          "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+		   Authorization: `
+		   Bearer ${accessKey}`,
+		},
+				}
+			);
+			
+			
+			if(!res.ok){
+				setUserFriends([]);
+				showToast();
+				return;
+			}
+			
+			const data=await res.json()
+	
+			
+			setUserFriends(data.userFriends)
+		
+		}catch(error:any){
+		showToast();
+			console.log(error)
+			setUserFriends([])
+		}
+	
+
+    
+	};
 
 	
   return (
@@ -301,7 +340,9 @@ const [sheetIndex, setSheetIndex] = useState(-1);
           snapPoints={snapPoints}
           index={homeBottomSheetDisplay}
           onChange={(index) => setHomeBottomSheetDisplay(index)}
-			onClose={() => setHomeBottomSheetDisplay(-1)}
+			onClose={() => {
+			setSharingNoteData(undefined)
+			setHomeBottomSheetDisplay(-1) }}
           enablePanDownToClose
           handleStyle={{ backgroundColor: lightTheme.primary }}
           handleIndicatorStyle={{ backgroundColor: "white" }}
