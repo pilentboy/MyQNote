@@ -332,8 +332,8 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 							width:"100%"
 						}}> 
 						
-						<Text style={{color:'white',fontFamily:'yekan'}}> {user.receiver_username} </Text>
-					<Ionicons name="send-outline" size={24} color={'gray'} onPress={()=>handleShareNote(user.receiver_username)}/>
+						<Text style={{color:'white',fontFamily:'yekan'}}> {user.friend_username} </Text>
+					<Ionicons name="send-outline" size={24} color={'gray'} onPress={()=>handleShareNote(user.friend_username)}/>
 					
 					</View> )}
 					</View>

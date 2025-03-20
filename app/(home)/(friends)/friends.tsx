@@ -75,20 +75,18 @@ const handleGetUsersFriends = async () => {
   useEffect(()=>{
 	handleGetUsersFriends()
   },[])
-  useEffect(()=>{
-console.log(userFriends)
-  },[userFriends])
+
   
   
-	return  <View style={{ flex: 1 , padding:10, backgroundColor: theme === "light" ? "white" : "#222831"}}>
+	return  <View style={{ flex: 1 , padding:10, backgroundColor: theme === "light" ? "white" : "#222831",gap:8}}>
       
         />
 		
 		{userFriends.length ? userFriends.map((friend:any) =>  <View key={friend.id} style={{width:'100%',height:45,padding:8,borderRadius:10,borderColor:'gray',flexDirection:'row',alignItems:'center',justifyContent:'space-between',borderWidth:1}}>
 			
-			<Text style={{color:'white',fontSize:16}}>{friend.receiver_username} </Text>
+			<Text style={{color:'white',fontSize:16}}>{friend.friend_username} </Text>
 			<View style={{flexDirection:'row',alignItems:'center',gap:10}}> 
-				<Ionicons name="remove-circle-outline" size={26} color="red" onPress={()=> handleDeleteFriendRequet(friend.id)}/>
+				<AntDesign name="deleteuser" size={24} color="red" onPress={()=> handleDeleteFriendRequet(friend.id)} />
 			</View> 
 			
 			
