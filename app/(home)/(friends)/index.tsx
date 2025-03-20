@@ -1,5 +1,5 @@
-import React, { useMemo, useState , useEffect,useContext} from "react";
-import { View, Text, ScrollView } from "react-native";
+import React, { useMemo, useState , useEffect,useContext,useCallback} from "react";
+import { View, Text, ScrollView ,FlatList, RefreshControl} from "react-native";
 import useTheme from "@/context/themeProvider";
 import FloatingActionButton from "@/components/home/floatingActionButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -8,20 +8,25 @@ import BottomSheet, { BottomSheetView ,BottomSheetScrollView} from "@gorhom/bott
 import { useForm } from "react-hook-form";
 import { authContext } from "@/context/authProvider";
 import * as Yup from "yup";
+import RotateArrow from "@/components/rotateArrow";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "@/components/formItems/formInput";
+import NoteBox from "@/components/noteBox/noteBox";
 import CustomLinearGradient from "@/components/linearGradient";
 import { darkTheme, lightTheme } from "@/constants/theme";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Toast from "react-native-toast-message";
 import {useNavigationState} from "@react-navigation/native"
 
+
 export default function Friends() {
   const { setTheme, theme } = useTheme();
   const [sheetIndex, setSheetIndex] = useState(-1); 
   const [messages,setMessages]=useState<any>([]);
   const [usersFound,setUsersFound]=useState<any>([]);
-  const {accessKey}=useContext(authContext)
+    const [preNoteFlastListPosition, setPreNoteFlastListPosition] =
+    useState<number>(0);
+  const {accessKey,loading,setLoading}=useContext(authContext)
 
   const snapPoints = useMemo(() => ["65%","80%"], []);
   
@@ -121,19 +126,110 @@ export default function Friends() {
 	}
   }
   
+  // get shared messages
+   const handleGetUserMessages=async()=>{
+
+	try{
+		const res=await fetch ("http://10.0.2.2:3000/friend_request",{
+				method:'POST',
+				 body: JSON.stringify({
+				
+		}),
+			 headers: { 
+        "Content-Type": "application/json",
+        "x-api-key":
+          "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+		  Authorization: `Bearer ${accessKey}`,
+		},
+		})
+		if(res.status === 400){
+		const test=await res.json()
+		console.log(test.error)
+			showToast('info',test.error)
+			return;
+		}
+		const result=await res.json()
+		showToast('success',result.message)
+		
+	}catch(e:any){
+		showToast();
+		console.log(e,'error adding friend ')
+	}
+  }
+  
+  
+   interface NoteItem {
+    title: string;
+    content: string;
+    date: string;
+    time: string;
+    direction: "right" | "left";
+    id: string;
+  }
+
+  const renderNoteItem = useCallback(({ item }: { item: NoteItem }) => {
+    return (
+      <NoteBox
+        title={item.title}
+        content={item.content}
+        date={item.date}
+        time={item.time}
+        direction={item.direction}
+        id={item.id}
+	
+      />
+    );
+  }, []);
+  
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 ,  backgroundColor: theme === "light" ? "white" : "#222831"}}>
        
-		{messages.length ? messages.map((notif:any) =>  <View key={notif.id} style={{width:'100%',height:45,padding:8,borderRadius:10,borderColor:'gray',flexDirection:'row',alignItems:'center',justifyContent:'space-between',borderWidth:1}}>
-			
-			<Text style={{color:'white',fontSize:16}}>{notif.receiver_username} </Text>
-			<View style={{flexDirection:'row',alignItems:'center',gap:10}}> 
-				<Ionicons name="remove-circle-outline" size={26} color="red"  />
-			</View> 
-			
-			
-	</View>) :      <View
+		{messages.length ? <FlatList
+                data={messages}
+                keyExtractor={(item) => item.id}
+                renderItem={renderNoteItem}
+                maxToRenderPerBatch={6}
+                initialNumToRender={6}
+                windowSize={10}
+                removeClippedSubviews={true}
+                getItemLayout={getItemLayout}
+                refreshControl={
+                  <RefreshControl refreshing={loading} onRefresh={handleGetUserMessages}>
+                    <RotateArrow />
+                  </RefreshControl>
+                }
+                contentContainerStyle={{
+                  paddingVertical: 8,
+                  gap: 4,
+                }}
+                onScroll={(e: any) => {
+                  const currentPositon = e.nativeEvent.contentOffset.y;
+
+                  setPreNoteFlastListPosition(currentPositon);
+
+                  if (
+                    currentPositon > preNoteFlastListPosition &&
+                    currentPositon > 50
+                  ) {
+                    setAddNoteBTNDisplay(false);
+                  } else {
+                    setAddNoteBTNDisplay(true);
+                  }
+                }}
+              /> :    <ScrollView
+                contentContainerStyle={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+                refreshControl={
+                  <RefreshControl refreshing={loading} onRefresh={handleGetUserMessages}>
+                    <RotateArrow />
+                  </RefreshControl>
+                }
+              >   <View
                   style={{
                     height: 400,
                     alignItems: "center",
@@ -157,7 +253,7 @@ export default function Friends() {
 				 
       <AntDesign name="message1" size={24} color={lightTheme.primary} onPress={()=> router.replace("./")}  />
 
-			   </View> }
+			   </View>           </ScrollView> }
 
 
 	   <FloatingActionButton

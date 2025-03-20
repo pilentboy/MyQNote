@@ -45,8 +45,9 @@ const index = () => {
     useState<number>(0);
   const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true);
   const [originalUserNotes, setOriginalUserNotes] = useState([]);
-const [userFriends, setUserFriends] = useState([]);
+const [userFriends, setUserFriends] = useState();
 const [sheetIndex, setSheetIndex] = useState(-1);
+
 	const snapPoints = useMemo(() => ["65%"], []);
   const showToast = () => {
     Toast.show({
@@ -122,6 +123,7 @@ const [sheetIndex, setSheetIndex] = useState(-1);
         time={item.time}
         direction={item.direction}
         id={item.id}
+	
       />
     );
   }, []);
@@ -175,16 +177,10 @@ const [sheetIndex, setSheetIndex] = useState(-1);
     
 	};
 	
-	useEffect(()=>{
-	setUserFriends([])
-		if(homeBottomSheetDisplay !== -1) {
-		handleGetUsersFriends()
-		}
-	},[homeBottomSheetDisplay])
-	
+
 	
 	 const handleGetUsersFriends = async () => {
-
+	
 		try{
 			const res = await fetch(`http://10.0.2.2:3000/user_friends`,{
 			method:'GET',
@@ -215,11 +211,24 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 			console.log(error)
 			setUserFriends([])
 		}
+		
+
 	
 
     
 	};
 
+	useEffect(()=>{
+
+	setUserFriends(undefined)
+		if(homeBottomSheetDisplay !== -1) {
+		handleGetUsersFriends()
+		}
+	},[homeBottomSheetDisplay])
+	
+	useEffect(()=>{
+	console.log(loading)
+	},[loading])
 	
   return (
     <GestureHandlerRootView>
@@ -359,7 +368,7 @@ const [sheetIndex, setSheetIndex] = useState(-1);
           >
             <View style={{ flex: 1 }}>
 			
-			{userFriends.length ? <> 
+			{!userFriends ? null : userFriends.length ? <> 
 				
 					<BottomSheetScrollView  style={{ flex: 1 }}  contentContainerStyle={{ paddingBottom: 20 }} >
 					<View style={{gap:5,marginTop:10}}> 

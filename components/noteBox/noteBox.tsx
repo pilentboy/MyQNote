@@ -9,7 +9,8 @@ import { lightTheme } from "@/constants/theme";
 import CopyNoteBTN from "../note/copyNoteBTN";
 import ShareNoteBTN from "../note/shareNoteBTN";
 import { authContext } from "@/context/authProvider";
-import React from "react";
+
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 const NoteBox = ({
   title,
@@ -18,6 +19,8 @@ const NoteBox = ({
   time,
   id,
   direction,
+  options,
+  friendName
 }: {
   title: string;
   content: string;
@@ -25,6 +28,8 @@ const NoteBox = ({
   time: string;
   id: string;
   direction: "right" | "left";
+  options?:boolean;
+  friendName?:string
 }) => {
   const route = useRouter();
   const { theme } = useTheme();
@@ -98,8 +103,18 @@ const NoteBox = ({
         >
           {title}
         </Text>
-        <View style={{ flexDirection: "row", gap: 5 }}>
-          <TouchableOpacity onPress={goEditingNoteScreen} activeOpacity={0.5}>
+        <View style={{ flexDirection: "row",alignItems:'center', gap: 5 }}>
+		{options ? <> <FontAwesome5 name="user" size={13} color="white" />   <Text
+          style={{
+            color: theme == "light" ? "black" : "white",
+            fontFamily: "Vazir",
+       
+            fontSize: 13,
+          }}
+        >
+          {friendName}
+		  
+        </Text></> :  <> <TouchableOpacity onPress={goEditingNoteScreen} activeOpacity={0.5}>
             <MaterialIcons
               name="edit"
               size={16}
@@ -127,7 +142,8 @@ const NoteBox = ({
 			  time={time}
             />
 			
-          )}
+          )} </>}
+         
         </View>
       </View>
 
