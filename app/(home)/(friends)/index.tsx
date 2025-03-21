@@ -92,7 +92,7 @@ export default function Friends() {
   useEffect(()=>{
 	searchedUsernameValue ? onSubmit(searchedUsernameValue) :setUsersFound([]) ;
   },[searchedUsernameValue])
-  
+
   
   
   // add friend request 
@@ -130,11 +130,7 @@ export default function Friends() {
    const handleGetUserMessages=async()=>{
 
 	try{
-		const res=await fetch ("http://10.0.2.2:3000/friend_request",{
-				method:'POST',
-				 body: JSON.stringify({
-				
-		}),
+		const res=await fetch ("http://10.0.2.2:3000/user_shared_notes",{
 			 headers: { 
         "Content-Type": "application/json",
         "x-api-key":
@@ -149,14 +145,18 @@ export default function Friends() {
 			return;
 		}
 		const result=await res.json()
-		showToast('success',result.message)
-		
+		//showToast('success',result.message)
+		console.log(result.notes)
+		setMessages(result.notes)
 	}catch(e:any){
 		showToast();
 		console.log(e,'error adding friend ')
 	}
   }
   
+    useEffect(()=>{
+	handleGetUserMessages();
+  },[])
   
    interface NoteItem {
     title: string;
@@ -176,14 +176,21 @@ export default function Friends() {
         time={item.time}
         direction={item.direction}
         id={item.id}
-	
+		options
+		friendName={item.username}
       />
     );
   }, []);
   
+    const getItemLayout = (_: any, index: number): ItemLayout => ({
+    length: 120,
+    offset: 120 * index,
+    index,
+  });
+  
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={{ flex: 1 ,  backgroundColor: theme === "light" ? "white" : "#222831"}}>
+      <View style={{ flex: 1 , paddingHorizontal: 10, backgroundColor: theme === "light" ? "white" : "#222831"}}>
        
 		{messages.length ? <FlatList
                 data={messages}
@@ -256,12 +263,7 @@ export default function Friends() {
 			   </View>           </ScrollView> }
 
 
-	   <FloatingActionButton
-          display={true}
-          action={() => setSheetIndex(0)}
-          icon={<AntDesign name="adduser" size={24} color="white" />}
-        />
-
+	
 
 	
         <BottomSheet
@@ -316,7 +318,14 @@ export default function Friends() {
             </View>
           </BottomSheetView>
         </BottomSheet>
+		
+
       </View>
+	     <FloatingActionButton
+          display={true}
+          action={() => setSheetIndex(0)}
+          icon={<AntDesign name="adduser" size={24} color="white" />}
+        />
     </GestureHandlerRootView>
 	
   );

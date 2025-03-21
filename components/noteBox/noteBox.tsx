@@ -135,11 +135,7 @@ const NoteBox = ({
 		    {accessKey && (
 				<ShareNoteBTN
 				id={id}
-              title={title}
-              content={content}
-              direction={direction}
-			  date={date}
-			  time={time}
+				
             />
 			
           )} </>}

@@ -11,20 +11,14 @@ import Entypo from '@expo/vector-icons/Entypo';
 
 
 
-const ShareNoteBTN: React.FC<ShareNoteBTNProps> = ({id,content,title,date,time,direction}:{ title: string;
-  content: string;
-  date: string;
-  time: string;
-  id: string;
-  date:string,
-  time:string,
-  direction: "right" | "left"}) => {
+const ShareNoteBTN: React.FC<ShareNoteBTNProps> = ({id}:{ 
+  id: string;}
+) => {
   const { theme } = useTheme();
 
    const {
 	setHomeBottomSheetDisplay,
 	setSharingNoteID,
-	setSharingNoteData
   } = useContext(authContext);
 
 
@@ -32,7 +26,7 @@ const ShareNoteBTN: React.FC<ShareNoteBTNProps> = ({id,content,title,date,time,d
   const handleOpenSharingBottomSheet = () => {
 	setSharingNoteID(id);
 	setHomeBottomSheetDisplay(0)
-	setSharingNoteData({content,date,time,id,direction,title,id})
+	
   };
 
   return (<TouchableOpacity

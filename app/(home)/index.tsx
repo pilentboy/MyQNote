@@ -33,7 +33,7 @@ const index = () => {
 	setHomeBottomSheetDisplay,
 	homeBottomSheetDisplay,
 	setSharingNoteID,
-	setSharingNoteData
+	sharingNoteID
   } = useContext(authContext);
 
   const route = useRouter();
@@ -49,10 +49,10 @@ const [userFriends, setUserFriends] = useState();
 const [sheetIndex, setSheetIndex] = useState(-1);
 
 	const snapPoints = useMemo(() => ["65%"], []);
-  const showToast = () => {
+  const showToast = (type?:string,message?:string) => {
     Toast.show({
-      type: "error",
-      text2: "خطا در برقراری ارتباط",
+      type: type || "error",
+      text2:  message || "خطا در برقراری ارتباط",
     });
   };
 
@@ -140,11 +140,15 @@ const [sheetIndex, setSheetIndex] = useState(-1);
     index,
   });
   
-  const handleShareNote = async () => {
+  const handleShareNote = async (friendUsername:string) => {
 
 		try{
-			const res = await fetch(`http://10.0.2.2:3000/user_friends`,{
-			method:'GET',
+			const res = await fetch(`http://10.0.2.2:3000/share_note`,{
+			method:'POST',
+				 body: JSON.stringify({
+				 sharingNoteID,
+				friendUsername
+		}),
 			headers: {
         "Content-Type": "application/json",
         "x-api-key":
@@ -157,20 +161,21 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 			
 			
 			if(!res.ok){
-				setUserFriends([]);
-				showToast();
+				
+				const data=await res.json()
+				console.log(data)
+				showToast('info',data.error);
 				return;
 			}
 			
 			const data=await res.json()
 	
-			
-			setUserFriends(data.userFriends)
+			console.log(data)
 		
 		}catch(error:any){
 		showToast();
 			console.log(error)
-			setUserFriends([])
+			
 		}
 	
 
@@ -196,6 +201,7 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 			
 			
 			if(!res.ok){
+				
 				setUserFriends([]);
 				showToast();
 				return;
@@ -350,7 +356,7 @@ const [sheetIndex, setSheetIndex] = useState(-1);
           index={homeBottomSheetDisplay}
           onChange={(index) => setHomeBottomSheetDisplay(index)}
 			onClose={() => {
-			setSharingNoteData(undefined)
+			setSharingNoteID(undefined)
 			setHomeBottomSheetDisplay(-1) }}
           enablePanDownToClose
           handleStyle={{ backgroundColor: lightTheme.primary }}
