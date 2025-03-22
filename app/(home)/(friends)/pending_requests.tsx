@@ -16,7 +16,7 @@ export default function PendingRequests() {
   
   const handleGetPendingRequests=async ()=>{
 	try{
-	const res=await fetch ("http://10.0.2.2:3000/pending_requests",{
+	const res=await fetch ("https://myqnoteapi.liara.run/pending_requests",{
 			 headers: { 
         "Content-Type": "application/json",
         "x-api-key":

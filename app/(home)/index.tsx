@@ -143,7 +143,7 @@ const [sheetIndex, setSheetIndex] = useState(-1);
   const handleShareNote = async (friendUsername:string) => {
 
 		try{
-			const res = await fetch(`http://10.0.2.2:3000/share_note`,{
+			const res = await fetch(`https://myqnoteapi.liara.run/share_note`,{
 			method:'POST',
 				 body: JSON.stringify({
 				 sharingNoteID,
@@ -187,7 +187,7 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 	 const handleGetUsersFriends = async () => {
 	
 		try{
-			const res = await fetch(`http://10.0.2.2:3000/user_friends`,{
+			const res = await fetch(`https://myqnoteapi.liara.run/user_friends`,{
 			method:'GET',
 			headers: {
         "Content-Type": "application/json",

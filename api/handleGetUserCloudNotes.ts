@@ -3,7 +3,7 @@
 const handleGetUserCloudNotes = async (accessKey: any) => {
   try {
   
-    const res = await fetch(`http://10.0.2.2:3000/user_notes`, {
+    const res = await fetch(`https://myqnoteapi.liara.run/user_notes`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -25,5 +25,5 @@ const handleGetUserCloudNotes = async (accessKey: any) => {
     console.log("Error:", error.message);
   }
 };
-//https://myqnoteapi.liara.run/user_notes
+
 export default handleGetUserCloudNotes;

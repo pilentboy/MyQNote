@@ -1,6 +1,6 @@
 const handleLogin = async (data: any) => {
   try {
-    const res = await fetch("http://10.0.2.2:3000/login", {
+    const res = await fetch("https://myqnoteapi.liara.run/login", {
       method: "POST",
       body: JSON.stringify({
         username: data.username.trim(),
@@ -26,4 +26,3 @@ const handleLogin = async (data: any) => {
 };
 
 export default handleLogin;
-// https://myqnoteapi.liara.run/login

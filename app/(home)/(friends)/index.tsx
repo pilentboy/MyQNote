@@ -58,7 +58,7 @@ export default function Friends() {
 	// make an api call for fetching users based on the searchedUsernameValue		
 	const onSubmit = async () => {
 		try{
-			const res = await fetch(`http://10.0.2.2:3000/search_users?username=${searchedUsernameValue}`,{
+			const res = await fetch(`https://myqnoteapi.liara.run/search_users?username=${searchedUsernameValue}`,{
 			method:'GET',
 			headers: {
         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export default function Friends() {
   const handleAddFriendRequest=async(receiverUsername:string)=>{
 
 	try{
-		const res=await fetch ("http://10.0.2.2:3000/friend_request",{
+		const res=await fetch ("https://myqnoteapi.liara.run/friend_request",{
 				method:'POST',
 				 body: JSON.stringify({
 				receiver_username:receiverUsername
@@ -130,7 +130,7 @@ export default function Friends() {
    const handleGetUserMessages=async()=>{
 
 	try{
-		const res=await fetch ("http://10.0.2.2:3000/user_shared_notes",{
+		const res=await fetch ("https://myqnoteapi.liara.run/user_shared_notes",{
 			 headers: { 
         "Content-Type": "application/json",
         "x-api-key":
@@ -321,7 +321,7 @@ export default function Friends() {
 		
 
       </View>
-	     <FloatingActionButton
+	   <FloatingActionButton
           display={true}
           action={() => setSheetIndex(0)}
           icon={<AntDesign name="adduser" size={24} color="white" />}

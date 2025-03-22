@@ -16,7 +16,7 @@ export default function Notification() {
   
   const handleGetNotifications=async ()=>{
 	try{
-	const res=await fetch ("http://10.0.2.2:3000/notification",{
+	const res=await fetch ("https://myqnoteapi.liara.run/notification",{
 			 headers: { 
         "Content-Type": "application/json",
         "x-api-key":
@@ -36,7 +36,7 @@ export default function Notification() {
   
     const handleDeleteFriendRequet=async (friendRequestID:string)=>{
 	try{
-	const res=await fetch ("http://10.0.2.2:3000/delete_friend_request",{
+	const res=await fetch ("https://myqnoteapi.liara.run/delete_friend_request",{
 	method:'DELETE',
 		body:JSON.stringify({friendRequestID: friendRequestID})
 		,
@@ -59,7 +59,7 @@ export default function Notification() {
   
    const handleAcceptFriendRequest=async (friendRequestID:string)=>{
 	try{
-	const res=await fetch ("http://10.0.2.2:3000/accept_friend_request",{
+	const res=await fetch ("https://myqnoteapi.liara.run/accept_friend_request",{
 			method:"PUT",
 			body:JSON.stringify({friendRequestID:friendRequestID}),
 			 headers: { 

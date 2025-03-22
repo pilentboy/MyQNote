@@ -18,7 +18,7 @@ export default function UserFriends() {
 const handleGetUsersFriends = async () => {
 	console.log('yy')
 		try{
-			const res = await fetch(`http://10.0.2.2:3000/user_friends`,{
+			const res = await fetch(`https://myqnoteapi.liara.run/user_friends`,{
 			method:'GET',
 			headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const handleGetUsersFriends = async () => {
   
      const handleDeleteFriendRequet=async (friendRequestID:string)=>{
 	try{
-	const res=await fetch ("http://10.0.2.2:3000/delete_friend_request",{
+	const res=await fetch ("https://myqnoteapi.liara.run/delete_friend_request",{
 	method:'DELETE',
 		body:JSON.stringify({friendRequestID: friendRequestID})
 		,
