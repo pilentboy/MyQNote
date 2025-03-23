@@ -14,6 +14,7 @@ export default function UserFriends() {
  const { setTheme, theme } = useTheme();
   const {accessKey}=useContext(authContext)
   const [userFriends,setUserFriends]=useState<any>([])
+ 
   
 const handleGetUsersFriends = async () => {
 	console.log('yy')
