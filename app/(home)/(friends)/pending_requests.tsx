@@ -5,11 +5,19 @@ import { lightTheme } from "@/constants/theme";
 import { authContext } from "@/context/authProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Toast from "react-native-toast-message";
 
 export default function PendingRequests() {
   const { theme } = useTheme();
   const { accessKey } = useContext(authContext);
   const [pendingRequests, setPendingRequests] = useState<any>([]);
+
+  const showToast = () => {
+    Toast.show({
+      type: "error",
+      text2: "خطا در برقراری ارتباط",
+    });
+  };
 
   const handleGetPendingRequests = async () => {
     try {
@@ -22,29 +30,42 @@ export default function PendingRequests() {
         },
       });
 
+      if (!res.ok) {
+        showToast();
+        return;
+      }
       const data = await res.json();
 
       setPendingRequests(data.pendingRequests);
     } catch (e: any) {
+      showToast();
       console.log(e, "error pending requests");
     }
   };
 
   const handleDeleteFriendRequet = async (friendRequestID: string) => {
     try {
-      const res = await fetch("https://myqnoteapi.liara.run/delete_friend_request", {
-        method: "DELETE",
-        body: JSON.stringify({ friendRequestID: friendRequestID }),
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        "https://myqnoteapi.liara.run/delete_friend_request",
+        {
+          method: "DELETE",
+          body: JSON.stringify({ friendRequestID: friendRequestID }),
+          headers: {
+            "Content-Type": "application/json",
 
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
+            "x-api-key":
+              "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            Authorization: `Bearer ${accessKey}`,
+          },
+        }
+      );
+      if (!res.ok) {
+        showToast();
+        return;
+      }
       await handleGetPendingRequests();
     } catch (e: any) {
+      showToast();
       console.log(e, "error Notification");
     }
   };

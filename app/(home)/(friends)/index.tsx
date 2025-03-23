@@ -21,11 +21,9 @@ import RotateArrow from "@/components/rotateArrow";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "@/components/formItems/formInput";
 import NoteBox from "@/components/noteBox/noteBox";
-import CustomLinearGradient from "@/components/linearGradient";
 import { darkTheme, lightTheme } from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
-import { useNavigationState } from "@react-navigation/native";
 
 export default function Friends() {
   const { setTheme, theme } = useTheme();
@@ -52,11 +50,8 @@ export default function Friends() {
   });
   const {
     control,
-    handleSubmit,
     formState: { errors },
-    clearErrors,
     watch,
-    setError,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -129,6 +124,7 @@ export default function Friends() {
 
   // get shared messages
   const handleGetUserMessages = async () => {
+    setLoading(true);
     try {
       const res = await fetch(
         "https://myqnoteapi.liara.run/user_shared_notes",
@@ -143,18 +139,16 @@ export default function Friends() {
       );
       if (res.status === 400) {
         const test = await res.json();
-        console.log(test.error);
         showToast("info", test.error);
         return;
       }
       const result = await res.json();
-      //showToast('success',result.message)
-      console.log(result.notes);
       setMessages(result.notes);
     } catch (e: any) {
       showToast();
       console.log(e, "error adding friend ");
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -206,7 +200,7 @@ export default function Friends() {
           backgroundColor: theme === "light" ? "white" : "#222831",
         }}
       >
-        {messages.length ? (
+        {loading ? null : messages.length ? (
           <FlatList
             data={messages}
             keyExtractor={(item) => item.id}

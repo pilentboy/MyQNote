@@ -4,13 +4,21 @@ import useTheme from "@/context/themeProvider";
 import { lightTheme } from "@/constants/theme";
 import { authContext } from "@/context/authProvider";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Toast from "react-native-toast-message";
 
 import Entypo from "@expo/vector-icons/Entypo";
 
 export default function UserFriends() {
-  const { setTheme, theme } = useTheme();
+  const { theme } = useTheme();
   const { accessKey } = useContext(authContext);
   const [userFriends, setUserFriends] = useState<any>([]);
+
+  const showToast = () => {
+    Toast.show({
+      type: "error",
+      text2: "خطا در برقراری ارتباط",
+    });
+  };
 
   const handleGetUsersFriends = async () => {
     console.log("yy");
@@ -28,6 +36,7 @@ export default function UserFriends() {
 
       if (!res.ok) {
         setUserFriends([]);
+        showToast();
         return;
       }
 
@@ -36,6 +45,7 @@ export default function UserFriends() {
 
       setUserFriends(data.userFriends);
     } catch (error: any) {
+      showToast();
       console.log(error);
       setUserFriends([]);
     }
