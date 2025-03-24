@@ -1,5 +1,11 @@
-import { useState, useRef, useContext } from "react";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { useState, useRef, useContext, useEffect } from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
 import { useRouter } from "expo-router";
@@ -9,8 +15,9 @@ import { lightTheme } from "@/constants/theme";
 import CopyNoteBTN from "../note/copyNoteBTN";
 import ShareNoteBTN from "../note/shareNoteBTN";
 import { authContext } from "@/context/authProvider";
-
+import Feather from "@expo/vector-icons/Feather";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { set } from "react-hook-form";
 
 const NoteBox = ({
   title,
@@ -33,10 +40,12 @@ const NoteBox = ({
 }) => {
   const route = useRouter();
   const { theme } = useTheme();
-  const { accessKey, setSharedNoteUsername } = useContext(authContext);
+  const { setSharedNoteUsername } = useContext(authContext);
   const { setSubmitNoteType } = useSubmitNoteType();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null); // Ref for long press timeout
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const iconRef = useRef<any>(null);
 
   // Handle touch start
   const handleTouchStart = () => {
@@ -72,12 +81,18 @@ const NoteBox = ({
     });
   };
 
+  useEffect(() => {
+    console.log(isEditing);
+  }, [isEditing]);
   return (
     <Pressable
       onPressIn={handleTouchStart}
       onPressOut={handleTouchEnd}
       onTouchMove={handleTouchEnd}
-      onPress={() => setDisplayFullContent((pre) => !pre)}
+      onPress={() => {
+        setDisplayFullContent((pre) => !pre);
+        setIsEditing(false);
+      }}
       style={{
         display: "flex",
         backgroundColor: theme === "light" ? lightTheme.secondry : "#2C394B",
@@ -110,10 +125,22 @@ const NoteBox = ({
         >
           {title}
         </Text>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 5,
+            position: "relative",
+          }}
+        >
           {noOptions ? (
             <>
-              <FontAwesome5 name="user" size={13} color={theme == "light" ? "black" : "white"}/>
+              <FontAwesome5
+                name="user"
+                size={13}
+                color={theme == "light" ? "black" : "white"}
+                ref={iconRef}
+              />
               <Text
                 style={{
                   color: theme == "light" ? "black" : "white",
@@ -127,7 +154,6 @@ const NoteBox = ({
             </>
           ) : (
             <>
-              {" "}
               <TouchableOpacity
                 onPress={goEditingNoteScreen}
                 activeOpacity={0.5}
@@ -138,18 +164,43 @@ const NoteBox = ({
                   color={theme == "light" ? "black" : "white"}
                 />
               </TouchableOpacity>
-              {/* button for handling copying local/online note to local/online storage */}
-              {accessKey && (
-                <CopyNoteBTN
-                  title={title}
-                  content={content}
-                  date={date}
-                  time={time}
-                  textDirection={direction}
-                />
+
+              <Feather
+                name="more-vertical"
+                size={16}
+                color={theme == "light" ? "black" : "white"}
+                onPress={() => setIsEditing((pre) => !pre)}
+              />
+              {isEditing && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -5,
+                    left: 40,
+                    width: 60,
+                    height: 60,
+                    borderRadius: 10,
+                    borderColor: "gray",
+                    borderWidth: 1,
+                    backgroundColor:
+                      theme === "light" ? lightTheme.secondry : "#2C394B",
+                    zIndex: 100,
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  {/* button for handling copying local/online note to local/online storage */}
+                  <CopyNoteBTN
+                    title={title}
+                    content={content}
+                    date={date}
+                    time={time}
+                    textDirection={direction}
+                  />
+                  {/* button for sharing note*/}
+                  <ShareNoteBTN id={id} />
+                </View>
               )}
-              {/* button for sharing note*/}
-              {accessKey && <ShareNoteBTN id={id} />}{" "}
             </>
           )}
         </View>
