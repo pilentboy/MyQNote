@@ -46,7 +46,9 @@ const Note = () => {
   const [inputHeight, setinputHeight] = useState(windowHeight - 260);
   const { id, editedTitle, editedContent, direction } = useLocalSearchParams();
   const { theme } = useTheme();
-
+  useEffect(() => {
+    console.log(id);
+  }, [id]);
   const [textDirection, setTextDirection] = useState<"right" | "left">(
     (direction === "left" || direction === "right" ? direction : "right") as
       | "right"
@@ -224,6 +226,7 @@ const Note = () => {
 
   const handleEditingCloudNote = async (data: any) => {
     setLoading(true);
+    console.log(id, "xx");
     try {
       const res = await fetch("https://myqnoteapi.liara.run/edit_note", {
         method: "PUT",

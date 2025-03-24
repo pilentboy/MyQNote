@@ -1,16 +1,21 @@
 import useTheme from "@/context/themeProvider";
 import { Stack } from "expo-router";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import SubmitNoteButton from "@/components/note/submitNoteBTN";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import EditNoteBTN from "@/components/note/editNoteBTN";
 import DeleteNoteBTN from "@/components/note/deleteNoteBTN";
-
+import { useContext, useEffect } from "react";
+import { authContext } from "@/context/authProvider";
 
 export default function NoteLayout() {
   const { theme } = useTheme();
   const { submitNoteType } = useSubmitNoteType();
+  const { sharedNoteUsername } = useContext(authContext);
 
+  useEffect(() => {
+    console.log(sharedNoteUsername,'xx');
+  }, [sharedNoteUsername]);
   return (
     <Stack
       screenOptions={{
@@ -20,6 +25,8 @@ export default function NoteLayout() {
         },
         headerTintColor: theme === "light" ? "black" : "white",
         headerRight: () => {
+          if (!!sharedNoteUsername)
+            return <Text style={{ fontSize: 15,color:'white' }}>{sharedNoteUsername}</Text>;
           return (
             <View style={{ flexDirection: "row", gap: 15 }}>
               {submitNoteType === "newNote" ? (

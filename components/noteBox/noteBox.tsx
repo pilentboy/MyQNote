@@ -10,7 +10,7 @@ import CopyNoteBTN from "../note/copyNoteBTN";
 import ShareNoteBTN from "../note/shareNoteBTN";
 import { authContext } from "@/context/authProvider";
 
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 const NoteBox = ({
   title,
@@ -19,8 +19,8 @@ const NoteBox = ({
   time,
   id,
   direction,
-  options,
-  friendName
+  noOptions,
+  friendName,
 }: {
   title: string;
   content: string;
@@ -28,12 +28,12 @@ const NoteBox = ({
   time: string;
   id: string;
   direction: "right" | "left";
-  options?:boolean;
-  friendName?:string
+  noOptions?: boolean;
+  friendName?: string;
 }) => {
   const route = useRouter();
   const { theme } = useTheme();
-  const { accessKey } = useContext(authContext);
+  const { accessKey, setSharedNoteUsername } = useContext(authContext);
   const { setSubmitNoteType } = useSubmitNoteType();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null); // Ref for long press timeout
@@ -53,6 +53,13 @@ const NoteBox = ({
   };
 
   const goEditingNoteScreen = () => {
+    // disable editing note if it's a shared note
+    console.log(friendName,'tt')
+    if (noOptions) {
+      setSharedNoteUsername(friendName);
+    } else {
+      setSharedNoteUsername(undefined);
+    }
     setSubmitNoteType("editNote");
     route.push({
       pathname: "/(note)",
@@ -103,43 +110,49 @@ const NoteBox = ({
         >
           {title}
         </Text>
-        <View style={{ flexDirection: "row",alignItems:'center', gap: 5 }}>
-		{options ? <> <FontAwesome5 name="user" size={13} color="white" />   <Text
-          style={{
-            color: theme == "light" ? "black" : "white",
-            fontFamily: "Vazir",
-       
-            fontSize: 13,
-          }}
-        >
-          {friendName}
-		  
-        </Text></> :  <> <TouchableOpacity onPress={goEditingNoteScreen} activeOpacity={0.5}>
-            <MaterialIcons
-              name="edit"
-              size={16}
-              color={theme == "light" ? "black" : "white"}
-            />
-          </TouchableOpacity>
-          {/* button for handling copying local/online note to local/online storage */}
-       {accessKey && (
-            <CopyNoteBTN
-              title={title}
-              content={content}
-              date={date}
-              time={time}
-              textDirection={direction}
-            />
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+          {noOptions ? (
+            <>
+              {" "}
+              <FontAwesome5 name="user" size={13} color="white" />{" "}
+              <Text
+                style={{
+                  color: theme == "light" ? "black" : "white",
+                  fontFamily: "Vazir",
+
+                  fontSize: 13,
+                }}
+              >
+                {friendName}
+              </Text>
+            </>
+          ) : (
+            <>
+              {" "}
+              <TouchableOpacity
+                onPress={goEditingNoteScreen}
+                activeOpacity={0.5}
+              >
+                <MaterialIcons
+                  name="edit"
+                  size={16}
+                  color={theme == "light" ? "black" : "white"}
+                />
+              </TouchableOpacity>
+              {/* button for handling copying local/online note to local/online storage */}
+              {accessKey && (
+                <CopyNoteBTN
+                  title={title}
+                  content={content}
+                  date={date}
+                  time={time}
+                  textDirection={direction}
+                />
+              )}
+              {/* button for sharing note*/}
+              {accessKey && <ShareNoteBTN id={id} />}{" "}
+            </>
           )}
-		  {/* button for sharing note*/}
-		    {accessKey && (
-				<ShareNoteBTN
-				id={id}
-				
-            />
-			
-          )} </>}
-         
         </View>
       </View>
 

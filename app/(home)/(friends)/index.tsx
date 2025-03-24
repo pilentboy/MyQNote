@@ -26,7 +26,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
 
 export default function Friends() {
-  const { setTheme, theme } = useTheme();
+  const {  theme } = useTheme();
   const [sheetIndex, setSheetIndex] = useState(-1);
   const [messages, setMessages] = useState<any>([]);
   const [usersFound, setUsersFound] = useState<any>([]);
@@ -143,6 +143,7 @@ export default function Friends() {
         return;
       }
       const result = await res.json();
+      console.log(result)
       setMessages(result.notes);
     } catch (e: any) {
       showToast();
@@ -162,7 +163,7 @@ export default function Friends() {
     time: string;
     direction: "right" | "left";
     id: string;
-    friendName: string;
+    username: string;
   }
 
   const renderNoteItem = useCallback(({ item }: { item: NoteItem }) => {
@@ -174,8 +175,8 @@ export default function Friends() {
         time={item.time}
         direction={item.direction}
         id={item.id}
-        options
-        friendName={item.friendName}
+        noOptions
+        friendName={item.username}
       />
     );
   }, []);

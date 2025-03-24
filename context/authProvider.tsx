@@ -1,7 +1,4 @@
-import {
-  handleDefaultNoteMode,
-  handleGetAppMode,
-} from "@/utils/handleLocalStorage";
+import { handleGetAppMode } from "@/utils/handleLocalStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
 
@@ -16,11 +13,12 @@ const authContext = createContext<{
   setAppMode: React.Dispatch<React.SetStateAction<any>>;
   accessKey: any;
   setAccessKey: React.Dispatch<React.SetStateAction<any>>;
- homeBottomSheetDisplay:number;
- setHomeBottomSheetDisplay: React.Dispatch<React.SetStateAction<number>>;
- sharingNoteID:string | undefined;
+  homeBottomSheetDisplay: number;
+  setHomeBottomSheetDisplay: React.Dispatch<React.SetStateAction<number>>;
+  sharingNoteID: string | undefined;
   setSharingNoteID: React.Dispatch<React.SetStateAction<any>>;
-
+  sharedNoteUsername: undefined | string;
+  setSharedNoteUsername: React.Dispatch<React.SetStateAction<any>>;
 }>({
   loading: true,
   setLoading: () => {},
@@ -32,11 +30,12 @@ const authContext = createContext<{
   setAppMode: () => {},
   accessKey: undefined,
   setAccessKey: () => {},
-  homeBottomSheetDisplay:-1,
-  setHomeBottomSheetDisplay:() => {},
-  sharingNoteID:undefined,
-  setSharingNoteID:() => {},
-
+  homeBottomSheetDisplay: -1,
+  setHomeBottomSheetDisplay: () => {},
+  sharingNoteID: undefined,
+  setSharingNoteID: () => {},
+  sharedNoteUsername: undefined,
+  setSharedNoteUsername: () => {},
 });
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -46,23 +45,22 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [appMode, setAppMode] = useState<any>();
   const [accessKey, setAccessKey] = useState<any>();
   const [homeBottomSheetDisplay, setHomeBottomSheetDisplay] = useState(-1);
-    const [sharingNoteID, setSharingNoteID] = useState();
+  const [sharingNoteID, setSharingNoteID] = useState();
+  const [sharedNoteUsername, setSharedNoteUsername] = useState();
 
-   
   // set access key in state
   const handlesetAccessKey = async () => {
     try {
       const res = await AsyncStorage.getItem("access_key");
-	 
-	  const accessKe2y = res.split('"')[0];
 
-		console.log(accessKe2y)
+      const accessKe2y = res?.split('"')[0];
+
+      console.log(accessKe2y);
       if (res) return setAccessKey(JSON.parse(res));
     } catch (error) {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     const getAppMode = async () => {
@@ -85,11 +83,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         setAppMode,
         accessKey,
         setAccessKey,
-	homeBottomSheetDisplay,
-	setHomeBottomSheetDisplay,
-	sharingNoteID,
-	setSharingNoteID,
-
+        homeBottomSheetDisplay,
+        setHomeBottomSheetDisplay,
+        sharingNoteID,
+        setSharingNoteID,
+        sharedNoteUsername,
+        setSharedNoteUsername,
       }}
     >
       {children}

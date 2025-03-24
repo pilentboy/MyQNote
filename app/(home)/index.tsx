@@ -45,7 +45,7 @@ const index = () => {
     useState<number>(0);
   const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true);
   const [originalUserNotes, setOriginalUserNotes] = useState([]);
-const [userFriends, setUserFriends] = useState();
+const [userFriends, setUserFriends] = useState<any>();
 const [sheetIndex, setSheetIndex] = useState(-1);
 
 	const snapPoints = useMemo(() => ["65%"], []);
@@ -201,7 +201,6 @@ const [sheetIndex, setSheetIndex] = useState(-1);
 			
 			
 			if(!res.ok){
-				
 				setUserFriends([]);
 				showToast();
 				return;
