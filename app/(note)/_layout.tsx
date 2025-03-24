@@ -14,7 +14,7 @@ export default function NoteLayout() {
   const { sharedNoteUsername } = useContext(authContext);
 
   useEffect(() => {
-    console.log(sharedNoteUsername,'xx');
+    console.log(sharedNoteUsername, "xx");
   }, [sharedNoteUsername]);
   return (
     <Stack
@@ -26,7 +26,16 @@ export default function NoteLayout() {
         headerTintColor: theme === "light" ? "black" : "white",
         headerRight: () => {
           if (!!sharedNoteUsername)
-            return <Text style={{ fontSize: 15,color:'white' }}>{sharedNoteUsername}</Text>;
+            return (
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: theme == "light" ? "black" : "white",
+                }}
+              >
+                {sharedNoteUsername}
+              </Text>
+            );
           return (
             <View style={{ flexDirection: "row", gap: 15 }}>
               {submitNoteType === "newNote" ? (

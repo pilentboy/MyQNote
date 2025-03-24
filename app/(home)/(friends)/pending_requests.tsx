@@ -99,8 +99,8 @@ export default function PendingRequests() {
               borderWidth: 1,
             }}
           >
-            <Text style={{ color: "white", fontSize: 16 }}>
-              {notif.receiver_username}{" "}
+            <Text style={{ color: theme == "light" ? "black" : "white", fontSize: 16 }}>
+              {notif.receiver_username}
             </Text>
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}

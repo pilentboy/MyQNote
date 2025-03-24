@@ -54,7 +54,7 @@ const NoteBox = ({
 
   const goEditingNoteScreen = () => {
     // disable editing note if it's a shared note
-    console.log(friendName,'tt')
+    console.log(friendName, "tt");
     if (noOptions) {
       setSharedNoteUsername(friendName);
     } else {
@@ -113,8 +113,7 @@ const NoteBox = ({
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           {noOptions ? (
             <>
-              {" "}
-              <FontAwesome5 name="user" size={13} color="white" />{" "}
+              <FontAwesome5 name="user" size={13} color={theme == "light" ? "black" : "white"}/>
               <Text
                 style={{
                   color: theme == "light" ? "black" : "white",

@@ -5,7 +5,6 @@ import { lightTheme } from "@/constants/theme";
 import { authContext } from "@/context/authProvider";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Toast from "react-native-toast-message";
-
 import Entypo from "@expo/vector-icons/Entypo";
 
 export default function UserFriends() {
@@ -21,7 +20,6 @@ export default function UserFriends() {
   };
 
   const handleGetUsersFriends = async () => {
-    console.log("yy");
     try {
       const res = await fetch(`https://myqnoteapi.liara.run/user_friends`, {
         method: "GET",
@@ -102,7 +100,12 @@ export default function UserFriends() {
               borderWidth: 1,
             }}
           >
-            <Text style={{ color: "white", fontSize: 16 }}>
+            <Text
+              style={{
+                color: theme == "light" ? "black" : "white",
+                fontSize: 16,
+              }}
+            >
               {friend.friend_username}{" "}
             </Text>
             <View
