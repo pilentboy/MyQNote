@@ -26,7 +26,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
 
 export default function Friends() {
-  const {  theme } = useTheme();
+  const { theme } = useTheme();
   const [sheetIndex, setSheetIndex] = useState(-1);
   const [messages, setMessages] = useState<any>([]);
   const [usersFound, setUsersFound] = useState<any>([]);
@@ -143,7 +143,7 @@ export default function Friends() {
         return;
       }
       const result = await res.json();
-      console.log(result)
+      console.log(result);
       setMessages(result.notes);
     } catch (e: any) {
       showToast();
@@ -325,8 +325,7 @@ export default function Friends() {
                           }}
                         >
                           <Text style={{ color: "white", fontFamily: "yekan" }}>
-                            {" "}
-                            {user.username}{" "}
+                            {user.username}
                           </Text>
                           <MaterialIcons
                             name="person-add-alt-1"

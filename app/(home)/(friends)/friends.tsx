@@ -106,7 +106,7 @@ export default function UserFriends() {
                 fontSize: 16,
               }}
             >
-              {friend.friend_username}{" "}
+              {friend.friend_username}
             </Text>
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}

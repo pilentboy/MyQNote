@@ -1,12 +1,10 @@
 import { lightTheme } from "@/constants/theme";
-import useEdit from "@/context/editProvider";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {  useRouter } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 const EditContainer = ({
   width,
@@ -57,7 +55,6 @@ const EditContainer = ({
           color="white"
           onPress={() => {
             setTextDirection(undefined);
-            console.log("changer");
           }}
         />
       )}

@@ -93,12 +93,13 @@ const index = () => {
 
   // Effect: Trigger fetching or filtering notes when `searchValue` changes
   useEffect(() => {
+    console.log(originalUserNotes, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     if (searchValue !== "") {
       setSearchNotes(); // Filter notes
     } else if (!textDirection) {
       originalUserNotes.length ? setUserNotes(originalUserNotes) : setData(); // Fetch all notes
     } else {
-      if (textDirection !== undefined && userNotes.length)
+      if (textDirection !== undefined && originalUserNotes.length)
         filterNotesRotation();
     } // Fetch all notes
   }, [searchValue, accessKey, textDirection]);
@@ -211,10 +212,6 @@ const index = () => {
       handleGetUsersFriends();
     }
   }, [homeBottomSheetDisplay]);
-
-  useEffect(() => {
-    console.log(loading);
-  }, [loading]);
 
   return (
     <GestureHandlerRootView>
@@ -359,7 +356,7 @@ const index = () => {
                   style={{ flex: 1 }}
                   contentContainerStyle={{ paddingBottom: 20 }}
                 >
-                  <View style={{ gap: 5, marginTop: 10 ,alignItems:'center'}}>
+                  <View style={{ gap: 5, marginTop: 10, alignItems: "center" }}>
                     <SimpleLineIcons name="share" size={16} color="black" />
                     {userFriends.map((user: any) => (
                       <View
@@ -380,8 +377,7 @@ const index = () => {
                             fontFamily: "yekan",
                           }}
                         >
-                          {" "}
-                          {user.friend_username}{" "}
+                          {user.friend_username}
                         </Text>
                         <Ionicons
                           name="send-outline"

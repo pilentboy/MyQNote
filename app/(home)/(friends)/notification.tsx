@@ -127,7 +127,7 @@ export default function Notification() {
             }}
           >
             <Text style={{ color: "white", fontSize: 16 }}>
-              {notif.sender_username}{" "}
+              {notif.sender_username}
             </Text>
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}

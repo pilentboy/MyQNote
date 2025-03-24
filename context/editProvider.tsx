@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const EditContext = createContext<{
   textDirection: undefined | "right" | "left";
@@ -13,6 +13,9 @@ function EditProvider({ children }: { children: React.ReactNode }) {
     undefined | "right" | "left"
   >();
 
+  useEffect(() => {
+    console.log(textDirection);
+  }, [textDirection]);
   return (
     <EditContext.Provider value={{ textDirection, setTextDirection }}>
       {children}
