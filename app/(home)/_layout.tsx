@@ -9,58 +9,55 @@ import DrawerCustomHeader from "@/components/home/drawerCustomHeader"; // Custom
 import useTheme from "@/context/themeProvider";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
-import {useNavigationState} from "@react-navigation/native"
 
 export default function Layout() {
   const labelFontSize = 14; // Font size for drawer labels
   const { theme } = useTheme();
-  const { appMode } = useContext(authContext);
+  const { accessKey } = useContext(authContext);
 
-
-
-		  
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* Drawer navigation setup */}
       <Drawer
-        drawerContent={(props) => <CustomDrawerContent {...props}  />}
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
         screenOptions={({ navigation }) => {
-		
-
-			
-		return {
-          header: ({ navigation,route  }) => (
-            <DrawerCustomHeader navigation={navigation} currentRoute ={route} />
-          ),
-          drawerStatusBarAnimation: "fade",
-          drawerType: "slide",
-          headerStyle: {
-            backgroundColor: "white",
-          },
-          drawerPosition: "right",
-          headerTitleStyle: {
-            display: "none",
-          },
-          drawerLabelStyle: {
-            fontFamily: "Yekan",
-            direction: "rtl",
-            fontSize: labelFontSize,
-            fontWeight: "bold",
-          },
-          drawerActiveBackgroundColor: "#0165b6",
-          drawerActiveTintColor: "white",
-          drawerInactiveTintColor: theme === "light" ? "black" : "white",
-          drawerStyle: {
-            backgroundColor: "white",
-            width: 175,
-          },
-          sceneStyle: {
-            backgroundColor: theme === "light" ? "white" : "#222831",
-          },
-          drawerItemStyle: {
-            borderRadius: 8,
-            marginVertical: 3,
-          },}
+          return {
+            header: ({ navigation, route }) => (
+              <DrawerCustomHeader
+                navigation={navigation}
+                currentRoute={route}
+              />
+            ),
+            drawerStatusBarAnimation: "fade",
+            drawerType: "slide",
+            headerStyle: {
+              backgroundColor: "white",
+            },
+            drawerPosition: "right",
+            headerTitleStyle: {
+              display: "none",
+            },
+            drawerLabelStyle: {
+              fontFamily: "Yekan",
+              direction: "rtl",
+              fontSize: labelFontSize,
+              fontWeight: "bold",
+            },
+            drawerActiveBackgroundColor: "#0165b6",
+            drawerActiveTintColor: "white",
+            drawerInactiveTintColor: theme === "light" ? "black" : "white",
+            drawerStyle: {
+              backgroundColor: "white",
+              width: 175,
+            },
+            sceneStyle: {
+              backgroundColor: theme === "light" ? "white" : "#222831",
+            },
+            drawerItemStyle: {
+              borderRadius: 8,
+              marginVertical: 3,
+            },
+          };
         }}
       >
         {/* First screen in the drawer */}
@@ -82,22 +79,27 @@ export default function Layout() {
         />
 
         {/* Second  screen in the drawer */}
-        <Drawer.Screen
-          name="(friends)"
-          options={{
-            title: "دوستان",
-            drawerLabel: "دوستان",
-            drawerIcon({ focused }) {
-              return (
-                <FontAwesome5
-                  name="user-friends"
-                  size={labelFontSize}
-                  color={focused || theme === "dark" ? "white" : "black"}
-                />
-              );
-            },
-          }}
-        />
+    
+          <Drawer.Screen
+            name="(friends)"
+            options={{
+              title: "دوستان",
+              drawerLabel: "دوستان",
+              drawerItemStyle:{
+                display: accessKey ? "flex" : "none"
+              },
+              drawerIcon({ focused }) {
+                return (
+                  <FontAwesome5
+                    name="user-friends"
+                    size={labelFontSize}
+                    color={focused || theme === "dark" ? "white" : "black"}
+                  />
+                );
+              },
+            }}
+          />
+    
         {/* Third screen in the drawer */}
         <Drawer.Screen
           name="settings"
