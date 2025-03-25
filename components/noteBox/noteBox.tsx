@@ -33,7 +33,7 @@ const NoteBox = ({
 }) => {
   const route = useRouter();
   const { theme } = useTheme();
-  const { setSharedNoteUsername, appMode } = useContext(authContext);
+  const { setSharedNoteUsername, appMode, accessKey } = useContext(authContext);
   const { setSubmitNoteType } = useSubmitNoteType();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null); // Ref for long press timeout
@@ -74,9 +74,6 @@ const NoteBox = ({
     });
   };
 
-  useEffect(() => {
-    console.log(isEditing);
-  }, [isEditing]);
   return (
     <Pressable
       onPressIn={handleTouchStart}
@@ -158,7 +155,7 @@ const NoteBox = ({
                 />
               </TouchableOpacity>
 
-              {appMode === "offline" ? (
+              {accessKey && appMode === "offline" ? (
                 <CopyNoteBTN
                   title={title}
                   content={content}
@@ -166,14 +163,16 @@ const NoteBox = ({
                   time={time}
                   textDirection={direction}
                 />
-              ) : (
+              ) : null}
+
+              {accessKey && appMode === "online" ? (
                 <Feather
                   name="more-vertical"
                   size={16}
                   color={theme == "light" ? "black" : "white"}
                   onPress={() => setIsEditing((pre) => !pre)}
                 />
-              )}
+              ) : null}
 
               {isEditing && (
                 <View
