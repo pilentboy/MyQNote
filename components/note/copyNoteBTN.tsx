@@ -1,7 +1,7 @@
 import { TouchableOpacity } from "react-native";
 import CustomAlert from "../cutstomAlert";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import useTheme from "@/context/themeProvider";
 import { storeDataInLocalStorage } from "@/utils/handleLocalStorage";
@@ -35,9 +35,7 @@ const CopyNoteBTN: React.FC<CopyNoteBTNProps> = ({
     });
   };
 
-  useEffect(() => {
-    console.log(textDirection);
-  }, []);
+
 
   const handleCopyingNote = async (): Promise<void> => {
     setLoading(true);

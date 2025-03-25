@@ -1,11 +1,5 @@
 import { useState, useRef, useContext, useEffect } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./footerText";
 import { useRouter } from "expo-router";
@@ -17,7 +11,6 @@ import ShareNoteBTN from "../note/shareNoteBTN";
 import { authContext } from "@/context/authProvider";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { set } from "react-hook-form";
 
 const NoteBox = ({
   title,
@@ -40,7 +33,7 @@ const NoteBox = ({
 }) => {
   const route = useRouter();
   const { theme } = useTheme();
-  const { setSharedNoteUsername } = useContext(authContext);
+  const { setSharedNoteUsername, appMode } = useContext(authContext);
   const { setSubmitNoteType } = useSubmitNoteType();
   const [displayFullContent, setDisplayFullContent] = useState<boolean>(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null); // Ref for long press timeout
@@ -165,12 +158,23 @@ const NoteBox = ({
                 />
               </TouchableOpacity>
 
-              <Feather
-                name="more-vertical"
-                size={16}
-                color={theme == "light" ? "black" : "white"}
-                onPress={() => setIsEditing((pre) => !pre)}
-              />
+              {appMode === "offline" ? (
+                <CopyNoteBTN
+                  title={title}
+                  content={content}
+                  date={date}
+                  time={time}
+                  textDirection={direction}
+                />
+              ) : (
+                <Feather
+                  name="more-vertical"
+                  size={16}
+                  color={theme == "light" ? "black" : "white"}
+                  onPress={() => setIsEditing((pre) => !pre)}
+                />
+              )}
+
               {isEditing && (
                 <View
                   style={{
