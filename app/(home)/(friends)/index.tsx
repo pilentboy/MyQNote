@@ -62,13 +62,13 @@ export default function Friends() {
   const onSubmit = async () => {
     try {
       const res = await fetch(
-        `https://myqnoteapi.liara.run/search_users?username=${searchedUsernameValue}`,
+        `${process.env.EXPO_PUBLIC_API_URL}search_users?username=${searchedUsernameValue}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             "x-api-key":
-              "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            process.env.EXPO_PUBLIC_API_KEY || '',
             Authorization: `Bearer ${accessKey}`,
           },
         }
@@ -96,7 +96,7 @@ export default function Friends() {
   // add friend request
   const handleAddFriendRequest = async (receiverUsername: string) => {
     try {
-      const res = await fetch("https://myqnoteapi.liara.run/friend_request", {
+      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}friend_request`, {
         method: "POST",
         body: JSON.stringify({
           receiver_username: receiverUsername,
@@ -104,7 +104,7 @@ export default function Friends() {
         headers: {
           "Content-Type": "application/json",
           "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          process.env.EXPO_PUBLIC_API_KEY || '',
           Authorization: `Bearer ${accessKey}`,
         },
       });
@@ -127,12 +127,12 @@ export default function Friends() {
     setLoading(true);
     try {
       const res = await fetch(
-        "https://myqnoteapi.liara.run/user_shared_notes",
+        `${process.env.EXPO_PUBLIC_API_URL}user_shared_notes`,
         {
           headers: {
             "Content-Type": "application/json",
             "x-api-key":
-              "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            process.env.EXPO_PUBLIC_API_KEY || '',
             Authorization: `Bearer ${accessKey}`,
           },
         }

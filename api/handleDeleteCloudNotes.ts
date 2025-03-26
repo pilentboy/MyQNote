@@ -1,11 +1,10 @@
 const handleDeleteCloudNotes = async (accessKey: any) => {
   try {
-    const res = await fetch("https://myqnoteapi.liara.run/delete_notes", {
+    const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}delete_notes`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key":
-          "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+        "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
         Authorization: `Bearer ${accessKey}`,
       },
     });

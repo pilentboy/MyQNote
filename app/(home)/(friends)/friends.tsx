@@ -21,16 +21,18 @@ export default function UserFriends() {
 
   const handleGetUsersFriends = async () => {
     try {
-      const res = await fetch(`https://myqnoteapi.liara.run/user_friends`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
-          Authorization: `
+      const res = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}user_friends`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
+            Authorization: `
 		   Bearer ${accessKey}`,
-        },
-      });
+          },
+        }
+      );
 
       if (!res.ok) {
         setUserFriends([]);
@@ -52,15 +54,14 @@ export default function UserFriends() {
   const handleDeleteFriendRequet = async (friendRequestID: string) => {
     try {
       const res = await fetch(
-        "https://myqnoteapi.liara.run/delete_friend_request",
+        `${process.env.EXPO_PUBLIC_API_URL}delete_friend_request`,
         {
           method: "DELETE",
           body: JSON.stringify({ friendRequestID: friendRequestID }),
           headers: {
             "Content-Type": "application/json",
 
-            "x-api-key":
-              "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
             Authorization: `Bearer ${accessKey}`,
           },
         }

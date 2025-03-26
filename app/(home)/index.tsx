@@ -22,7 +22,6 @@ import BottomSheet, {
   BottomSheetView,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const index = () => {
@@ -93,7 +92,6 @@ const index = () => {
 
   // Effect: Trigger fetching or filtering notes when `searchValue` changes
   useEffect(() => {
-    console.log(originalUserNotes, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     if (searchValue !== "") {
       setSearchNotes(); // Filter notes
     } else if (!textDirection) {
@@ -146,7 +144,7 @@ const index = () => {
 
   const handleShareNote = async (friendUsername: string) => {
     try {
-      const res = await fetch(`https://myqnoteapi.liara.run/share_note`, {
+      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}share_note`, {
         method: "POST",
         body: JSON.stringify({
           sharingNoteID,
@@ -154,8 +152,7 @@ const index = () => {
         }),
         headers: {
           "Content-Type": "application/json",
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
           Authorization: `
 		   Bearer ${accessKey}`,
         },
@@ -179,16 +176,18 @@ const index = () => {
 
   const handleGetUsersFriends = async () => {
     try {
-      const res = await fetch(`https://myqnoteapi.liara.run/user_friends`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
-          Authorization: `
+      const res = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}user_friends`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
+            Authorization: `
 		   Bearer ${accessKey}`,
-        },
-      });
+          },
+        }
+      );
 
       if (!res.ok) {
         setUserFriends([]);

@@ -21,11 +21,11 @@ export default function Notification() {
 
   const handleGetNotifications = async () => {
     try {
-      const res = await fetch("https://myqnoteapi.liara.run/notification", {
+      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}notification`, {
         headers: {
           "Content-Type": "application/json",
           "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          process.env.EXPO_PUBLIC_API_KEY || '',
           Authorization: `Bearer ${accessKey}`,
         },
       });
@@ -47,7 +47,7 @@ export default function Notification() {
   const handleDeleteFriendRequet = async (friendRequestID: string) => {
     try {
       const res = await fetch(
-        "https://myqnoteapi.liara.run/delete_friend_request",
+        `${process.env.EXPO_PUBLIC_API_URL}delete_friend_request`,
         {
           method: "DELETE",
           body: JSON.stringify({ friendRequestID: friendRequestID }),
@@ -55,7 +55,7 @@ export default function Notification() {
             "Content-Type": "application/json",
 
             "x-api-key":
-              "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            process.env.EXPO_PUBLIC_API_KEY || '',
             Authorization: `Bearer ${accessKey}`,
           },
         }
@@ -77,14 +77,14 @@ export default function Notification() {
   const handleAcceptFriendRequest = async (friendRequestID: string) => {
     try {
       const res = await fetch(
-        "https://myqnoteapi.liara.run/accept_friend_request",
+        `${process.env.EXPO_PUBLIC_API_URL}accept_friend_request`,
         {
           method: "PUT",
           body: JSON.stringify({ friendRequestID: friendRequestID }),
           headers: {
             "Content-Type": "application/json",
             "x-api-key":
-              "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            process.env.EXPO_PUBLIC_API_KEY || '',
             Authorization: `Bearer ${accessKey}`,
           },
         }

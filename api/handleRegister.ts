@@ -1,6 +1,6 @@
 const handleRegister = async (data: any) => {
   try {
-    const res = await fetch("https://myqnoteapi.liara.run/register", {
+    const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}register`, {
       method: "POST",
       body: JSON.stringify({
         username: data.username.trim(),
@@ -8,8 +8,7 @@ const handleRegister = async (data: any) => {
       }),
       headers: {
         "Content-Type": "application/json",
-        "x-api-key":
-          "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+        "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
       },
     });
 

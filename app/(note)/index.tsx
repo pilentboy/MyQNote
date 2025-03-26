@@ -197,13 +197,12 @@ const Note = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://myqnoteapi.liara.run/delete_note/${id}`,
+        `${process.env.EXPO_PUBLIC_API_URL}delete_note/${id}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "x-api-key":
-              "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
             Authorization: `Bearer ${accessKey}`,
           },
         }
@@ -228,7 +227,7 @@ const Note = () => {
     setLoading(true);
     console.log(id, "xx");
     try {
-      const res = await fetch("https://myqnoteapi.liara.run/edit_note", {
+      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}edit_note`, {
         method: "PUT",
         body: JSON.stringify({
           title: data.title,
@@ -240,8 +239,7 @@ const Note = () => {
         }),
         headers: {
           "Content-Type": "application/json",
-          "x-api-key":
-            "shYqiZ7vc4?QoiatSIOA9MHMxOsBW2Wckzc5GAsO3xvzkUVr/24zxssYdAOlta-5/lKBdOb0Q3hW7ClRsrgAX?kmQa8-o9qfpwUhP7v/CR8St!wO5VanxxjZ12gG2CHi",
+          "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
           Authorization: `Bearer ${accessKey}`,
         },
       });
