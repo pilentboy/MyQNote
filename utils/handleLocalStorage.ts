@@ -63,6 +63,7 @@ const handleEditingNote = async ({
       ...editedNote,
       title: editedTitle,
       content: editedContent,
+      direction: direction,
     };
 
     updatedNotes[editingNoteIndex] = editedNote;
