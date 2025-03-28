@@ -56,7 +56,6 @@ const NoteBox = ({
 
   const goEditingNoteScreen = () => {
     // disable editing note if it's a shared note
-    console.log(friendName, "tt");
     if (noOptions) {
       setSharedNoteUsername(friendName);
     } else {

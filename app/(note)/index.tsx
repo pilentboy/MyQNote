@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useFocusEffect } from "expo-router";
 import {
   Dimensions,
   Keyboard,
@@ -30,7 +31,7 @@ import {
 } from "../../utils/handleLocalStorage";
 import handleAddingCloudNotes from "@/api/handleAddUserCloudNote";
 
-const Note = () => {
+const Note = ({ navigation }) => {
   const windowHeight = Dimensions.get("window").height;
   const { setSubmitAction, submitNoteType, setDeleteNote } =
     useSubmitNoteType();
@@ -42,13 +43,19 @@ const Note = () => {
     accessKey,
     setSearchValue,
     appMode,
+	setSharedNoteUsername
   } = useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 260);
   const { id, editedTitle, editedContent, direction } = useLocalSearchParams();
   const { theme } = useTheme();
-  useEffect(() => {
-    console.log(id);
-  }, [id]);
+  
+  
+  useFocusEffect(() => {
+    return () => {
+      setSharedNoteUsername(undefined);
+	  }
+  });
+ 
   const [textDirection, setTextDirection] = useState<"right" | "left">(
     (direction === "left" || direction === "right" ? direction : "right") as
       | "right"

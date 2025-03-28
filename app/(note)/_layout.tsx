@@ -13,9 +13,7 @@ export default function NoteLayout() {
   const { submitNoteType } = useSubmitNoteType();
   const { sharedNoteUsername } = useContext(authContext);
 
-  useEffect(() => {
-    console.log(sharedNoteUsername, "xx");
-  }, [sharedNoteUsername]);
+
   return (
     <Stack
       screenOptions={{
