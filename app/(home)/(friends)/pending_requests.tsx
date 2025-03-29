@@ -6,6 +6,7 @@ import { authContext } from "@/context/authProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
+import { API_URL, API_KEY } from "@/config/config";
 
 export default function PendingRequests() {
   const { theme } = useTheme();
@@ -21,16 +22,13 @@ export default function PendingRequests() {
 
   const handleGetPendingRequests = async () => {
     try {
-      const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}pending_requests`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
-            Authorization: `Bearer ${accessKey}`,
-          },
-        }
-      );
+      const res = await fetch(`${API_URL}pending_requests`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY || "",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
 
       if (!res.ok) {
         showToast();
@@ -46,22 +44,17 @@ export default function PendingRequests() {
   };
 
   const handleDeleteFriendRequet = async (friendRequestID: string) => {
-
     try {
-      const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}delete_friend_request`,
-        {
-          method: "DELETE",
-          body: JSON.stringify({ friendRequestID: friendRequestID }),
-          headers: {
-            "Content-Type": "application/json",
+      const res = await fetch(`${API_URL}delete_friend_request`, {
+        method: "DELETE",
+        body: JSON.stringify({ friendRequestID: friendRequestID }),
+        headers: {
+          "Content-Type": "application/json",
 
-            "x-api-key":
-            process.env.EXPO_PUBLIC_API_KEY || '',
-            Authorization: `Bearer ${accessKey}`,
-          },
-        }
-      );
+          "x-api-key": API_KEY || "",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
       if (!res.ok) {
         showToast();
         return;

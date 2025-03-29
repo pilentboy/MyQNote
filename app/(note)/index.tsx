@@ -9,6 +9,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useFocusEffect } from "expo-router";
+import { API_URL, API_KEY } from "@/config/config";
 import {
   Dimensions,
   Keyboard,
@@ -31,7 +32,7 @@ import {
 } from "../../utils/handleLocalStorage";
 import handleAddingCloudNotes from "@/api/handleAddUserCloudNote";
 
-const Note = ({ navigation }) => {
+const Note = () => {
   const windowHeight = Dimensions.get("window").height;
   const { setSubmitAction, submitNoteType, setDeleteNote } =
     useSubmitNoteType();
@@ -43,19 +44,18 @@ const Note = ({ navigation }) => {
     accessKey,
     setSearchValue,
     appMode,
-	setSharedNoteUsername
+    setSharedNoteUsername,
   } = useContext(authContext);
   const [inputHeight, setinputHeight] = useState(windowHeight - 260);
   const { id, editedTitle, editedContent, direction } = useLocalSearchParams();
   const { theme } = useTheme();
-  
-  
+
   useFocusEffect(() => {
     return () => {
       setSharedNoteUsername(undefined);
-	  }
+    };
   });
- 
+
   const [textDirection, setTextDirection] = useState<"right" | "left">(
     (direction === "left" || direction === "right" ? direction : "right") as
       | "right"
@@ -203,17 +203,14 @@ const Note = ({ navigation }) => {
   const handleDeleteCloudNote = async () => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}delete_note/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
-            Authorization: `Bearer ${accessKey}`,
-          },
-        }
-      );
+      const res = await fetch(`${API_URL}delete_note/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY || "",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
       const result = await res.json();
       console.log(result);
       if (result.error) {
@@ -234,7 +231,7 @@ const Note = ({ navigation }) => {
     setLoading(true);
     console.log(id, "xx");
     try {
-      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}edit_note`, {
+      const res = await fetch(`${API_URL}edit_note`, {
         method: "PUT",
         body: JSON.stringify({
           title: data.title,
@@ -246,7 +243,7 @@ const Note = ({ navigation }) => {
         }),
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
+          "x-api-key": API_KEY || "",
           Authorization: `Bearer ${accessKey}`,
         },
       });

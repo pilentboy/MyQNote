@@ -24,6 +24,7 @@ import NoteBox from "@/components/noteBox/noteBox";
 import { darkTheme, lightTheme } from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
+import { API_URL, API_KEY } from "@/config/config";
 
 export default function Friends() {
   const { theme } = useTheme();
@@ -62,13 +63,12 @@ export default function Friends() {
   const onSubmit = async () => {
     try {
       const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}search_users?username=${searchedUsernameValue}`,
+        `${API_URL}search_users?username=${searchedUsernameValue}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "x-api-key":
-            process.env.EXPO_PUBLIC_API_KEY || '',
+            "x-api-key": API_KEY || "",
             Authorization: `Bearer ${accessKey}`,
           },
         }
@@ -96,15 +96,14 @@ export default function Friends() {
   // add friend request
   const handleAddFriendRequest = async (receiverUsername: string) => {
     try {
-      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}friend_request`, {
+      const res = await fetch(`${API_URL}friend_request`, {
         method: "POST",
         body: JSON.stringify({
           receiver_username: receiverUsername,
         }),
         headers: {
           "Content-Type": "application/json",
-          "x-api-key":
-          process.env.EXPO_PUBLIC_API_KEY || '',
+          "x-api-key": API_KEY || "",
           Authorization: `Bearer ${accessKey}`,
         },
       });
@@ -126,17 +125,13 @@ export default function Friends() {
   const handleGetUserMessages = async () => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}user_shared_notes`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key":
-            process.env.EXPO_PUBLIC_API_KEY || '',
-            Authorization: `Bearer ${accessKey}`,
-          },
-        }
-      );
+      const res = await fetch(`${API_URL}user_shared_notes`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY || "",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
       if (res.status === 400) {
         const test = await res.json();
         showToast("info", test.error);

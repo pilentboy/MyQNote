@@ -5,6 +5,7 @@ import { lightTheme } from "@/constants/theme";
 import { authContext } from "@/context/authProvider";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Toast from "react-native-toast-message";
+import { API_URL, API_KEY } from "@/config/config";
 import Entypo from "@expo/vector-icons/Entypo";
 
 export default function UserFriends() {
@@ -21,18 +22,15 @@ export default function UserFriends() {
 
   const handleGetUsersFriends = async () => {
     try {
-      const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}user_friends`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
-            Authorization: `
+      const res = await fetch(`${API_URL}user_friends`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY || "",
+          Authorization: `
 		   Bearer ${accessKey}`,
-          },
-        }
-      );
+        },
+      });
 
       if (!res.ok) {
         setUserFriends([]);
@@ -53,19 +51,16 @@ export default function UserFriends() {
 
   const handleDeleteFriendRequet = async (friendRequestID: string) => {
     try {
-      const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}delete_friend_request`,
-        {
-          method: "DELETE",
-          body: JSON.stringify({ friendRequestID: friendRequestID }),
-          headers: {
-            "Content-Type": "application/json",
+      const res = await fetch(`${API_URL}delete_friend_request`, {
+        method: "DELETE",
+        body: JSON.stringify({ friendRequestID: friendRequestID }),
+        headers: {
+          "Content-Type": "application/json",
 
-            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
-            Authorization: `Bearer ${accessKey}`,
-          },
-        }
-      );
+          "x-api-key": API_KEY || "",
+          Authorization: `Bearer ${accessKey}`,
+        },
+      });
       await handleGetUsersFriends();
     } catch (e: any) {
       console.log(e, "error Notification");

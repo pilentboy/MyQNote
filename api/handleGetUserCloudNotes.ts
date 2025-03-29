@@ -1,12 +1,13 @@
 // get users note with using the uniqe accessKey
+import { API_URL, API_KEY } from "@/config/config";
 
 const handleGetUserCloudNotes = async (accessKey: any) => {
   try {
-    const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}user_notes`, {
+    const res = await fetch(`${API_URL}user_notes`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
+        "x-api-key": API_KEY || "",
         Authorization: `Bearer ${accessKey}`,
       },
     });

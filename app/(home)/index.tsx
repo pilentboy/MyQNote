@@ -1,5 +1,6 @@
 import { View, Text, FlatList, RefreshControl, ScrollView } from "react-native";
 import { useCallback, useContext, useEffect, useState, useMemo } from "react";
+import { API_URL, API_KEY } from "@/config/config";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
@@ -144,7 +145,7 @@ const index = () => {
 
   const handleShareNote = async (friendUsername: string) => {
     try {
-      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}share_note`, {
+      const res = await fetch(`${API_URL}share_note`, {
         method: "POST",
         body: JSON.stringify({
           sharingNoteID,
@@ -152,7 +153,7 @@ const index = () => {
         }),
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
+          "x-api-key": API_KEY || "",
           Authorization: `
 		   Bearer ${accessKey}`,
         },
@@ -176,18 +177,15 @@ const index = () => {
 
   const handleGetUsersFriends = async () => {
     try {
-      const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}user_friends`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
-            Authorization: `
+      const res = await fetch(`${API_URL}user_friends`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY || "",
+          Authorization: `
 		   Bearer ${accessKey}`,
-          },
-        }
-      );
+        },
+      });
 
       if (!res.ok) {
         setUserFriends([]);

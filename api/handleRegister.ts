@@ -1,6 +1,8 @@
+import { API_URL, API_KEY } from "@/config/config";
+
 const handleRegister = async (data: any) => {
   try {
-    const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}register`, {
+    const res = await fetch(`${API_URL}register`, {
       method: "POST",
       body: JSON.stringify({
         username: data.username.trim(),
@@ -8,7 +10,7 @@ const handleRegister = async (data: any) => {
       }),
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": process.env.EXPO_PUBLIC_API_KEY || "",
+        "x-api-key": API_KEY || "",
       },
     });
 

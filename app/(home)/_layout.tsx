@@ -79,27 +79,29 @@ export default function Layout() {
         />
 
         {/* Second  screen in the drawer */}
-    
-          <Drawer.Screen
-            name="(friends)"
-            options={{
-              title: "دوستان",
-              drawerLabel: "دوستان",
-              drawerItemStyle:{
-                display: accessKey ? "flex" : "none"
-              },
-              drawerIcon({ focused }) {
-                return (
-                  <FontAwesome5
-                    name="user-friends"
-                    size={labelFontSize}
-                    color={focused || theme === "dark" ? "white" : "black"}
-                  />
-                );
-              },
-            }}
-          />
-    
+
+        <Drawer.Screen
+          name="(friends)"
+          options={{
+            title: "دوستان",
+            drawerLabel: "دوستان",
+            drawerItemStyle: {
+              display: accessKey ? "flex" : "none",
+              borderRadius: 8,
+              marginVertical: 3,
+            },
+            drawerIcon({ focused }) {
+              return (
+                <FontAwesome5
+                  name="user-friends"
+                  size={labelFontSize}
+                  color={focused || theme === "dark" ? "white" : "black"}
+                />
+              );
+            },
+          }}
+        />
+
         {/* Third screen in the drawer */}
         <Drawer.Screen
           name="settings"
