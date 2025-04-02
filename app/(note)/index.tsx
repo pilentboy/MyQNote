@@ -29,8 +29,7 @@ import {
   handleEditingNote,
   storeDataInLocalStorage,
 } from "../../utils/handleLocalStorage";
-import handleAddingCloudNotes from "@/api/handleAddUserCloudNote";
-import { fetchUserCloudNotes } from "@/api";
+import { addUserCloudNote, fetchUserCloudNotes } from "@/api";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -74,7 +73,7 @@ const Note = () => {
       setSubmitAction(() =>
         handleSubmit(
           appMode === "online" && accessKey
-            ? addUserCloudNote
+            ? addCloudNote
             : handleAddingLocalNote
         )
       );
@@ -278,21 +277,19 @@ const Note = () => {
     }
   };
 
-  const addUserCloudNote = async (data: any) => {
+  const addCloudNote = async (data: any) => {
     setLoading(true);
     try {
-      const res = await handleAddingCloudNotes(
-        data,
-        getCurrentDate()[0],
-        getCurrentDate()[1],
-        textDirection,
-        accessKey
-      );
+      const res = await addUserCloudNote(accessKey, {
+        title: data.title,
+        content: data.content,
+        date: getCurrentDate()[0],
+        time: getCurrentDate()[1],
+        direction: direction,
+      });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.log(errorData);
-        showToast(`خطا در ذخیره یادداشت`, "error");
+      if (res.error) {
+        showToast(res.error, "error");
         return;
       }
 

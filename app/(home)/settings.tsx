@@ -14,10 +14,9 @@ import CustomAlert from "@/components/cutstomAlert";
 import Toast from "react-native-toast-message"; // Library for displaying toast notifications
 import { useContext, useMemo } from "react";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user-related data
-import handleDeleteCloudNotes from "@/api/handleDeleteCloudNotes";
 import Loading from "@/components/loading";
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
-import { fetchUserCloudNotes } from "@/api";
+import { deleteUserCloudNotes, fetchUserCloudNotes } from "@/api";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme(); // Access and set the app's current theme
@@ -39,7 +38,7 @@ export default function Settings() {
     setAppMode(updatedAppMode);
     const refreshedNotes =
       updatedAppMode === "online"
-        ? await fetchUserCloudNotes("x")
+        ? await fetchUserCloudNotes(accessKey)
         : await getLocalStorageUserNotes();
 
     if (refreshedNotes.error) {
@@ -99,9 +98,9 @@ export default function Settings() {
     // delete cloud notes
     if (appMode === "online" && accessKey) {
       try {
-        const res = await handleDeleteCloudNotes(accessKey);
+        const res = await deleteUserCloudNotes(accessKey);
 
-        if (!res.ok) {
+        if (res.error) {
           showToast("خطا در پاک کردن یادداشت ها", "error");
         } else {
           showToast("یادداشت ها با موفقیت حذف شدند");

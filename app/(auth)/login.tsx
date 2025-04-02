@@ -16,7 +16,7 @@ import {
   handleDefaultNoteMode,
   handleSetAccessKey,
 } from "@/utils/handleLocalStorage";
-import handleLogin from "@/api/handleLogIn";
+import { login } from "@/api";
 
 const Login = () => {
   const { loading, setLoading, setAccessKey, setAppMode } =
@@ -50,7 +50,7 @@ const Login = () => {
   // submit log in form
   const onSubmit = async (data: any) => {
     setLoading(true);
-    const res = await handleLogin(data);
+    const res = await login(data);
     setLoading(false);
 
     if (res.error) {

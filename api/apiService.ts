@@ -15,7 +15,7 @@ const makeRequest = async (
     headers: {
       "Content-Type": "application/json",
       "x-api-key": API_KEY,
-      Authorization: `Bearer ${accessKey || null}`,
+      Authorization: `Bearer ${accessKey || undefined}`,
     },
   };
 
@@ -28,7 +28,7 @@ const makeRequest = async (
     const data = await response.json();
 
     if (!response.ok) {
-      return data || "something went wrong";
+      return data || { error: "خطا در برقراری ارتباط" };
     }
 
     return data;
@@ -39,8 +39,12 @@ const makeRequest = async (
 
 export const get = (endpoint: endpoint, accessKey: string) =>
   makeRequest(endpoint, undefined, undefined, accessKey);
-export const post = (endpoint: endpoint, body: Record<string, any>) =>
-  makeRequest(endpoint, "POST", body);
+export const post = (
+  endpoint: endpoint,
+  body: Record<string, any>,
+  accessKey: undefined | string
+) => makeRequest(endpoint, "POST", body, accessKey);
 export const put = (endpoint: endpoint, body: Record<string, any>) =>
   makeRequest(endpoint, "PUT", body);
-export const del = (endpoint: endpoint) => makeRequest(endpoint, "DELETE");
+export const del = (endpoint: endpoint, accessKey: string) =>
+  makeRequest(endpoint, "DELETE", accessKey);

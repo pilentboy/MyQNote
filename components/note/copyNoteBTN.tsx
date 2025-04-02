@@ -5,10 +5,9 @@ import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import useTheme from "@/context/themeProvider";
 import { storeDataInLocalStorage } from "@/utils/handleLocalStorage";
-import handleAddingCloudNotes from "@/api/handleAddUserCloudNote";
 import { v4 as uuidv4 } from "uuid";
 import Toast from "react-native-toast-message";
-
+import { addUserCloudNote } from "@/api";
 
 interface CopyNoteBTNProps {
   title: string;
@@ -35,20 +34,18 @@ const CopyNoteBTN: React.FC<CopyNoteBTNProps> = ({
     });
   };
 
-
-
   const handleCopyingNote = async (): Promise<void> => {
     setLoading(true);
     try {
       if (appMode === "offline") {
-        const res = await handleAddingCloudNotes(
-          { title, content },
-          date,
-          time,
-          textDirection,
-          accessKey
-        );
-        if (!res.ok) {
+        const res = await addUserCloudNote(accessKey, {
+          title: title,
+          content: content,
+          date: date,
+          time: time,
+          direction: textDirection,
+        });
+        if (res.error) {
           showToast("خطا در کپی کردن یادداشت", "error");
         } else {
           showToast();

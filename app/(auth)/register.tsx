@@ -13,7 +13,7 @@ import FormTitle from "@/components/formItems/formTitle";
 import SubmitBTN from "@/components/formItems/submitBTN";
 import BottomGuideText from "@/components/formItems/bottomGuideText";
 import Toast from "react-native-toast-message";
-import handleRegister from "@/api/handleRegister";
+import { register } from "@/api";
 
 const Register = () => {
   const { loading, setLoading } = useContext(authContext);
@@ -60,7 +60,7 @@ const Register = () => {
   // handle register form
   const onSubmit = async (data: any) => {
     setLoading(true);
-    const res = await handleRegister(data);
+    const res = await register(data);
     setLoading(false);
 
     if (res.error) {
