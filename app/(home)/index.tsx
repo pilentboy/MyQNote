@@ -1,6 +1,5 @@
 import { View, Text, FlatList, RefreshControl, ScrollView } from "react-native";
 import { useCallback, useContext, useEffect, useState, useMemo } from "react";
-import { API_URL, API_KEY } from "@/config/config";
 import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
@@ -23,7 +22,7 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { fetchUserCloudNotes } from "../../api";
+import { fetchUserCloudNotes, fetchUserFriends, shareNote } from "../../api";
 
 const index = () => {
   const {
@@ -145,28 +144,15 @@ const index = () => {
 
   const handleShareNote = async (friendUsername: string) => {
     try {
-      const res = await fetch(`${API_URL}share_note`, {
-        method: "POST",
-        body: JSON.stringify({
-          sharingNoteID,
-          friendUsername,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `
-		   Bearer ${accessKey}`,
-        },
+      const data = await shareNote(accessKey, {
+        sharingNoteID,
+        friendUsername,
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        console.log(data);
+      if (data.error) {
         showToast("info", data.error);
         return;
       }
-
-      const data = await res.json();
 
       console.log(data);
     } catch (error: any) {
@@ -177,23 +163,13 @@ const index = () => {
 
   const handleGetUsersFriends = async () => {
     try {
-      const res = await fetch(`${API_URL}user_friends`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `
-		   Bearer ${accessKey}`,
-        },
-      });
+      const data = await fetchUserFriends(accessKey);
 
-      if (!res.ok) {
+      if (data.error) {
         setUserFriends([]);
         showToast();
         return;
       }
-
-      const data = await res.json();
 
       setUserFriends(data.userFriends);
     } catch (error: any) {
@@ -354,7 +330,11 @@ const index = () => {
                   contentContainerStyle={{ paddingBottom: 20 }}
                 >
                   <View style={{ gap: 5, marginTop: 10, alignItems: "center" }}>
-                    <SimpleLineIcons name="share" size={16} color="black" />
+                    <SimpleLineIcons
+                      name="share"
+                      size={16}
+                      color={theme === "light" ? "black" : "white"}
+                    />
                     {userFriends.map((user: any) => (
                       <View
                         key={user.id}

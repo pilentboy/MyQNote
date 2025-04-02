@@ -24,7 +24,7 @@ import NoteBox from "@/components/noteBox/noteBox";
 import { darkTheme, lightTheme } from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
-import { API_URL, API_KEY } from "@/config/config";
+import { addFriend, fetchSearchedUsers, fetchSharedNotes } from "@/api";
 
 export default function Friends() {
   const { theme } = useTheme();
@@ -62,25 +62,14 @@ export default function Friends() {
   // make an api call for fetching users based on the searchedUsernameValue
   const onSubmit = async () => {
     try {
-      const res = await fetch(
-        `${API_URL}search_users?username=${searchedUsernameValue}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": API_KEY || "",
-            Authorization: `Bearer ${accessKey}`,
-          },
-        }
-      );
+      const data = await fetchSearchedUsers(accessKey, searchedUsernameValue);
 
-      if (!res.ok) {
+      if (data.error) {
+        showToast("error", data.error);
         setUsersFound([]);
         return;
       }
 
-      const data = await res.json();
-      console.log(data);
       setUsersFound(data);
     } catch (error: any) {
       showToast();
@@ -96,25 +85,14 @@ export default function Friends() {
   // add friend request
   const handleAddFriendRequest = async (receiverUsername: string) => {
     try {
-      const res = await fetch(`${API_URL}friend_request`, {
-        method: "POST",
-        body: JSON.stringify({
-          receiver_username: receiverUsername,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
+      const data = await addFriend(accessKey, {
+        receiver_username: receiverUsername,
       });
-      if (res.status === 400) {
-        const test = await res.json();
-        console.log(test.error);
-        showToast("info", test.error);
+      if (data.error) {
+        showToast("info", data.error);
         return;
       }
-      const result = await res.json();
-      showToast("success", result.message);
+      showToast("success", data.message);
     } catch (e: any) {
       showToast();
       console.log(e, "error adding friend ");
@@ -125,21 +103,12 @@ export default function Friends() {
   const handleGetUserMessages = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}user_shared_notes`, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
-      if (res.status === 400) {
-        const test = await res.json();
-        showToast("info", test.error);
+      const data = await fetchSharedNotes(accessKey);
+      if (data.error) {
+        showToast("info", data.error);
         return;
       }
-      const result = await res.json();
-      console.log(result);
-      setMessages(result.notes);
+      setMessages(data.notes);
     } catch (e: any) {
       showToast();
       console.log(e, "error adding friend ");

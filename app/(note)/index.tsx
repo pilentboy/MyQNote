@@ -8,7 +8,6 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useFocusEffect } from "expo-router";
-import { API_URL, API_KEY } from "@/config/config";
 import {
   Dimensions,
   Keyboard,
@@ -29,7 +28,12 @@ import {
   handleEditingNote,
   storeDataInLocalStorage,
 } from "../../utils/handleLocalStorage";
-import { addUserCloudNote, fetchUserCloudNotes } from "@/api";
+import {
+  addUserCloudNote,
+  deleteCloudNote,
+  editCloudNote,
+  fetchUserCloudNotes,
+} from "@/api";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -202,21 +206,13 @@ const Note = () => {
   const handleDeleteCloudNote = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}delete_note/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
-      const result = await res.json();
-      console.log(result);
-      if (result.error) {
-        showToast(result.error, "error");
+      const data = await deleteCloudNote(accessKey, id);
+
+      if (data.error) {
+        showToast(data.error, "error");
         return;
       }
-      showToast(result.message);
+      showToast(data.message);
 
       const refreshedNotes = await fetchUserCloudNotes(accessKey);
       if (refreshedNotes.error) {
@@ -232,31 +228,20 @@ const Note = () => {
     }
   };
 
-  const handleEditingCloudNote = async (data: any) => {
+  const handleEditingCloudNote = async (editedNote: any) => {
     setLoading(true);
-    console.log(id, "xx");
     try {
-      const res = await fetch(`${API_URL}edit_note`, {
-        method: "PUT",
-        body: JSON.stringify({
-          title: data.title,
-          content: data.content,
-          date: getCurrentDate()[0],
-          time: getCurrentDate()[1],
-          post_id: id,
-          direction: textDirection,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
+      const data = await editCloudNote(accessKey, {
+        title: editedNote.title,
+        content: editedNote.content,
+        date: getCurrentDate()[0],
+        time: getCurrentDate()[1],
+        post_id: id,
+        direction: textDirection,
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.log(errorData);
-        showToast(errorData.message || errorData.error, "error");
+      if (data.error) {
+        showToast(data.message || data.error, "error");
         return;
       }
       showToast("با موفقیت ویرایش شد");

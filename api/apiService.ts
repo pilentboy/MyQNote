@@ -39,12 +39,18 @@ const makeRequest = async (
 
 export const get = (endpoint: endpoint, accessKey: string) =>
   makeRequest(endpoint, undefined, undefined, accessKey);
+
 export const post = (
   endpoint: endpoint,
   body: Record<string, any>,
   accessKey: undefined | string
 ) => makeRequest(endpoint, "POST", body, accessKey);
-export const put = (endpoint: endpoint, body: Record<string, any>) =>
-  makeRequest(endpoint, "PUT", body);
-export const del = (endpoint: endpoint, accessKey: string) =>
-  makeRequest(endpoint, "DELETE", accessKey);
+
+export const put = (
+  endpoint: endpoint,
+  accessKey: string,
+  body: Record<string, any>
+) => makeRequest(endpoint, "PUT", body, accessKey);
+
+export const del = (endpoint: endpoint, accessKey: string, body?: any) =>
+  makeRequest(endpoint, "DELETE", body, accessKey);

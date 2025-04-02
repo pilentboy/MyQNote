@@ -6,7 +6,7 @@ import { authContext } from "@/context/authProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
-import { API_URL, API_KEY } from "@/config/config";
+import { deleteFriend, fetchPendingRequests } from "@/api";
 
 export default function PendingRequests() {
   const { theme } = useTheme();
@@ -22,47 +22,33 @@ export default function PendingRequests() {
 
   const handleGetPendingRequests = async () => {
     try {
-      const res = await fetch(`${API_URL}pending_requests`, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
+      const data = await fetchPendingRequests(accessKey);
 
-      if (!res.ok) {
+      if (data.error) {
         showToast();
         return;
       }
-      const data = await res.json();
 
       setPendingRequests(data.pendingRequests);
     } catch (e: any) {
       showToast();
-      console.log(e, "error pending requests");
     }
   };
 
   const handleDeleteFriendRequet = async (friendRequestID: string) => {
     try {
-      const res = await fetch(`${API_URL}delete_friend_request`, {
-        method: "DELETE",
-        body: JSON.stringify({ friendRequestID: friendRequestID }),
-        headers: {
-          "Content-Type": "application/json",
-
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
+      const data = await deleteFriend(accessKey, {
+        friendRequestID: friendRequestID,
       });
-      if (!res.ok) {
+
+      if (data.error) {
         showToast();
         return;
       }
+
       await handleGetPendingRequests();
     } catch (e: any) {
       showToast();
-      console.log(e, "error Notification");
     }
   };
 

@@ -6,7 +6,7 @@ import { authContext } from "@/context/authProvider";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Toast from "react-native-toast-message";
-import { API_URL, API_KEY } from "@/config/config";
+import { acceptFriendRequest, deleteFriend, fetchNotifications } from "@/api";
 
 export default function Notification() {
   const { theme } = useTheme();
@@ -22,69 +22,47 @@ export default function Notification() {
 
   const handleGetNotifications = async () => {
     try {
-      const res = await fetch(`${API_URL}notification`, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
-      });
+      const data = await fetchNotifications(accessKey);
 
-      if (!res.ok) {
+      if (data.error) {
         showToast();
         return;
       }
 
-      const data = await res.json();
       setNotifications(data.notifications);
-      console.log(data);
     } catch (e: any) {
       showToast();
       console.log(e, "error Notification");
     }
   };
 
-  const handleDeleteFriendRequet = async (friendRequestID: string) => {
+  const handleDeleteFriendRequest = async (friendRequestID: string) => {
     try {
-      const res = await fetch(`${API_URL}delete_friend_request`, {
-        method: "DELETE",
-        body: JSON.stringify({ friendRequestID: friendRequestID }),
-        headers: {
-          "Content-Type": "application/json",
-
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
+      const data = await deleteFriend(accessKey, {
+        friendRequestID: friendRequestID,
       });
 
-      if (!res.ok) {
+      if (data.error) {
         showToast();
         return;
       }
-
-      const data = await res.json();
-      console.log(data);
+      handleGetNotifications();
     } catch (e: any) {
-      showToast();
       console.log(e, "error Notification");
     }
   };
 
   const handleAcceptFriendRequest = async (friendRequestID: string) => {
     try {
-      const res = await fetch(`${API_URL}accept_friend_request`, {
-        method: "PUT",
-        body: JSON.stringify({ friendRequestID: friendRequestID }),
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
+      const data = await acceptFriendRequest(accessKey, {
+        friendRequestID: friendRequestID,
       });
-
-      const data = await res.json();
+      if (data.error) {
+        console.log(data);
+        showToast();
+        return;
+      }
       await handleGetNotifications();
-      console.log(data);
     } catch (e: any) {
       console.log(e, "error Notification");
     }
@@ -128,7 +106,7 @@ export default function Notification() {
                 name="remove-circle-outline"
                 size={26}
                 color="red"
-                onPress={() => handleDeleteFriendRequet(notif.id)}
+                onPress={() => handleDeleteFriendRequest(notif.id)}
               />
               <AntDesign
                 name="checkcircleo"

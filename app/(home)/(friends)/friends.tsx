@@ -5,8 +5,8 @@ import { lightTheme } from "@/constants/theme";
 import { authContext } from "@/context/authProvider";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Toast from "react-native-toast-message";
-import { API_URL, API_KEY } from "@/config/config";
 import Entypo from "@expo/vector-icons/Entypo";
+import { deleteFriend, fetchUserFriends } from "@/api";
 
 export default function UserFriends() {
   const { theme } = useTheme();
@@ -22,24 +22,13 @@ export default function UserFriends() {
 
   const handleGetUsersFriends = async () => {
     try {
-      const res = await fetch(`${API_URL}user_friends`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY || "",
-          Authorization: `
-		   Bearer ${accessKey}`,
-        },
-      });
+      const data = await fetchUserFriends(accessKey);
 
-      if (!res.ok) {
+      if (data.error) {
         setUserFriends([]);
         showToast();
         return;
       }
-
-      const data = await res.json();
-      console.log(data.userFriends, "xxx");
 
       setUserFriends(data.userFriends);
     } catch (error: any) {
@@ -49,18 +38,16 @@ export default function UserFriends() {
     }
   };
 
-  const handleDeleteFriendRequet = async (friendRequestID: string) => {
+  const handleDeleteFriend = async (friendRequestID: string) => {
     try {
-      const res = await fetch(`${API_URL}delete_friend_request`, {
-        method: "DELETE",
-        body: JSON.stringify({ friendRequestID: friendRequestID }),
-        headers: {
-          "Content-Type": "application/json",
-
-          "x-api-key": API_KEY || "",
-          Authorization: `Bearer ${accessKey}`,
-        },
+      const data = await deleteFriend(accessKey, {
+        friendRequestID: friendRequestID,
       });
+
+      if (data.error) {
+        showToast();
+        return;
+      }
       await handleGetUsersFriends();
     } catch (e: any) {
       console.log(e, "error Notification");
@@ -111,7 +98,7 @@ export default function UserFriends() {
                 name="deleteuser"
                 size={24}
                 color="red"
-                onPress={() => handleDeleteFriendRequet(friend.id)}
+                onPress={() => handleDeleteFriend(friend.id)}
               />
             </View>
           </View>
