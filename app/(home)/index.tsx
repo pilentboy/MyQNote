@@ -11,7 +11,6 @@ import { getLocalStorageUserNotes } from "@/utils/handleLocalStorage"; // Utilit
 import FloatingActionButton from "@/components/home/floatingActionButton"; // Custom button component for adding notes
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
-import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
 import Toast from "react-native-toast-message";
 import RotateArrow from "@/components/rotateArrow";
@@ -24,6 +23,7 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { fetchUserCloudNotes } from "../../api";
 
 const index = () => {
   const {
@@ -67,8 +67,8 @@ const index = () => {
     setLoading(true);
     if (appMode === "online" && accessKey) {
       try {
-        const res = await handleGetUserCloudNotes(accessKey);
-        if (res.message || res.error) {
+        const res = await fetchUserCloudNotes(accessKey);
+        if (res.error) {
           showToast();
           setUserNotes([]);
         } else {

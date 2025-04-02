@@ -1,4 +1,3 @@
-import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import EditContainer from "@/components/EditContainer";
 import { authContext } from "@/context/authProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
@@ -31,6 +30,7 @@ import {
   storeDataInLocalStorage,
 } from "../../utils/handleLocalStorage";
 import handleAddingCloudNotes from "@/api/handleAddUserCloudNote";
+import { fetchUserCloudNotes } from "@/api";
 
 const Note = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -62,10 +62,10 @@ const Note = () => {
       | "left"
   );
 
-  const showToast = (text: string, type?: string) => {
+  const showToast = (text?: string, type?: string) => {
     Toast.show({
       type: type || "success",
-      text2: text,
+      text2: text || "خطا در برقراری ارتباط",
     });
   };
 
@@ -217,8 +217,14 @@ const Note = () => {
         showToast(result.error, "error");
         return;
       }
-      setUserNotes(await handleGetUserCloudNotes(accessKey));
       showToast(result.message);
+
+      const refreshedNotes = await fetchUserCloudNotes(accessKey);
+      if (refreshedNotes.error) {
+        showToast("خطا در دریافت یادداشت ها", "error");
+      } else {
+        setUserNotes(refreshedNotes);
+      }
       router.replace("/(home)");
     } catch (error) {
       showToast("خطا در برقراری ارتباط", "error");
@@ -257,8 +263,12 @@ const Note = () => {
       showToast("با موفقیت ویرایش شد");
 
       // update user notes after editing
-      setUserNotes(await handleGetUserCloudNotes(accessKey));
-
+      const refreshedNotes = await fetchUserCloudNotes(accessKey);
+      if (refreshedNotes.error) {
+        showToast("خطا در دریافت یادداشت ها", "error");
+      } else {
+        setUserNotes(refreshedNotes);
+      }
       // redirect to home page
       router.replace("/(home)");
     } catch (error: any) {

@@ -21,7 +21,7 @@ const getLocalStorageUserNotes = async () => {
     }
     return [];
   } catch (error) {
-    console.error("خطا در بازیابی داده‌ها:", error);
+    return { error: "خطا در دریافت یادداشت ها" };
   }
 };
 

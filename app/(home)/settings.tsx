@@ -1,4 +1,4 @@
-import { View, Switch } from "react-native";
+import { View } from "react-native";
 import {
   getLocalStorageUserNotes,
   handleChangeAppTheme,
@@ -16,8 +16,8 @@ import { useContext, useMemo } from "react";
 import { authContext } from "@/context/authProvider"; // Context for managing authentication and user-related data
 import handleDeleteCloudNotes from "@/api/handleDeleteCloudNotes";
 import Loading from "@/components/loading";
-import handleGetUserCloudNotes from "@/api/handleGetUserCloudNotes";
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
+import { fetchUserCloudNotes } from "@/api";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme(); // Access and set the app's current theme
@@ -25,10 +25,10 @@ export default function Settings() {
     useContext(authContext); // Access and update user notes from the context
 
   // Function to display a success toast message
-  const showToast = (text: string, type?: string) => {
+  const showToast = (text?: string, type?: string) => {
     Toast.show({
       type: type || "success",
-      text2: text, // Success message
+      text2: text || "خطا در برقراری ارتباط",
     });
   };
 
@@ -37,11 +37,16 @@ export default function Settings() {
     const updatedAppMode = appMode === "online" ? "offline" : "online";
     await handleDefaultNoteMode(updatedAppMode);
     setAppMode(updatedAppMode);
-    setUserNotes(
+    const refreshedNotes =
       updatedAppMode === "online"
-        ? await handleGetUserCloudNotes(accessKey)
-        : await getLocalStorageUserNotes()
-    );
+        ? await fetchUserCloudNotes("x")
+        : await getLocalStorageUserNotes();
+
+    if (refreshedNotes.error) {
+      showToast(undefined, "error");
+      return;
+    }
+    setUserNotes(refreshedNotes);
     // Display a success toast message
     showToast(
       `یادداشت های ${
@@ -50,7 +55,6 @@ export default function Settings() {
     );
   };
 
-  
   const themeRadioButtons: RadioButtonProps[] = useMemo(
     () => [
       {
@@ -97,18 +101,18 @@ export default function Settings() {
       try {
         const res = await handleDeleteCloudNotes(accessKey);
 
-        if (res.error) {
+        if (!res.ok) {
           showToast("خطا در پاک کردن یادداشت ها", "error");
         } else {
           showToast("یادداشت ها با موفقیت حذف شدند");
         }
         // reset notes state
-        const updatedCloudNotes = await handleGetUserCloudNotes(accessKey);
-        if (updatedCloudNotes.message) {
-          alert("خطا در بروزرسانی یادداشت ها");
-        } else {
-          setUserNotes(updatedCloudNotes);
+        const updatedCloudNotes = await fetchUserCloudNotes(accessKey);
+        if (updatedCloudNotes.error) {
+          showToast("خطا در دریافت یادداشت ها", "error");
+          return;
         }
+        setUserNotes([]);
       } catch (error) {
         showToast("خطا در برقراری ارتباط", "error");
       }
