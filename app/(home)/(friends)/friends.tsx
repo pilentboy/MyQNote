@@ -7,6 +7,8 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Toast from "react-native-toast-message";
 import Entypo from "@expo/vector-icons/Entypo";
 import { deleteFriend, fetchUserFriends } from "@/api";
+import CustomScrollView from "@/components/common/CustomScrollView";
+import CustomFlatList from "@/components/common/CustomFlatList";
 
 export default function UserFriends() {
   const { theme } = useTheme();
@@ -54,6 +56,46 @@ export default function UserFriends() {
     }
   };
 
+  const renderUserLists = ({
+    item,
+  }: {
+    item: { friend_username: string; id: string };
+  }) => {
+    return (
+      <View
+        key={item.id}
+        style={{
+          width: "100%",
+          height: 45,
+          padding: 8,
+          borderRadius: 10,
+          borderColor: "gray",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderWidth: 1,
+        }}
+      >
+        <Text
+          style={{
+            color: theme === "light" ? "black" : "white",
+            fontSize: 16,
+          }}
+        >
+          {item.friend_username} {/* Now using item.friend_username */}
+        </Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <AntDesign
+            name="deleteuser"
+            size={24}
+            color="red"
+            onPress={() => handleDeleteFriend(item.id)}
+          />
+        </View>
+      </View>
+    );
+  };
+
   useEffect(() => {
     handleGetUsersFriends();
   }, []);
@@ -68,63 +110,52 @@ export default function UserFriends() {
       }}
     >
       {userFriends.length ? (
-        userFriends.map((friend: any) => (
-          <View
-            key={friend.id}
-            style={{
-              width: "100%",
-              height: 45,
-              padding: 8,
-              borderRadius: 10,
-              borderColor: "gray",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              borderWidth: 1,
-            }}
-          >
-            <Text
-              style={{
-                color: theme == "light" ? "black" : "white",
-                fontSize: 16,
-              }}
-            >
-              {friend.friend_username}
-            </Text>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
-              <AntDesign
-                name="deleteuser"
-                size={24}
-                color="red"
-                onPress={() => handleDeleteFriend(friend.id)}
-              />
-            </View>
-          </View>
-        ))
+        <CustomFlatList
+          data={userFriends}
+          setData={handleGetUsersFriends}
+          renderItem={renderUserLists}
+          preNoteFlastListPosition={undefined}
+        />
       ) : (
-        <View
-          style={{
-            height: 400,
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 5,
-            flex: 1,
-          }}
-        >
-          <Text
-            style={{
-              color: theme === "light" ? lightTheme.primary : "white",
-              fontSize: 15,
-              fontFamily: "Yekan",
-            }}
-          >
-            لیست دوستان شما خالی است.
-          </Text>
-
-          <Entypo name="emoji-sad" size={24} color={lightTheme.primary} />
-        </View>
+        // userFriends.map((friend: any) => (
+        //   <View
+        //     key={friend.id}
+        //     style={{
+        //       width: "100%",
+        //       height: 45,
+        //       padding: 8,
+        //       borderRadius: 10,
+        //       borderColor: "gray",
+        //       flexDirection: "row",
+        //       alignItems: "center",
+        //       justifyContent: "space-between",
+        //       borderWidth: 1,
+        //     }}
+        //   >
+        //     <Text
+        //       style={{
+        //         color: theme == "light" ? "black" : "white",
+        //         fontSize: 16,
+        //       }}
+        //     >
+        //       {friend.friend_username}
+        //     </Text>
+        //     <View
+        //       style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+        //     >
+        //       <AntDesign
+        //         name="deleteuser"
+        //         size={24}
+        //         color="red"
+        //         onPress={() => handleDeleteFriend(friend.id)}
+        //       />
+        //     </View>
+        //   </View>
+        // ))
+        <CustomScrollView
+          setData={handleGetUsersFriends}
+          message="  لیست دوستان شما خالی است."
+        />
       )}
     </View>
   );

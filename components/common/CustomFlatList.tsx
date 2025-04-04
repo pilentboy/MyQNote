@@ -24,12 +24,14 @@ const CustomFlatList = ({
   preNoteFlastListPosition,
   setPreNoteFlastListPosition,
   setAddNoteBTNDisplay,
+  renderItem,
 }: {
   data: any;
   setData: any;
   preNoteFlastListPosition: undefined | number;
-  setPreNoteFlastListPosition: undefined | any;
-  setAddNoteBTNDisplay: undefined | any;
+  setPreNoteFlastListPosition?: any;
+  setAddNoteBTNDisplay?: any;
+  renderItem?: any;
 }) => {
   const { loading } = useContext(authContext);
 
@@ -56,7 +58,7 @@ const CustomFlatList = ({
     <FlatList
       data={data}
       keyExtractor={(item) => item.id}
-      renderItem={renderNoteItem}
+      renderItem={renderItem || renderNoteItem}
       maxToRenderPerBatch={6}
       initialNumToRender={6}
       windowSize={10}
