@@ -4,12 +4,12 @@ import NoteBox from "@/components/noteBox/noteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/loading";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
-import { authContext } from "@/context/authProvider"; // Context for managing authentication and user data
-import { lightTheme, darkTheme } from "@/constants/theme"; // Constants for the light theme colors
-import { getLocalStorageUserNotes } from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
-import FloatingActionButton from "@/components/home/floatingActionButton"; // Custom button component for adding notes
+import { authContext } from "@/context/authProvider";
+import { lightTheme, darkTheme } from "@/constants/theme";
+import { getLocalStorageUserNotes } from "@/utils/handleLocalStorage";
+import FloatingActionButton from "@/components/home/floatingActionButton";
 import { useRouter } from "expo-router";
-import useTheme from "@/context/themeProvider"; // Hook for accessing the current theme
+import useTheme from "@/context/themeProvider";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
 import Toast from "react-native-toast-message";
 import RotateArrow from "@/components/rotateArrow";
@@ -23,6 +23,7 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { fetchUserCloudNotes, fetchUserFriends, shareNote } from "../../api";
+import CustomScrollView from "@/components/common/CustomScrollView";
 
 const index = () => {
   const {
@@ -45,13 +46,13 @@ const index = () => {
   const { setSubmitNoteType } = useSubmitNoteType();
 
   const [preNoteFlastListPosition, setPreNoteFlastListPosition] =
-    useState<number>(0);
-  const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true);
+    useState<number>(0); // State to track the previous position of the FlatList
+  const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true); // State to control the visibility of the floating action button
   const [originalUserNotes, setOriginalUserNotes] = useState([]);
   const [userFriends, setUserFriends] = useState<any>();
-  const [sheetIndex, setSheetIndex] = useState(-1);
 
   const snapPoints = useMemo(() => ["65%"], []);
+
   const showToast = (type?: string, message?: string) => {
     Toast.show({
       type: type || "error",
@@ -98,11 +99,11 @@ const index = () => {
       originalUserNotes.length ? setUserNotes(originalUserNotes) : setData(); // Fetch all notes
     } else {
       if (textDirection !== undefined && originalUserNotes.length)
-        filterNotesRotation();
+        filterNotesDirection();
     } // Fetch all notes
   }, [searchValue, accessKey, textDirection]);
 
-  const filterNotesRotation = () => {
+  const filterNotesDirection = () => {
     setUserNotes(
       originalUserNotes.filter((note: any) => note.direction === textDirection)
     );
@@ -153,8 +154,6 @@ const index = () => {
         showToast("info", data.error);
         return;
       }
-
-      console.log(data);
     } catch (error: any) {
       showToast();
       console.log(error);
@@ -209,50 +208,13 @@ const index = () => {
           >
             {/* Display message if there are no notes, otherwise map through notes */}
             {!userNotes || userNotes.length === 0 ? (
-              <ScrollView
-                contentContainerStyle={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-                refreshControl={
-                  <RefreshControl refreshing={loading} onRefresh={setData}>
-                    <RotateArrow />
-                  </RefreshControl>
+              <CustomScrollView
+                setData={setData}
+                message={
+                  searchValue !== "" ? "چیزی پیدا نشد!" : "هیچ یادداشتی نداری!"
                 }
-              >
-                <View
-                  style={{
-                    height: 400,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 5,
-                    flex: 1,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: theme === "light" ? lightTheme.primary : "white",
-                      fontSize: 15,
-                      fontFamily: "Yekan",
-                    }}
-                  >
-                    {searchValue !== ""
-                      ? "چیزی پیدا نشد!" // Message if search yields no results
-                      : "هیچ یادداشتی نداری!"}
-                  </Text>
-
-                  <Entypo
-                    name="emoji-sad"
-                    size={24}
-                    color={lightTheme.primary}
-                  />
-                </View>
-              </ScrollView>
+              />
             ) : (
-              // Display notes if there are any in the state
-
               <FlatList
                 data={userNotes}
                 keyExtractor={(item) => item.id}
