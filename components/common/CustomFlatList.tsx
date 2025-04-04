@@ -1,17 +1,8 @@
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 import { FlatList, RefreshControl } from "react-native";
-import NoteBox from "../noteBox/noteBox";
 import RotateArrow from "../rotateArrow";
 import { authContext } from "@/context/authProvider";
 
-interface NoteItem {
-  title: string;
-  content: string;
-  date: string;
-  time: string;
-  direction: "right" | "left";
-  id: string;
-}
 interface ItemLayout {
   length: number;
   offset: number;
@@ -35,19 +26,6 @@ const CustomFlatList = ({
 }) => {
   const { loading } = useContext(authContext);
 
-  const renderNoteItem = useCallback(({ item }: { item: NoteItem }) => {
-    return (
-      <NoteBox
-        title={item.title}
-        content={item.content}
-        date={item.date}
-        time={item.time}
-        direction={item.direction}
-        id={item.id}
-      />
-    );
-  }, []);
-
   const getItemLayout = (_: any, index: number): ItemLayout => ({
     length: 120,
     offset: 120 * index,
@@ -58,7 +36,7 @@ const CustomFlatList = ({
     <FlatList
       data={data}
       keyExtractor={(item) => item.id}
-      renderItem={renderItem || renderNoteItem}
+      renderItem={renderItem}
       maxToRenderPerBatch={6}
       initialNumToRender={6}
       windowSize={10}

@@ -132,18 +132,6 @@ const index = () => {
     );
   }, []);
 
-  interface ItemLayout {
-    length: number;
-    offset: number;
-    index: number;
-  }
-
-  const getItemLayout = (_: any, index: number): ItemLayout => ({
-    length: 120,
-    offset: 120 * index,
-    index,
-  });
-
   const handleShareNote = async (friendUsername: string) => {
     try {
       const data = await shareNote(accessKey, {
@@ -217,6 +205,7 @@ const index = () => {
               />
             ) : (
               <CustomFlatList
+                renderItem={renderNoteItem}
                 data={userNotes}
                 setData={setData}
                 preNoteFlastListPosition={preNoteFlastListPosition}

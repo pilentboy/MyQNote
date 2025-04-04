@@ -1,4 +1,10 @@
-import React, { useMemo, useState, useEffect, useContext } from "react";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import { View, Text } from "react-native";
 import useTheme from "@/context/themeProvider";
 import FloatingActionButton from "@/components/home/floatingActionButton";
@@ -19,6 +25,7 @@ import Toast from "react-native-toast-message";
 import { addFriend, fetchSearchedUsers, fetchSharedNotes } from "@/api";
 import CustomScrollView from "@/components/common/CustomScrollView";
 import CustomFlatList from "@/components/common/CustomFlatList";
+import NoteBox from "@/components/noteBox/noteBox";
 
 export default function Friends() {
   const { theme } = useTheme();
@@ -110,6 +117,31 @@ export default function Friends() {
     setLoading(false);
   };
 
+  interface NoteItem {
+    title: string;
+    content: string;
+    date: string;
+    time: string;
+    direction: "right" | "left";
+    id: string;
+    noOptions?: boolean;
+    username: string;
+  }
+  const renderNoteItem = useCallback(({ item }: { item: NoteItem }) => {
+    return (
+      <NoteBox
+        title={item.title}
+        content={item.content}
+        date={item.date}
+        time={item.time}
+        direction={item.direction}
+        id={item.id}
+        noOptions={true}
+        friendName={item.username}
+      />
+    );
+  }, []);
+
   useEffect(() => {
     handleGetUserMessages();
   }, []);
@@ -126,6 +158,7 @@ export default function Friends() {
         {loading ? null : messages.length ? (
           <CustomFlatList
             data={messages}
+            renderItem={renderNoteItem}
             setData={handleGetUserMessages}
             preNoteFlastListPosition={preNoteFlastListPosition}
             setPreNoteFlastListPosition={setPreNoteFlastListPosition}
