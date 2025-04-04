@@ -270,7 +270,7 @@ const Note = () => {
         content: data.content,
         date: getCurrentDate()[0],
         time: getCurrentDate()[1],
-        direction: direction,
+        direction: textDirection,
       });
 
       if (res.error) {
