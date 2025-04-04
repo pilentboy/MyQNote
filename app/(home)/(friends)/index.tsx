@@ -1,11 +1,5 @@
-import React, {
-  useMemo,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-} from "react";
-import { View, Text, ScrollView, FlatList, RefreshControl } from "react-native";
+import React, { useMemo, useState, useEffect, useContext } from "react";
+import { View, Text } from "react-native";
 import useTheme from "@/context/themeProvider";
 import FloatingActionButton from "@/components/home/floatingActionButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -17,14 +11,14 @@ import BottomSheet, {
 import { useForm } from "react-hook-form";
 import { authContext } from "@/context/authProvider";
 import * as Yup from "yup";
-import RotateArrow from "@/components/rotateArrow";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "@/components/formItems/FormInput";
-import NoteBox from "@/components/noteBox/noteBox";
 import { darkTheme, lightTheme } from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
 import { addFriend, fetchSearchedUsers, fetchSharedNotes } from "@/api";
+import CustomScrollView from "@/components/common/CustomScrollView";
+import CustomFlatList from "@/components/common/CustomFlatList";
 
 export default function Friends() {
   const { theme } = useTheme();
@@ -70,7 +64,7 @@ export default function Friends() {
         return;
       }
 
-      setUsersFound(data);
+      setUsersFound(data.notes);
     } catch (error: any) {
       showToast();
       console.log(error);
@@ -120,42 +114,6 @@ export default function Friends() {
     handleGetUserMessages();
   }, []);
 
-  interface NoteItem {
-    title: string;
-    content: string;
-    date: string;
-    time: string;
-    direction: "right" | "left";
-    id: string;
-    username: string;
-  }
-
-  const renderNoteItem = useCallback(({ item }: { item: NoteItem }) => {
-    return (
-      <NoteBox
-        title={item.title}
-        content={item.content}
-        date={item.date}
-        time={item.time}
-        direction={item.direction}
-        id={item.id}
-        noOptions
-        friendName={item.username}
-      />
-    );
-  }, []);
-
-  interface ItemLayout {
-    length: number;
-    offset: number;
-    index: number;
-  }
-  const getItemLayout = (_: any, index: number): ItemLayout => ({
-    length: 120,
-    offset: 120 * index,
-    index,
-  });
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View
@@ -166,81 +124,18 @@ export default function Friends() {
         }}
       >
         {loading ? null : messages.length ? (
-          <FlatList
+          <CustomFlatList
             data={messages}
-            keyExtractor={(item) => item.id}
-            renderItem={renderNoteItem}
-            maxToRenderPerBatch={6}
-            initialNumToRender={6}
-            windowSize={10}
-            removeClippedSubviews={true}
-            getItemLayout={getItemLayout}
-            refreshControl={
-              <RefreshControl
-                refreshing={loading}
-                onRefresh={handleGetUserMessages}
-              >
-                <RotateArrow />
-              </RefreshControl>
-            }
-            contentContainerStyle={{
-              paddingVertical: 8,
-              gap: 4,
-            }}
-            onScroll={(e: any) => {
-              const currentPositon = e.nativeEvent.contentOffset.y;
-
-              setPreNoteFlastListPosition(currentPositon);
-
-              if (
-                currentPositon > preNoteFlastListPosition &&
-                currentPositon > 50
-              ) {
-                setAddFriendBTNDisplay(false);
-              } else {
-                setAddFriendBTNDisplay(true);
-              }
-            }}
+            setData={handleGetUserMessages}
+            preNoteFlastListPosition={preNoteFlastListPosition}
+            setPreNoteFlastListPosition={setPreNoteFlastListPosition}
+            setAddNoteBTNDisplay={setAddFriendBTNDisplay}
           />
         ) : (
-          <ScrollView
-            contentContainerStyle={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-            }}
-            refreshControl={
-              <RefreshControl
-                refreshing={loading}
-                onRefresh={handleGetUserMessages}
-              >
-                <RotateArrow />
-              </RefreshControl>
-            }
-          >
-            <View
-              style={{
-                height: 400,
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 5,
-                flex: 1,
-              }}
-            >
-              <Text
-                style={{
-                  color: theme === "light" ? lightTheme.primary : "white",
-                  fontSize: 15,
-                  fontFamily: "Yekan",
-                }}
-              >
-                هیچ یادداشتی برای شما ارسال نشده است
-              </Text>
-
-              <AntDesign name="message1" size={24} color={lightTheme.primary} />
-            </View>
-          </ScrollView>
+          <CustomScrollView
+            setData={handleGetUserMessages}
+            message=" هیچ یادداشتی برای شما ارسال نشده است"
+          />
         )}
 
         <BottomSheet
