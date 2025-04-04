@@ -2,18 +2,17 @@ import { View } from "react-native";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { lightTheme } from "@/constants/theme";
 import FormInput from "@/components/formItems/formInput";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/authFormContainer";
 import Loading from "@/components/loading";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import FormTitle from "@/components/formItems/formTitle";
 import SubmitBTN from "@/components/formItems/submitBTN";
-import BottomGuideText from "@/components/formItems/bottomGuideText";
 import Toast from "react-native-toast-message";
 import { register } from "@/api";
+import AuthSwitchPropmt from "@/components/formItems/AuthSwitchPropmt";
 
 const Register = () => {
   const { loading, setLoading } = useContext(authContext);
@@ -93,33 +92,13 @@ const Register = () => {
           name="password"
         />
         <SubmitBTN title="ثبت نام" action={handleSubmit(onSubmit)} />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 4,
-            width: 300,
-            justifyContent: "center",
-            paddingTop: 5,
-            borderTopWidth: 1,
-            borderColor: "#C0C0C0",
-          }}
-        >
-          <BottomGuideText title="قبلا ثبت نام کردی؟" />
 
-          <Link
-            href={"/(auth)/login"}
-            replace
-            onPress={() => clearErrors()}
-            style={{
-              color: lightTheme.primary,
-              fontSize: 15,
-              fontFamily: "Vazir",
-            }}
-          >
-            ورود
-          </Link>
-        </View>
+        <AuthSwitchPropmt
+          title="حساب کاربری دارید؟"
+          linkPath="login"
+          linkTitle="ورود"
+          clearErorrs={clearErrors}
+        />
       </View>
     </AuthFormContainer>
   );

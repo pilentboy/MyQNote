@@ -57,6 +57,8 @@ export default function RootLayout() {
     Vazir: require("../assets/fonts/Vazir.ttf"),
   });
 
+ 
+
   useEffect(() => {
     async function hideSplashScreen() {
       if (fontsLoaded) {

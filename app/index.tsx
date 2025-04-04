@@ -8,6 +8,7 @@ import Logo from "@/components/logo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import BoldTitle from "@/components/common/BoldTitle";
+import Toast from "react-native-toast-message";
 
 // welcome screen
 export default function index() {
@@ -27,6 +28,13 @@ export default function index() {
     };
     setAppMode();
   }, []);
+
+  const showToast = () => {
+    Toast.show({
+      type: "success",
+      text2: "با موفقیت وارد شدید",
+    });
+  };
 
   if (loading) {
     return <Loading />;
