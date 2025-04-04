@@ -11,7 +11,7 @@ const CustomScrollView = ({
   message,
 }: {
   setData: any;
-  message?: string;
+  message: undefined | string;
 }) => {
   const { loading } = useContext(authContext);
   const { theme } = useTheme();

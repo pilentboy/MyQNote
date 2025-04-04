@@ -24,6 +24,7 @@ import BottomSheet, {
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { fetchUserCloudNotes, fetchUserFriends, shareNote } from "../../api";
 import CustomScrollView from "@/components/common/CustomScrollView";
+import CustomFlatList from "@/components/common/CustomFlatList";
 
 const index = () => {
   const {
@@ -215,38 +216,12 @@ const index = () => {
                 }
               />
             ) : (
-              <FlatList
+              <CustomFlatList
                 data={userNotes}
-                keyExtractor={(item) => item.id}
-                renderItem={renderNoteItem}
-                maxToRenderPerBatch={6}
-                initialNumToRender={6}
-                windowSize={10}
-                removeClippedSubviews={true}
-                getItemLayout={getItemLayout}
-                refreshControl={
-                  <RefreshControl refreshing={loading} onRefresh={setData}>
-                    <RotateArrow />
-                  </RefreshControl>
-                }
-                contentContainerStyle={{
-                  paddingVertical: 8,
-                  gap: 4,
-                }}
-                onScroll={(e: any) => {
-                  const currentPositon = e.nativeEvent.contentOffset.y;
-
-                  setPreNoteFlastListPosition(currentPositon);
-
-                  if (
-                    currentPositon > preNoteFlastListPosition &&
-                    currentPositon > 50
-                  ) {
-                    setAddNoteBTNDisplay(false);
-                  } else {
-                    setAddNoteBTNDisplay(true);
-                  }
-                }}
+                setData={setData}
+                preNoteFlastListPosition={preNoteFlastListPosition}
+                setPreNoteFlastListPosition={setPreNoteFlastListPosition}
+                setAddNoteBTNDisplay={setAddNoteBTNDisplay}
               />
             )}
           </View>

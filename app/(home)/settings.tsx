@@ -5,25 +5,25 @@ import {
   handleDeleteNotes,
   handleGetAppTheme,
   handleDefaultNoteMode,
-} from "@/utils/handleLocalStorage"; // Utility functions for local storage operations
+} from "@/utils/handleLocalStorage";
 import useTheme from "@/context/themeProvider";
-import SettingsItemWrapper from "@/components/settings/settingsItemWrapper"; // Custom wrapper component for settings items
-import SettingsTitle from "@/components/settings/settingsTitle"; // Custom component for displaying settings titles
+import SettingsItemWrapper from "@/components/settings/SettingsItemWrapper";
+import SettingsTitle from "@/components/settings/settingsTitle";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import CustomAlert from "@/components/cutstomAlert";
-import Toast from "react-native-toast-message"; // Library for displaying toast notifications
+import Toast from "react-native-toast-message";
 import { useContext, useMemo } from "react";
-import { authContext } from "@/context/authProvider"; // Context for managing authentication and user-related data
+import { authContext } from "@/context/authProvider";
 import Loading from "@/components/loading";
-import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
+import { RadioButtonProps } from "react-native-radio-buttons-group";
 import { deleteUserCloudNotes, fetchUserCloudNotes } from "@/api";
+import CustomRadioButton from "@/components/settings/CustomRadioButton";
 
 export default function Settings() {
-  const { setTheme, theme } = useTheme(); // Access and set the app's current theme
+  const { setTheme, theme } = useTheme();
   const { setUserNotes, accessKey, setLoading, loading, appMode, setAppMode } =
-    useContext(authContext); // Access and update user notes from the context
+    useContext(authContext);
 
-  // Function to display a success toast message
   const showToast = (text?: string, type?: string) => {
     Toast.show({
       type: type || "success",
@@ -102,9 +102,10 @@ export default function Settings() {
 
         if (res.error) {
           showToast("خطا در پاک کردن یادداشت ها", "error");
-        } else {
-          showToast("یادداشت ها با موفقیت حذف شدند");
+          return;
         }
+
+        showToast("یادداشت ها با موفقیت حذف شدند");
         // reset notes state
         const updatedCloudNotes = await fetchUserCloudNotes(accessKey);
         if (updatedCloudNotes.error) {
@@ -117,9 +118,9 @@ export default function Settings() {
       }
     } else {
       // delete local notes
-      await handleDeleteNotes(); // Delete notes from local storage
+      await handleDeleteNotes();
       showToast("یادداشت ها با موفقیت حذف شدند");
-      setUserNotes(await getLocalStorageUserNotes()); // reset notes state
+      setUserNotes(await getLocalStorageUserNotes());
     }
     setLoading(false);
   };
@@ -137,38 +138,34 @@ export default function Settings() {
     >
       {/* Theme toggle setting */}
       <SettingsItemWrapper theme={theme}>
-        <RadioGroup
-          radioButtons={themeRadioButtons}
-          onPress={changeAppTheme}
-          layout="row"
-          labelStyle={{ color: theme === "light" ? "black" : "white" }}
-          selectedId={theme}
+        <CustomRadioButton
+          data={themeRadioButtons}
+          action={changeAppTheme}
+          title="تم برنامه"
+          selected={theme}
         />
-        <SettingsTitle title="تم برنامه" theme={theme} />
       </SettingsItemWrapper>
 
       {/* change app mode */}
       {accessKey && (
         <SettingsItemWrapper theme={theme}>
-          <RadioGroup
-            radioButtons={noteSourseRadioButtons}
-            onPress={changeAppMode}
-            layout="row"
-            labelStyle={{ color: theme === "light" ? "black" : "white" }}
-            selectedId={appMode}
+          <CustomRadioButton
+            data={noteSourseRadioButtons}
+            action={changeAppMode}
+            title="منبع یادداشت ها"
+            selected={appMode}
           />
-          <SettingsTitle title="منبع یادداشت ها" theme={theme} />
         </SettingsItemWrapper>
       )}
 
-      {/* Delete notes setting */}
+      {/* Delete notes  */}
       <SettingsItemWrapper theme={theme}>
         <MaterialIcons
           onPress={() =>
             CustomAlert(
-              "حذف", // Alert title
+              "حذف",
               "آیا از حذف تمام یادداشت ها مطمئن هستید؟",
-              deleteNotes // Callback for confirming deletion
+              deleteNotes
             )
           }
           name="delete-forever"
