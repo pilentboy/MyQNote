@@ -1,12 +1,11 @@
 import { View, Text } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import useTheme from "@/context/themeProvider";
-import { lightTheme } from "@/constants/theme";
 import { authContext } from "@/context/authProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Toast from "react-native-toast-message";
 import { deleteFriend, fetchPendingRequests } from "@/api";
+import CustomScrollView from "@/components/common/CustomScrollView";
 
 export default function PendingRequests() {
   const { theme } = useTheme();
@@ -102,31 +101,10 @@ export default function PendingRequests() {
           </View>
         ))
       ) : (
-        <View
-          style={{
-            height: 400,
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 5,
-            flex: 1,
-          }}
-        >
-          <Text
-            style={{
-              color: theme === "light" ? lightTheme.primary : "white",
-              fontSize: 15,
-              fontFamily: "Yekan",
-            }}
-          >
-            لیست درخواست‌های در انتظار تایید خالی است.
-          </Text>
-
-          <MaterialIcons
-            name="pending-actions"
-            size={24}
-            color={lightTheme.primary}
-          />
-        </View>
+        <CustomScrollView
+          setData={handleGetPendingRequests}
+          message="لیست درخواست‌های در انتظار تایید خالی است."
+        />
       )}
     </View>
   );
