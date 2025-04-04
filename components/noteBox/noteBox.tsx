@@ -1,4 +1,4 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useRef, useContext } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FooterText from "./FooterText";
@@ -6,8 +6,8 @@ import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import { lightTheme } from "@/constants/theme";
-import CopyNoteBTN from "../note/copyNoteBTN";
-import ShareNoteBTN from "../note/shareNoteBTN";
+import CopyNoteBTN from "../note/CopyNoteBTN";
+import ShareNoteBTN from "../note/ShareNoteBTN";
 import { authContext } from "@/context/authProvider";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";

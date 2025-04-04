@@ -1,4 +1,4 @@
-import { View, Text, FlatList, RefreshControl, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import { useCallback, useContext, useEffect, useState, useMemo } from "react";
 import NoteBox from "@/components/noteBox/NoteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -12,7 +12,6 @@ import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import handleSearchingNotes from "@/utils/handleSearchingNotes";
 import Toast from "react-native-toast-message";
-import RotateArrow from "@/components/common/RotateArrow";
 import Entypo from "@expo/vector-icons/Entypo";
 import useEdit from "@/context/editProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
@@ -25,6 +24,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { fetchUserCloudNotes, fetchUserFriends, shareNote } from "../../api";
 import CustomScrollView from "@/components/common/CustomScrollView";
 import CustomFlatList from "@/components/common/CustomFlatList";
+import { NoteBox } from "@/components/noteBox/NoteBox";
 
 const index = () => {
   const {
