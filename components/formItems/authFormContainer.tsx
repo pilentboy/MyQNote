@@ -6,7 +6,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import  { CroppedLogo } from "@/components/logo";
+import { CroppedLogo } from "@/components/logo";
 import CustomLinearGradient from "../linearGradient";
 
 const AuthFormContainer = ({ children }: { children: ReactNode }) => {

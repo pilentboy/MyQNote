@@ -19,7 +19,7 @@ import { authContext } from "@/context/authProvider";
 import * as Yup from "yup";
 import RotateArrow from "@/components/rotateArrow";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormInput from "@/components/formItems/formInput";
+import FormInput from "@/components/formItems/FormInput";
 import NoteBox from "@/components/noteBox/noteBox";
 import { darkTheme, lightTheme } from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";

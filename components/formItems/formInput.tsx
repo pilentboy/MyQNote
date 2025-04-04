@@ -2,22 +2,22 @@ import { lightTheme } from "@/constants/theme";
 import useTheme from "@/context/themeProvider";
 import { Controller } from "react-hook-form";
 import { View, Text, TextInput } from "react-native";
-import FormInputLabel from "./formInputTitle";
+import InputLabel from "./InputLabel";
+
+interface FormInputProps {
+  errors: any;
+  label?: string;
+  control: any;
+  name: string;
+  placeholder?: string;
+}
 const FormInput = ({
   errors,
   label,
   control,
   name,
   placeholder,
- 
-}: {
-  label?: string;
-  control: any;
-  name: string;
-  errors: any;
-  placeholder?: string;
-
-}) => {
+}: FormInputProps) => {
   const { theme } = useTheme();
   return (
     <View style={{ gap: 6 }}>
@@ -27,7 +27,7 @@ const FormInput = ({
           gap: 1,
         }}
       >
-        {label && <FormInputLabel label={label} />}
+        {label && <InputLabel label={label} />}
         {errors && (
           <Text style={{ color: "red", fontFamily: "Yekan", fontSize: 12 }}>
             {errors.message}
@@ -56,7 +56,6 @@ const FormInput = ({
             }}
             onBlur={onBlur}
             onChangeText={onChange}
-			
             value={value}
           />
         )}

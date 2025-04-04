@@ -2,21 +2,21 @@ import { View } from "react-native";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormInput from "@/components/formItems/formInput";
+import FormInput from "@/components/formItems/FormInput";
 import { useRouter } from "expo-router";
-import AuthFormContainer from "@/components/formItems/authFormContainer";
+import AuthFormContainer from "@/components/formItems/AuthFormContainer";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import Loading from "@/components/loading";
-import FormTitle from "@/components/formItems/formTitle";
+import FormTitle from "@/components/formItems/FormTitle";
 import Toast from "react-native-toast-message";
 import {
   handleDefaultNoteMode,
   handleSetAccessKey,
 } from "@/utils/handleLocalStorage";
 import { login } from "@/api";
-import LargeButton from "@/components/common/LargeButton";
 import AuthSwitchPropmt from "@/components/formItems/AuthSwitchPropmt";
+import SubmitBTN from "@/components/formItems/SubmitBTN";
 
 const Login = () => {
   const { loading, setLoading, setAccessKey, setAppMode } =
@@ -95,7 +95,7 @@ const Login = () => {
           name="password"
         />
 
-        <LargeButton action={handleSubmit(onSubmit)} title="ورود" />
+        <SubmitBTN action={handleSubmit(onSubmit)} title="ورود" />
 
         <AuthSwitchPropmt
           title="ثبت نام نکردی؟"
