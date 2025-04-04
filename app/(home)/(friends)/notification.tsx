@@ -7,6 +7,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Toast from "react-native-toast-message";
 import { acceptFriendRequest, deleteFriend, fetchNotifications } from "@/api";
+import CustomScrollView from "@/components/common/CustomScrollView";
 
 export default function Notification() {
   const { theme } = useTheme();
@@ -118,31 +119,10 @@ export default function Notification() {
           </View>
         ))
       ) : (
-        <View
-          style={{
-            height: 400,
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 5,
-            flex: 1,
-          }}
-        >
-          <Text
-            style={{
-              color: theme === "light" ? lightTheme.primary : "white",
-              fontSize: 15,
-              fontFamily: "Yekan",
-            }}
-          >
-            هیچ اعلانی ندارید
-          </Text>
-
-          <Ionicons
-            name="notifications-off-outline"
-            size={24}
-            color={lightTheme.primary}
-          />
-        </View>
+        <CustomScrollView
+          setData={handleGetNotifications}
+          message="هیچ اعلانی ندارید"
+        />
       )}
     </View>
   );
