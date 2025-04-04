@@ -1,26 +1,33 @@
-// Importing necessary modules and components
-import { GestureHandlerRootView } from "react-native-gesture-handler"; // Provides root view for gesture handling
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
-import CustomDrawerContent from "@/components/home/customDrawerContent"; // Custom content for the drawer
-import DrawerCustomHeader from "@/components/home/drawerCustomHeader"; // Custom header component for the drawer
+import CustomDrawerContent from "@/components/home/customDrawerContent";
+import DrawerCustomHeader from "@/components/home/drawerCustomHeader";
 import useTheme from "@/context/themeProvider";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 
 export default function Layout() {
-  const labelFontSize = 14; // Font size for drawer labels
+  const labelFontSize = 14;
   const { theme } = useTheme();
   const { accessKey } = useContext(authContext);
+
+  const CommonDrawerIconStyle = (Icon: any, name: any, focused: any) => (
+    <Icon
+      name={name}
+      size={labelFontSize}
+      color={focused || theme === "dark" ? "white" : "black"}
+    />
+  );
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* Drawer navigation setup */}
       <Drawer
         drawerContent={(props) => <CustomDrawerContent {...props} />}
-        screenOptions={({ navigation }) => {
+        screenOptions={() => {
           return {
             header: ({ navigation, route }) => (
               <DrawerCustomHeader
@@ -67,12 +74,10 @@ export default function Layout() {
             title: "یادداشت",
             drawerLabel: "یادداشت",
             drawerIcon({ focused }) {
-              return (
-                <MaterialCommunityIcons
-                  name="lead-pencil"
-                  size={labelFontSize}
-                  color={focused || theme === "dark" ? "white" : "black"}
-                />
+              return CommonDrawerIconStyle(
+                MaterialCommunityIcons,
+                "lead-pencil",
+                focused
               );
             },
           }}
@@ -91,12 +96,10 @@ export default function Layout() {
               marginVertical: 3,
             },
             drawerIcon({ focused }) {
-              return (
-                <FontAwesome5
-                  name="user-friends"
-                  size={labelFontSize}
-                  color={focused || theme === "dark" ? "white" : "black"}
-                />
+              return CommonDrawerIconStyle(
+                FontAwesome5,
+                "user-friends",
+                focused
               );
             },
           }}
@@ -109,12 +112,10 @@ export default function Layout() {
             title: "تنظیمات",
             drawerLabel: "تنظیمات",
             drawerIcon({ focused }) {
-              return (
-                <SimpleLineIcons
-                  name="settings"
-                  size={labelFontSize}
-                  color={focused || theme === "dark" ? "white" : "black"}
-                />
+              return CommonDrawerIconStyle(
+                SimpleLineIcons,
+                "settings",
+                focused
               );
             },
           }}
