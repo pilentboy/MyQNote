@@ -1,6 +1,5 @@
 import { View, Text } from "react-native";
 import { useCallback, useContext, useEffect, useState, useMemo } from "react";
-import NoteBox from "@/components/noteBox/NoteBox";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Loading from "@/components/common/Loading";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
@@ -24,7 +23,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { fetchUserCloudNotes, fetchUserFriends, shareNote } from "../../api";
 import CustomScrollView from "@/components/common/CustomScrollView";
 import CustomFlatList from "@/components/common/CustomFlatList";
-import { NoteBox } from "@/components/noteBox/NoteBox";
+import NoteBox from "@/components/noteBox/NoteBox";
 
 const index = () => {
   const {
