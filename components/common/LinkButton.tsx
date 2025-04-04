@@ -15,7 +15,7 @@ type LinkProps = {
   data?: {};
 };
 
-const CustomLink = ({
+const LinkButton = ({
   title,
   target,
   bgColor = true,
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomLink;
+export default LinkButton;
