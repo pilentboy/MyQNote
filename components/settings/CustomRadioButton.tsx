@@ -1,5 +1,5 @@
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
-import SettingsTitle from "./settingsTitle";
+import SettingsTitle from "./SettingsTitle";
 import useTheme from "@/context/themeProvider";
 
 const CustomRadioButton = ({

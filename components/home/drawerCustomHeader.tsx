@@ -1,31 +1,31 @@
 import { View, Text, Pressable } from "react-native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { lightTheme } from "@/constants/theme";
-import { CroppedLogo } from "../logo";
+import { CroppedLogo } from "../common/Logo";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import SearchInput from "./searchInput";
+import SearchInput from "./SearchInput";
 import useTheme from "@/context/themeProvider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useContext, useState ,useEffect} from "react";
-import EditContainer from "../EditContainer";
+import { useContext, useState, useEffect } from "react";
+import EditContainer from "../common/EditContainer";
 import useEdit from "@/context/editProvider";
 import { authContext } from "@/context/authProvider";
 
 export default function DrawerCustomHeader({
   navigation,
-  currentRoute  
+  currentRoute,
 }: {
   navigation: DrawerNavigationProp<any>;
-  currentRoute  :any
+  currentRoute: any;
 }) {
   const { theme } = useTheme();
   const { setTextDirection } = useEdit();
   const [displaySearch, setDisplaySearch] = useState<boolean>(false);
   const { setSearchValue } = useContext(authContext);
-  
-  useEffect(()=>{
-	console.log(currentRoute.name )
-  },[currentRoute])
+
+  useEffect(() => {
+    console.log(currentRoute.name);
+  }, [currentRoute]);
 
   const closeSearchingNotes = () => {
     setDisplaySearch(false);
@@ -94,7 +94,9 @@ export default function DrawerCustomHeader({
           padding: 10,
         }}
       >
-        {currentRoute.name === '(friends)' ? <EditContainer friendRequest /> : displaySearch ? (
+        {currentRoute.name === "(friends)" ? (
+          <EditContainer friendRequest />
+        ) : displaySearch ? (
           <>
             <AntDesign
               name="closecircleo"
@@ -104,7 +106,7 @@ export default function DrawerCustomHeader({
             />
             <SearchInput />
           </>
-        ) :  (
+        ) : (
           <>
             <FontAwesome
               name="search"
@@ -112,7 +114,11 @@ export default function DrawerCustomHeader({
               color={theme === "light" ? lightTheme.primary : "white"}
               onPress={() => setDisplaySearch(true)}
             />
-            <EditContainer width={"85%"} setTextDirection={setTextDirection} defaultTextDecoration />
+            <EditContainer
+              width={"85%"}
+              setTextDirection={setTextDirection}
+              defaultTextDecoration
+            />
           </>
         )}
       </View>

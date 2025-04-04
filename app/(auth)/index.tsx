@@ -1,8 +1,8 @@
 import { View, StyleSheet } from "react-native";
 import LinkButton from "@/components/common/LinkButton";
 import BoldTitle from "@/components/common/BoldTitle";
-import { CroppedLogo } from "@/components/logo";
-import CustomLinearGradient from "@/components/linearGradient";
+import { CroppedLogo } from "@/components/common/Logo";
+import CustomLinearGradient from "@/components/common/LinearGradient";
 import { useContext, useEffect } from "react";
 import {
   handleDefaultNoteMode,

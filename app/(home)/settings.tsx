@@ -8,13 +8,13 @@ import {
 } from "@/utils/handleLocalStorage";
 import useTheme from "@/context/themeProvider";
 import SettingsItemWrapper from "@/components/settings/SettingsItemWrapper";
-import SettingsTitle from "@/components/settings/settingsTitle";
+import SettingsTitle from "@/components/settings/SettingsTitle";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import CustomAlert from "@/components/cutstomAlert";
+import CustomAlert from "@/components/common/CutstomAlert";
 import Toast from "react-native-toast-message";
 import { useContext, useMemo } from "react";
 import { authContext } from "@/context/authProvider";
-import Loading from "@/components/loading";
+import Loading from "@/components/common/Loading";
 import { RadioButtonProps } from "react-native-radio-buttons-group";
 import { deleteUserCloudNotes, fetchUserCloudNotes } from "@/api";
 import CustomRadioButton from "@/components/settings/CustomRadioButton";

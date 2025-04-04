@@ -1,6 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
-import CustomAlert from "../cutstomAlert";
+import CustomAlert from "../common/CutstomAlert";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const DeleteNoteBTN = () => {

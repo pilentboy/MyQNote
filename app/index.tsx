@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react";
-import Loading from "@/components/loading";
+import Loading from "@/components/common/Loading";
 import { authContext } from "@/context/authProvider";
 import { View, StyleSheet } from "react-native";
 import CustomeLink from "@/components/common/LinkButton";
 import { Image } from "expo-image";
-import Logo from "@/components/logo";
+import Logo from "@/components/common/Logo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import BoldTitle from "@/components/common/BoldTitle";

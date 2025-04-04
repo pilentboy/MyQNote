@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/AuthFormContainer";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
-import Loading from "@/components/loading";
+import Loading from "@/components/common/Loading";
 import FormTitle from "@/components/formItems/FormTitle";
 import Toast from "react-native-toast-message";
 import {

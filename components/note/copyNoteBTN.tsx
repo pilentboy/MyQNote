@@ -1,5 +1,5 @@
 import { TouchableOpacity } from "react-native";
-import CustomAlert from "../cutstomAlert";
+import CustomAlert from "../common/CutstomAlert";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";

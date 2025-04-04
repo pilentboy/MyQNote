@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { FlatList, RefreshControl } from "react-native";
-import RotateArrow from "../rotateArrow";
+import RotateArrow from "./RotateArrow";
 import { authContext } from "@/context/authProvider";
 
 interface ItemLayout {

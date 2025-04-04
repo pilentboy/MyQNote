@@ -1,6 +1,6 @@
 import { RefreshControl, ScrollView, View, Text } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import RotateArrow from "@/components/rotateArrow";
+import RotateArrow from "@/components/common/RotateArrow";
 import { useContext } from "react";
 import useTheme from "@/context/themeProvider";
 import { lightTheme } from "@/constants/theme";

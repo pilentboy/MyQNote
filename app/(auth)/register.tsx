@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "@/components/formItems/FormInput";
 import { useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/AuthFormContainer";
-import Loading from "@/components/loading";
+import Loading from "@/components/common/Loading";
 import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import FormTitle from "@/components/formItems/FormTitle";

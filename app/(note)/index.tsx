@@ -1,4 +1,4 @@
-import EditContainer from "@/components/EditContainer";
+import EditContainer from "@/components/common/EditContainer";
 import { authContext } from "@/context/authProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
 import useTheme from "@/context/themeProvider";
@@ -21,7 +21,7 @@ import "react-native-get-random-values";
 import Toast from "react-native-toast-message";
 import { v4 as uuidv4 } from "uuid";
 import * as Yup from "yup";
-import Loading from "../../components/loading";
+import Loading from "../../components/common/Loading";
 import {
   getLocalStorageUserNotes,
   handleDeleteLocalNote,

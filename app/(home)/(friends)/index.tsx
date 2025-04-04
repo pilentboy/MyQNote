@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { View, Text } from "react-native";
 import useTheme from "@/context/themeProvider";
-import FloatingActionButton from "@/components/home/floatingActionButton";
+import FloatingActionButton from "@/components/home/FloatingActionButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet, {
@@ -25,7 +25,7 @@ import Toast from "react-native-toast-message";
 import { addFriend, fetchSearchedUsers, fetchSharedNotes } from "@/api";
 import CustomScrollView from "@/components/common/CustomScrollView";
 import CustomFlatList from "@/components/common/CustomFlatList";
-import NoteBox from "@/components/noteBox/noteBox";
+import NoteBox from "@/components/noteBox/NoteBox";
 
 export default function Friends() {
   const { theme } = useTheme();

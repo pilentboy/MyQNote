@@ -1,7 +1,7 @@
 import { useState, useRef, useContext, useEffect } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import FooterText from "./footerText";
+import FooterText from "./FooterText";
 import { useRouter } from "expo-router";
 import useTheme from "@/context/themeProvider";
 import useSubmitNoteType from "@/context/submitNoteTypeProvider";
