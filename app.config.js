@@ -4,7 +4,7 @@ export default {
   expo: {
     name: "MyQNote",
     slug: "MyQNote",
-    version: "3.2.2",
+    version: "3.2.3",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "myapp",
