@@ -16,6 +16,7 @@ const CustomFlatList = ({
   setPreNoteFlastListPosition,
   setAddNoteBTNDisplay,
   renderItem,
+  loading
 }: {
   data: any;
   setData: any;
@@ -23,8 +24,9 @@ const CustomFlatList = ({
   setPreNoteFlastListPosition?: any;
   setAddNoteBTNDisplay?: any;
   renderItem?: any;
+  loading:boolean
 }) => {
-  const { loading } = useContext(authContext);
+
 
   const getItemLayout = (_: any, index: number): ItemLayout => ({
     length: 120,

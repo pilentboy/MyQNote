@@ -41,14 +41,13 @@ const Note = () => {
     useSubmitNoteType();
   const router = useRouter();
   const {
-    loading,
-    setLoading,
     setUserNotes,
     accessKey,
     setSearchValue,
     appMode,
     setSharedNoteUsername,
   } = useContext(authContext);
+  const [loading, setLoading] = useState<boolean>();
   const [inputHeight, setinputHeight] = useState(windowHeight - 260);
   const { id, editedTitle, editedContent, direction } = useLocalSearchParams();
   const { theme } = useTheme();
@@ -154,7 +153,7 @@ const Note = () => {
       reset();
       clearErrors();
       showToast("با موفقیت افزوده شد");
-      router.replace("/(home)");
+      router.push("/(home)");
     } else {
       showToast(`خطا در ذخیره یادداشت`, "error");
     }
@@ -281,7 +280,7 @@ const Note = () => {
       reset();
       clearErrors();
       showToast("یادداشت با موفقیت افزوده شده");
-      router.replace("/(home)");
+      router.push("/(home)");
     } catch (error: any) {
       showToast("خطا در برقراری ارتباط", "error");
     } finally {

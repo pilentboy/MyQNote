@@ -12,7 +12,7 @@ import SettingsTitle from "@/components/settings/SettingsTitle";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import CustomAlert from "@/components/common/CutstomAlert";
 import Toast from "react-native-toast-message";
-import { useContext, useMemo } from "react";
+import { useContext, useMemo,useState } from "react";
 import { authContext } from "@/context/authProvider";
 import Loading from "@/components/common/Loading";
 import { RadioButtonProps } from "react-native-radio-buttons-group";
@@ -21,8 +21,9 @@ import CustomRadioButton from "@/components/settings/CustomRadioButton";
 
 export default function Settings() {
   const { setTheme, theme } = useTheme();
-  const { setUserNotes, accessKey, setLoading, loading, appMode, setAppMode } =
+  const { setUserNotes, accessKey, appMode, setAppMode } =
     useContext(authContext);
+	const [loading, setLoading] = useState<boolean>();
 
   const showToast = (text?: string, type?: string) => {
     Toast.show({

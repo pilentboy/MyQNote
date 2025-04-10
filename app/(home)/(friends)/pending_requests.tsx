@@ -11,6 +11,7 @@ export default function PendingRequests() {
   const { theme } = useTheme();
   const { accessKey } = useContext(authContext);
   const [pendingRequests, setPendingRequests] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const showToast = () => {
     Toast.show({
@@ -20,6 +21,7 @@ export default function PendingRequests() {
   };
 
   const handleGetPendingRequests = async () => {
+  setLoading(true)
     try {
       const data = await fetchPendingRequests(accessKey);
 
@@ -32,6 +34,7 @@ export default function PendingRequests() {
     } catch (e: any) {
       showToast();
     }
+	setLoading(false)
   };
 
   const handleDeleteFriendRequet = async (friendRequestID: string) => {
@@ -104,6 +107,7 @@ export default function PendingRequests() {
         <CustomScrollView
           setData={handleGetPendingRequests}
           message="لیست درخواست‌های در انتظار تایید خالی است."
+		  loading={loading}
         />
       )}
     </View>

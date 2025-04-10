@@ -1,12 +1,12 @@
 import { View } from "react-native";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
+import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "@/components/formItems/FormInput";
 import { useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/AuthFormContainer";
 import Loading from "@/components/common/Loading";
-import { useContext } from "react";
 import { authContext } from "@/context/authProvider";
 import FormTitle from "@/components/formItems/FormTitle";
 import SubmitBTN from "@/components/formItems/SubmitBTN";
@@ -15,8 +15,8 @@ import { register } from "@/api";
 import AuthSwitchPropmt from "@/components/formItems/AuthSwitchPropmt";
 
 const Register = () => {
-  const { loading, setLoading } = useContext(authContext);
   const router = useRouter();
+    const [ loading, setLoading]=useState<boolean>(false);
 
   // registering schema
   const validationSchema = Yup.object().shape({

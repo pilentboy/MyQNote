@@ -35,7 +35,8 @@ export default function Friends() {
   const [preNoteFlastListPosition, setPreNoteFlastListPosition] =
     useState<number>(0);
   const [addFriendBTNDisplay, setAddFriendBTNDisplay] = useState<boolean>(true);
-  const { accessKey, loading, setLoading } = useContext(authContext);
+  const { accessKey } = useContext(authContext);
+  const [loading,setLoading]=useState(false);
 
   const snapPoints = useMemo(() => ["65%", "80%"], []);
 
@@ -70,8 +71,8 @@ export default function Friends() {
         setUsersFound([]);
         return;
       }
-
-      setUsersFound(data.notes);
+		
+     setUsersFound(data);
     } catch (error: any) {
       showToast();
       console.log(error);
@@ -114,7 +115,8 @@ export default function Friends() {
       showToast();
       console.log(e, "error adding friend ");
     }
-    setLoading(false);
+	 setLoading(false);
+   
   };
 
   interface NoteItem {
@@ -163,11 +165,13 @@ export default function Friends() {
             preNoteFlastListPosition={preNoteFlastListPosition}
             setPreNoteFlastListPosition={setPreNoteFlastListPosition}
             setAddNoteBTNDisplay={setAddFriendBTNDisplay}
+			loading={loading}
           />
         ) : (
           <CustomScrollView
             setData={handleGetUserMessages}
             message=" هیچ یادداشتی برای شما ارسال نشده است"
+			loading={loading}
           />
         )}
 

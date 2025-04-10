@@ -14,6 +14,7 @@ export default function UserFriends() {
   const { theme } = useTheme();
   const { accessKey } = useContext(authContext);
   const [userFriends, setUserFriends] = useState<any>([]);
+   const [loading,setLoading]=useState(false);
 
   const showToast = () => {
     Toast.show({
@@ -23,6 +24,7 @@ export default function UserFriends() {
   };
 
   const handleGetUsersFriends = async () => {
+	setLoading(true);
     try {
       const data = await fetchUserFriends(accessKey);
 
@@ -38,9 +40,11 @@ export default function UserFriends() {
       console.log(error);
       setUserFriends([]);
     }
+	setLoading(false);
   };
 
   const handleDeleteFriend = async (friendRequestID: string) => {
+
     try {
       const data = await deleteFriend(accessKey, {
         friendRequestID: friendRequestID,
@@ -54,6 +58,7 @@ export default function UserFriends() {
     } catch (e: any) {
       console.log(e, "error Notification");
     }
+	
   };
 
   const renderUserLists = ({
@@ -115,46 +120,13 @@ export default function UserFriends() {
           setData={handleGetUsersFriends}
           renderItem={renderUserLists}
           preNoteFlastListPosition={undefined}
+		  loading={loading}
         />
       ) : (
-        // userFriends.map((friend: any) => (
-        //   <View
-        //     key={friend.id}
-        //     style={{
-        //       width: "100%",
-        //       height: 45,
-        //       padding: 8,
-        //       borderRadius: 10,
-        //       borderColor: "gray",
-        //       flexDirection: "row",
-        //       alignItems: "center",
-        //       justifyContent: "space-between",
-        //       borderWidth: 1,
-        //     }}
-        //   >
-        //     <Text
-        //       style={{
-        //         color: theme == "light" ? "black" : "white",
-        //         fontSize: 16,
-        //       }}
-        //     >
-        //       {friend.friend_username}
-        //     </Text>
-        //     <View
-        //       style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-        //     >
-        //       <AntDesign
-        //         name="deleteuser"
-        //         size={24}
-        //         color="red"
-        //         onPress={() => handleDeleteFriend(friend.id)}
-        //       />
-        //     </View>
-        //   </View>
-        // ))
         <CustomScrollView
           setData={handleGetUsersFriends}
           message="  لیست دوستان شما خالی است."
+		  loading={loading}
         />
       )}
     </View>

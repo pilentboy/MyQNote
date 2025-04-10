@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "@/components/formItems/FormInput";
 import { useRouter } from "expo-router";
 import AuthFormContainer from "@/components/formItems/AuthFormContainer";
-import { useContext } from "react";
+import { useContext,useState } from "react";
 import { authContext } from "@/context/authProvider";
 import Loading from "@/components/common/Loading";
 import FormTitle from "@/components/formItems/FormTitle";
@@ -19,9 +19,10 @@ import AuthSwitchPropmt from "@/components/formItems/AuthSwitchPropmt";
 import SubmitBTN from "@/components/formItems/SubmitBTN";
 
 const Login = () => {
-  const { loading, setLoading, setAccessKey, setAppMode } =
+  const {setAccessKey, setAppMode } =
     useContext(authContext);
   const router = useRouter();
+  const [ loading, setLoading]=useState<boolean>(false);
 
   // log in schema
   const validationSchema = Yup.object().shape({

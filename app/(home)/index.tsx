@@ -27,8 +27,6 @@ import NoteBox from "@/components/noteBox/NoteBox";
 
 const index = () => {
   const {
-    loading,
-    setLoading,
     userNotes,
     setUserNotes,
     searchValue,
@@ -50,7 +48,7 @@ const index = () => {
   const [addNoteBTNDisplay, setAddNoteBTNDisplay] = useState<boolean>(true); // State to control the visibility of the floating action button
   const [originalUserNotes, setOriginalUserNotes] = useState([]);
   const [userFriends, setUserFriends] = useState<any>();
-
+	const [loading, setLoading] = useState<boolean>();
   const snapPoints = useMemo(() => ["65%"], []);
 
   const showToast = (type?: string, message?: string) => {

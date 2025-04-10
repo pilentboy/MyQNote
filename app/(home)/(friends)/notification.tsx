@@ -13,6 +13,7 @@ export default function Notification() {
   const { theme } = useTheme();
   const { accessKey } = useContext(authContext);
   const [notifications, setNotifications] = useState<any>([]);
+  const [loading,setLoading]=useState(false);
 
   const showToast = () => {
     Toast.show({
@@ -22,6 +23,7 @@ export default function Notification() {
   };
 
   const handleGetNotifications = async () => {
+  	  setLoading(true);
     try {
       const data = await fetchNotifications(accessKey);
 
@@ -35,6 +37,7 @@ export default function Notification() {
       showToast();
       console.log(e, "error Notification");
     }
+	setLoading(false);
   };
 
   const handleDeleteFriendRequest = async (friendRequestID: string) => {
@@ -54,6 +57,7 @@ export default function Notification() {
   };
 
   const handleAcceptFriendRequest = async (friendRequestID: string) => {
+
     try {
       const data = await acceptFriendRequest(accessKey, {
         friendRequestID: friendRequestID,
@@ -67,6 +71,7 @@ export default function Notification() {
     } catch (e: any) {
       console.log(e, "error Notification");
     }
+
   };
 
   useEffect(() => {
@@ -122,6 +127,7 @@ export default function Notification() {
         <CustomScrollView
           setData={handleGetNotifications}
           message="هیچ اعلانی ندارید"
+		  loading={loading}
         />
       )}
     </View>
