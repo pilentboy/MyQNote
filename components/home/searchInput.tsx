@@ -5,7 +5,8 @@ import { authContext } from "@/context/authProvider";
 
 const SearchInput = () => {
   const { searchValue, setSearchValue } = useContext(authContext);
-
+	
+	
   return (
     <View
       style={{

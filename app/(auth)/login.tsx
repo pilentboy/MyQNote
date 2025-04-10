@@ -22,6 +22,7 @@ const Login = () => {
   const {setAccessKey, setAppMode } =
     useContext(authContext);
   const router = useRouter();
+  const [showPass,setShowPass]=useState<boolean>(false);
   const [ loading, setLoading]=useState<boolean>(false);
 
   // log in schema
@@ -87,6 +88,7 @@ const Login = () => {
           control={control}
           label="نام کاربری"
           name="username"
+	
         />
 
         <FormInput
@@ -94,6 +96,8 @@ const Login = () => {
           control={control}
           label="رمز عبور"
           name="password"
+		  showPass={showPass}
+		  setShowPass={setShowPass}
         />
 
         <SubmitBTN action={handleSubmit(onSubmit)} title="ورود" />

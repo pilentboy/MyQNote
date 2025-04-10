@@ -17,6 +17,7 @@ import AuthSwitchPropmt from "@/components/formItems/AuthSwitchPropmt";
 const Register = () => {
   const router = useRouter();
    const [ loading, setLoading]=useState<boolean>(false);
+   const [showPass,setShowPass]=useState<boolean>(false);
 
   // registering schema
   const validationSchema = Yup.object().shape({
@@ -83,13 +84,16 @@ const Register = () => {
           errors={errors.username}
           control={control}
           label="نام کاربری"
-          name="username"
+		  name='username'
+    
         />
         <FormInput
           errors={errors.password}
           control={control}
           label="رمز عبور"
           name="password"
+		  showPass={showPass}
+		  setShowPass={setShowPass}
         />
         <SubmitBTN title="ثبت نام" action={handleSubmit(onSubmit)} />
 
