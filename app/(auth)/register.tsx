@@ -16,7 +16,7 @@ import AuthSwitchPropmt from "@/components/formItems/AuthSwitchPropmt";
 
 const Register = () => {
   const router = useRouter();
-    const [ loading, setLoading]=useState<boolean>(false);
+   const [ loading, setLoading]=useState<boolean>(false);
 
   // registering schema
   const validationSchema = Yup.object().shape({

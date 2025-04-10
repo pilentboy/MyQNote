@@ -91,6 +91,7 @@ const index = () => {
 
   // Effect: Trigger fetching or filtering notes when `searchValue` changes
   useEffect(() => {
+  console.log(searchValue)
     if (searchValue !== "") {
       setSearchNotes(); // Filter notes
     } else if (!textDirection) {
