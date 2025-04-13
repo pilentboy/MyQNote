@@ -8,7 +8,7 @@ const makeRequest = async (
   body?: any,
   accessKey?: string
 ) => {
-  const url = `${API_URL}${endpoint}`;
+  const url = `http:10.0.2.2:3000/api/${endpoint}`;
 
   const options: RequestInit = {
     method: method || "GET",
