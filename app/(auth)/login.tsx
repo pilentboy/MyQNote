@@ -41,11 +41,11 @@ const Login = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  // display toast after a successfull log in
-  const showToast = () => {
+
+  const showToast = (type?:error,text?:string) => {
     Toast.show({
-      type: "success",
-      text2: "با موفقیت وارد شدید",
+      type: type || "success",
+      text2: text || "با موفقیت وارد شدید",
     });
   };
 
@@ -53,21 +53,38 @@ const Login = () => {
   const onSubmit = async (data: any) => {
     setLoading(true);
     const res = await login(data);
+	setLoading(false);
 
+
+	if(res.connectionError) return showToast("error",res.connectionError)
     if (res.error) {
-      setError("username", {
+	
+	const fieldsToSet = ['username', 'password'];
+      
+	  fieldsToSet.forEach(field => {
+    const error = res.error.find(e => e.field === field);
+	console.log(error)
+    if (error) {
+      setError(field, {
         type: "manual",
-        message: res.error,
+        message: error.msg
       });
+    }
+
+	 
+  });
+  
     } else {
-      await handleSetAccessKey(res.token);
+		
+      await handleSetAccessKey(res.data.token);
       await handleDefaultNoteMode("online");
-      setAccessKey(res.token);
+      setAccessKey(res.data.token);
       setAppMode("online");
       showToast();
-      router.replace("/(home)");
+
+		router.replace("/(home)");
     }
-    setLoading(false);
+
   };
 
   if (loading) return <Loading />;

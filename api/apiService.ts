@@ -28,12 +28,12 @@ const makeRequest = async (
     const data = await response.json();
 
     if (!response.ok) {
-      return data || { error: "خطا در برقراری ارتباط" };
+      return data ;
     }
 
     return data;
   } catch (error) {
-    return { error: "خطا در برقراری ارتباط" };
+    return { connectionError: "خطا در برقراری ارتباط" };
   }
 };
 

@@ -19,6 +19,7 @@ const Register = () => {
    const [ loading, setLoading]=useState<boolean>(false);
    const [showPass,setShowPass]=useState<boolean>(false);
 
+	  
   // registering schema
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -30,12 +31,10 @@ const Register = () => {
       .max(16, "حداکثر کاراکتر مجاز برای نام کاربری 14 می باشد")
       .required("نام کاربری الزامی است"),
     password: Yup.string()
-      .min(8, "رمز عبور باید حداقل 8 کاراکتر باشد")
-      .max(16, "رمز عبور باید حداثر 16 کاراکتر باشد")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/,
-        "رمز عبور باید شامل حروف کوچک، حروف بزرگ و اعداد باشد"
-      )
+    .matches(
+       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/,
+       "رمز عبور باید شامل حروف کوچک، حروف بزرگ و اعداد باشد"
+     )
       .required("رمز عبور الزامی است"),
   });
 
@@ -49,25 +48,36 @@ const Register = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  // display toast after a successfull registration
-  const showToast = () => {
+
+
+const showToast = (type?:error,text?:string) => {
     Toast.show({
-      type: "success",
-      text2: "ثبت نام شما با موفقیت انجام شد",
+      type: type || "success",
+      text2: text ||"ثبت نام شما با موفقیت انجام شد",
     });
   };
-
   // handle register form
   const onSubmit = async (data: any) => {
     setLoading(true);
+
     const res = await register(data);
     setLoading(false);
-
+	
+	if(res.connectionError) return showToast("error",res.connectionError)
     if (res.error) {
-      setError("username", {
+		console.log(res)
+	  const fieldsToSet = ['username', 'password'];
+
+  fieldsToSet.forEach(field => {
+    const error = res.error.find(e => e.field === field);
+    if (error) {
+      setError(field, {
         type: "manual",
-        message: res.error,
+        message: error.msg
       });
+    }
+  });
+ 
     } else {
       showToast();
       router.replace("/(auth)/login");
