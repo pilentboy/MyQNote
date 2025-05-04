@@ -70,8 +70,8 @@ const index = () => {
           showToast();
           setUserNotes([]);
         } else {
-          setUserNotes(res);
-          setOriginalUserNotes(res); // Set original notes
+          setUserNotes(res.data);
+          setOriginalUserNotes(res.data); // Set original notes
         }
       } catch (error) {
         showToast();

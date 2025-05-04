@@ -63,6 +63,8 @@ const showToast = (type?:error,text?:string) => {
     const res = await register(data);
     setLoading(false);
 	
+	console.log(res,'x')
+	
 	if(res.connectionError) return showToast("error",res.connectionError)
     if (res.error) {
 		console.log(res)

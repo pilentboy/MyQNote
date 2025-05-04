@@ -46,7 +46,7 @@ export default function Settings() {
       showToast(undefined, "error");
       return;
     }
-    setUserNotes(refreshedNotes);
+    setUserNotes(updatedAppMode === 'online' ? refreshedNotes.data : refreshedNotes);
     // Display a success toast message
     showToast(
       `یادداشت های ${

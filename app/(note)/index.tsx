@@ -217,7 +217,7 @@ const Note = () => {
       if (refreshedNotes.error) {
         showToast("خطا در دریافت یادداشت ها", "error");
       } else {
-        setUserNotes(refreshedNotes);
+        setUserNotes(refreshedNotes.data);
       }
       router.replace("/(home)");
     } catch (error) {
@@ -250,7 +250,7 @@ const Note = () => {
       if (refreshedNotes.error) {
         showToast("خطا در دریافت یادداشت ها", "error");
       } else {
-        setUserNotes(refreshedNotes);
+        setUserNotes(refreshedNotes.data);
       }
       // redirect to home page
       router.replace("/(home)");

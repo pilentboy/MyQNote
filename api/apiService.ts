@@ -27,10 +27,6 @@ const makeRequest = async (
     const response = await fetch(url, options);
     const data = await response.json();
 
-    if (!response.ok) {
-      return data ;
-    }
-
     return data;
   } catch (error) {
     return { connectionError: "خطا در برقراری ارتباط" };

@@ -63,7 +63,7 @@ const Login = () => {
       
 	  fieldsToSet.forEach(field => {
     const error = res.error.find(e => e.field === field);
-	console.log(error)
+	
     if (error) {
       setError(field, {
         type: "manual",

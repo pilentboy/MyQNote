@@ -1,7 +1,7 @@
 import { get, put, post, del } from "./apiService";
 
 export const fetchUserCloudNotes = (accessKey: string) =>
-  get("user_notes", accessKey);
+  get("user/user_notes", accessKey);
 
 export const fetchUserFriends = (accessKey: string) =>
   get("user_friends", accessKey);
@@ -36,7 +36,7 @@ export const deleteFriend = (accessKey: string, body: any) =>
   del("delete_friend_request", accessKey, body);
 
 export const deleteCloudNote = (accessKey: string, id: any) =>
-  del(`delete_note/${id}`, accessKey);
+  del(`user/delete_note/${id}`, accessKey);
 
 export const acceptFriendRequest = (accessKey: string, body: any) =>
   put("accept_friend_request", accessKey, body);
