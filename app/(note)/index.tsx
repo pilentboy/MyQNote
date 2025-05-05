@@ -240,10 +240,12 @@ const Note = () => {
       });
 
       if (data.error) {
-        showToast(data.message || data.error, "error");
+        showToast(data.error || data.message, "error");
+		console.log(data)
         return;
       }
       showToast("با موفقیت ویرایش شد");
+	
 
       // update user notes after editing
       const refreshedNotes = await fetchUserCloudNotes(accessKey);
@@ -271,12 +273,7 @@ const Note = () => {
         time: getCurrentDate()[1],
         direction: textDirection,
       });
-
-      if (res.error) {
-        showToast(res.error, "error");
-        return;
-      }
-
+console.log(res,'xxx')
       reset();
       clearErrors();
       showToast("یادداشت با موفقیت افزوده شده");

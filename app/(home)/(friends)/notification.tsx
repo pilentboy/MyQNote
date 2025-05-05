@@ -32,7 +32,7 @@ export default function Notification() {
         return;
       }
 
-      setNotifications(data.notifications);
+      setNotifications(data.data);
     } catch (e: any) {
       showToast();
       console.log(e, "error Notification");
@@ -70,6 +70,7 @@ export default function Notification() {
       await handleGetNotifications();
     } catch (e: any) {
       console.log(e, "error Notification");
+	  showToast();
     }
 
   };

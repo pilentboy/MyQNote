@@ -34,7 +34,7 @@ export default function UserFriends() {
         return;
       }
 
-      setUserFriends(data.userFriends);
+      setUserFriends(data.data);
     } catch (error: any) {
       showToast();
       console.log(error);
@@ -44,7 +44,7 @@ export default function UserFriends() {
   };
 
   const handleDeleteFriend = async (friendRequestID: string) => {
-
+	console.log('x222')
     try {
       const data = await deleteFriend(accessKey, {
         friendRequestID: friendRequestID,
@@ -52,8 +52,11 @@ export default function UserFriends() {
 
       if (data.error) {
         showToast();
+			  console.log(data)
+
         return;
       }
+	  console.log(data)
       await handleGetUsersFriends();
     } catch (e: any) {
       console.log(e, "error Notification");

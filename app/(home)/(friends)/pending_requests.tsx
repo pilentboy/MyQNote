@@ -30,7 +30,7 @@ export default function PendingRequests() {
         return;
       }
 
-      setPendingRequests(data.pendingRequests);
+      setPendingRequests(data.data);
     } catch (e: any) {
       showToast();
     }

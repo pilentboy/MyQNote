@@ -107,12 +107,7 @@ export default function Settings() {
         }
 
         showToast("یادداشت ها با موفقیت حذف شدند");
-        // reset notes state
-        const updatedCloudNotes = await fetchUserCloudNotes(accessKey);
-        if (updatedCloudNotes.error) {
-          showToast("خطا در دریافت یادداشت ها", "error");
-          return;
-        }
+      
         setUserNotes([]);
       } catch (error) {
         showToast("خطا در برقراری ارتباط", "error");

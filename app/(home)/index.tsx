@@ -157,7 +157,7 @@ const index = () => {
         return;
       }
 
-      setUserFriends(data.userFriends);
+      setUserFriends(data.data);
     } catch (error: any) {
       showToast();
       console.log(error);

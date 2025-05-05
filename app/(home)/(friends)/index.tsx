@@ -63,16 +63,19 @@ export default function Friends() {
 
   // make an api call for fetching users based on the searchedUsernameValue
   const onSubmit = async () => {
+
     try {
       const data = await fetchSearchedUsers(accessKey, searchedUsernameValue);
-
+	console.log(data)
       if (data.error) {
-        showToast("error", data.error);
+
+        showToast("error", data.error[0].msg);
         setUsersFound([]);
         return;
       }
 		
-     setUsersFound(data);
+     setUsersFound(data.data);
+	 
     } catch (error: any) {
       showToast();
       console.log(error);
@@ -86,6 +89,7 @@ export default function Friends() {
 
   // add friend request
   const handleAddFriendRequest = async (receiverUsername: string) => {
+  console.log('x2')
     try {
       const data = await addFriend(accessKey, {
         receiver_username: receiverUsername,
@@ -97,23 +101,24 @@ export default function Friends() {
       showToast("success", data.message);
     } catch (e: any) {
       showToast();
-      console.log(e, "error adding friend ");
+   
     }
   };
 
   // get shared messages
   const handleGetUserMessages = async () => {
+  console.log('x2')
     setLoading(true);
     try {
       const data = await fetchSharedNotes(accessKey);
+	    console.log('x2',data)
       if (data.error) {
-        showToast("info", data.error);
+        showToast("error", data.error);
         return;
       }
-      setMessages(data.notes);
+      setMessages(data.data);
     } catch (e: any) {
       showToast();
-      console.log(e, "error adding friend ");
     }
 	 setLoading(false);
    
